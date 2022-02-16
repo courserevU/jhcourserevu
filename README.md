@@ -6,22 +6,23 @@ A brief description of your project (elevator pitch goes here).
 
 | Name | JHU Email | GitHub Username |
 | ---- | --------- | --------------- |
-|      |           |                 |
-|      |           |                 |
-|      |           |                 |
-|      |           |                 |
-|      |           |                 |
-|      |           |                 |
+| Theodore Xie     |  txie10@jhu.edu         |    theodore-xie  |
+| Sebastian Cabrejos     |       scabrej1@jhu.edu  |     boccca2014            |
+|  Melody Hsu    |    mhsu13@jhu.edu       |      melodymhsu      |
+|   Bridget Carr   |     bcarr15@jhu.edu      |       bcarr15         |
+|   Tsige Solomon   |      tsolomo8@jhu.edu     |       tsigeas          |
+|   Narayani Wagle   |    nwagle1@jhu.edu       |        nhwagle         |
+|   Stephania Rincon Godinez   |    srincon3@jhu.edu       |        Stephrg        |
 
 **Advisors** 
 
 | Name | JHU Email | GitHub Username |
 | ---- | --------- | --------------- |
-|      |           |                 |
+|  Melody Lee    |     hlee244@jhu.edu      |              |
 
 ## Documentation
 
-* [Project Document](/link/to/Google/doc)
+* [Project Document](https://docs.google.com/document/d/1ERXfE-sJ2X_Asr5cXk-hHA5Ayl_FxULpkI7nzGDUnOM)
 * [User Manual](link/to/GitHubPage)
 * [API Documentation](link/to/GitHubPage/api)
 

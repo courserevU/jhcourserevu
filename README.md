@@ -1,4 +1,4 @@
-# Name of the project 
+# JHCourseRevU
 
 A brief description of your project (elevator pitch goes here).
 

@@ -28,9 +28,9 @@ on:
       - "code/frontend/**"
       - ".github/workflows/frontend.yml"
 
-  defaults:
-    run:
-      working-directory: code/frontend
+defaults:
+  run:
+    working-directory: code/frontend
 
 jobs:
   build:

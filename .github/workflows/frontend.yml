@@ -76,6 +76,6 @@ jobs:
         env:
           CI: true
       - name: Run Prettier
-          run: npx prettier "**/*.{js,jsx,ts,tsx}" --check 
+        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check 
       - name: Run ESLint
         run: eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0

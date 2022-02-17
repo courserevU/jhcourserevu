@@ -18,7 +18,7 @@ A brief description of your project (elevator pitch goes here).
 
 | Name | JHU Email | GitHub Username |
 | ---- | --------- | --------------- |
-|  Melody Lee    |     hlee244@jhu.edu      |              |
+|  Melody Lee    |     hlee244@jhu.edu      |     melodyhplee  |
 
 ## Documentation
 

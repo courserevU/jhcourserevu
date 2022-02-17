@@ -29,17 +29,17 @@ on:
       - ".github/workflows/frontend.yml"
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       # Add steps to build and deploy the frontend
-      - run: cd code/frontend
       - uses: actions/setup-node@v2
       with:
         node-version: 14
         cache: "npm"
       - name: Install Dependencies
+        run: cd code/frontend
         run: npm install
       - name: Run Test Suite
         - run: npm -g install chromedriver

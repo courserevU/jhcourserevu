@@ -2,12 +2,35 @@
 name: Deploy the backend
 
 on:
+  pull_request:
+    branches:
+      - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+      # TODO: add temp branches here
+  
   push:
     branches:
       - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+      # TODO: add temp branches here
+
     paths:
       - "code/backend/**"
       - ".github/workflows/backend.yml"
+
+defaults:
+  run:
+    working-directory: code/backend
 
 jobs:
   deploy:

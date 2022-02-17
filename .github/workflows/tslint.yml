@@ -32,7 +32,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: cd code/frontend
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2

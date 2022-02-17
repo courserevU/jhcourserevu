@@ -38,6 +38,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+          cache-dependency-path: code/frontend/package-lock.json
         run: |
           npm install
           npm install -g eslint

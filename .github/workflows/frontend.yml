@@ -1,9 +1,29 @@
-name: Deploy the forntend
+name: Deploy the frontend
 
 on:
+  pull_request:
+    branches:
+      - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+      # remove later
+      - frontend/initialize
+  
   push:
     branches:
       - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+      # remove later
+      - frontend/initialize
     paths:
       - "code/frontend/**"
       - ".github/workflows/frontend.yml"
@@ -14,3 +34,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # Add steps to build and deploy the frontend
+      - run: cd code/frontend
+      - uses: actions/setup-node@v2
+      with:
+        node-version: 14
+        cache: "npm"
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install -g eslint
+          npm install -g prettier
+      - name: Run Prettier
+        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check 
+      - name: Run ESLint
+        run: eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0

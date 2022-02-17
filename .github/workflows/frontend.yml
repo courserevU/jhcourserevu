@@ -50,7 +50,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: cd code/frontend
       - run: npm install
       - run: npm -g install chromedriver
       - run: npm -g install jest@20

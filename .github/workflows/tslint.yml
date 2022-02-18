@@ -10,8 +10,6 @@ on:
       - iteration-4
       - iteration-5
       - iteration-6
-      # TODO: remove these below later
-      - frontend/initialize
   
   push:
     branches:
@@ -22,28 +20,40 @@ on:
       - iteration-4
       - iteration-5
       - iteration-6
-      # TODO: remove these below later
-      - frontend/initialize
+
     paths:
       - "code/frontend/**"
-      - ".github/workflows/frontend.yml"
+      - ".github/workflows/tslint.yml"
 
+defaults:
+  run:
+    working-directory: code/frontend
+    
 jobs:
-  deploy:
+  test:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [12.x, 14.x, 16.x]
+
     steps:
       - uses: actions/checkout@v2
-      # Add steps to build and deploy the frontend
-      - uses: actions/setup-node@v2
-      - run: cd code/frontend
-      with:
-        node-version: 14
-        cache: "npm"
-      - name: Install Dependencies
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: code/frontend/package-lock.json
+      - name: npm install, and test
         run: |
           npm install
           npm install -g eslint
           npm install -g prettier
+        env:
+          CI: true
       - name: Run Prettier
         run: npx prettier "**/*.{js,jsx,ts,tsx}" --check 
       - name: Run ESLint

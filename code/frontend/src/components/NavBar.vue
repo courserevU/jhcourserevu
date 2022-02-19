@@ -1,102 +1,4 @@
-<!-- Navigation Header -->
-
-<script>
-import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
-import {
-  BookmarkAltIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  CursorClickIcon,
-  MenuIcon,
-  PhoneIcon,
-  PlayIcon,
-  RefreshIcon,
-  ShieldCheckIcon,
-  SupportIcon,
-  ViewGridIcon,
-  XIcon,
-} from '@heroicons/vue/outline'
-import { ChevronDownIcon } from '@heroicons/vue/solid'
-
-const solutions = [
-  {
-    name: 'Analytics',
-    description: 'Get a better understanding of where your traffic is coming from.',
-    href: '#',
-    icon: ChartBarIcon,
-  },
-  {
-    name: 'Engagement',
-    description: 'Speak directly to your customers in a more meaningful way.',
-    href: '#',
-    icon: CursorClickIcon,
-  },
-  { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
-  {
-    name: 'Integrations',
-    description: "Connect with third-party tools that you're already using.",
-    href: '#',
-    icon: ViewGridIcon,
-  },
-  {
-    name: 'Automations',
-    description: 'Build strategic funnels that will drive your customers to convert',
-    href: '#',
-    icon: RefreshIcon,
-  },
-]
-const callsToAction = [
-  { name: 'Watch Demo', href: '#', icon: PlayIcon },
-  { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-]
-const resources = [
-  {
-    name: 'Help Center',
-    description: 'Get all of your questions answered in our forums or contact support.',
-    href: '#',
-    icon: SupportIcon,
-  },
-  {
-    name: 'Guides',
-    description: 'Learn how to maximize our platform to get the most out of it.',
-    href: '#',
-    icon: BookmarkAltIcon,
-  },
-  {
-    name: 'Events',
-    description: 'See what meet-ups and other events we might be planning near you.',
-    href: '#',
-    icon: CalendarIcon,
-  },
-  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
-]
-const recentPosts = [
-  { id: 1, name: 'Boost your conversion rate', href: '#' },
-  { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-  { id: 3, name: 'Improve your customer experience', href: '#' },
-]
-
-export default {
-  name: "NavBar",
-  components: {
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
-    ChevronDownIcon,
-    MenuIcon,
-    XIcon,
-  },
-  setup() {
-    return {
-      solutions,
-      callsToAction,
-      resources,
-      recentPosts,
-    }
-  },
-}
-</script>
+<!-- Navigation Header Template (can edit to fit our design later) -->
 
 <template>
   <Popover class="relative bg-white">
@@ -104,8 +6,8 @@ export default {
       <div class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
         <div class="flex justify-start lg:w-0 lg:flex-1">
           <a href="#">
-            <span class="sr-only">JHcourserevU</span>
-            <p class="text-gray-900">JHcourserevU</p>
+            <span class="sr-only">Logo</span>
+            <p class="text-gray-900">Logo</p>
             <!-- <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" /> -->
           </a>
         </div>
@@ -118,7 +20,7 @@ export default {
         <PopoverGroup as="nav" class="hidden md:flex space-x-10">
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']">
-              <span>Solutions</span>
+              <span>Reviews</span>
               <ChevronDownIcon :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']" aria-hidden="true" />
             </PopoverButton>
 
@@ -151,8 +53,8 @@ export default {
             </transition>
           </Popover>
 
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Pricing </a>
           <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Docs </a>
+          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> About </a>
 
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']">
@@ -252,3 +154,102 @@ export default {
     </transition>
   </Popover>
 </template>
+
+
+<script>
+import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
+import {
+  BookmarkAltIcon,
+  CalendarIcon,
+  ChartBarIcon,
+  CursorClickIcon,
+  MenuIcon,
+  PhoneIcon,
+  PlayIcon,
+  RefreshIcon,
+  ShieldCheckIcon,
+  SupportIcon,
+  ViewGridIcon,
+  XIcon,
+} from '@heroicons/vue/outline'
+import { ChevronDownIcon } from '@heroicons/vue/solid'
+
+const solutions = [
+  {
+    name: 'Analytics',
+    description: 'Get a better understanding of where your traffic is coming from.',
+    href: '#',
+    icon: ChartBarIcon,
+  },
+  {
+    name: 'Engagement',
+    description: 'Speak directly to your customers in a more meaningful way.',
+    href: '#',
+    icon: CursorClickIcon,
+  },
+  { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
+  {
+    name: 'Integrations',
+    description: "Connect with third-party tools that you're already using.",
+    href: '#',
+    icon: ViewGridIcon,
+  },
+  {
+    name: 'Automations',
+    description: 'Build strategic funnels that will drive your customers to convert',
+    href: '#',
+    icon: RefreshIcon,
+  },
+]
+const callsToAction = [
+  { name: 'Watch Demo', href: '#', icon: PlayIcon },
+  { name: 'Contact Sales', href: '#', icon: PhoneIcon },
+]
+const resources = [
+  {
+    name: 'Help Center',
+    description: 'Get all of your questions answered in our forums or contact support.',
+    href: '#',
+    icon: SupportIcon,
+  },
+  {
+    name: 'Guides',
+    description: 'Learn how to maximize our platform to get the most out of it.',
+    href: '#',
+    icon: BookmarkAltIcon,
+  },
+  {
+    name: 'Events',
+    description: 'See what meet-ups and other events we might be planning near you.',
+    href: '#',
+    icon: CalendarIcon,
+  },
+  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
+]
+const recentPosts = [
+  { id: 1, name: 'Boost your conversion rate', href: '#' },
+  { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
+  { id: 3, name: 'Improve your customer experience', href: '#' },
+]
+
+export default {
+  name: "NavBar",
+  components: {
+    Popover,
+    PopoverButton,
+    PopoverGroup,
+    PopoverPanel,
+    ChevronDownIcon,
+    MenuIcon,
+    XIcon,
+  },
+  setup() {
+    return {
+      solutions,
+      callsToAction,
+      resources,
+      recentPosts,
+    }
+  },
+}
+</script>

@@ -1,4 +1,4 @@
-name: TSLint
+name: Frontend Linter
 
 on:
   pull_request:

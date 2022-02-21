@@ -1,4 +1,4 @@
-name: Deploy the backend
+name: DEPLOY THE BACKEND
 
 on:
   pull_request:

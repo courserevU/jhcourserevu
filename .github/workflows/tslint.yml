@@ -1,4 +1,4 @@
-name: Frontend Linter
+name: FRONTEND LINTING
 
 on:
   pull_request:

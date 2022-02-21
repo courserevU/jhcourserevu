@@ -1,4 +1,4 @@
-name: TSLint
+name: FRONTEND LINTING
 
 on:
   pull_request:

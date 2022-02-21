@@ -1,4 +1,4 @@
-name: Backend Linter
+name: BACKEND LINTING
 
 on:
   pull_request:

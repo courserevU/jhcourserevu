@@ -1,9 +1,25 @@
 name: Frontend Test & Lint
 
 on:
+  pull_request:
+    branches:
+      - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+  
   push:
     branches:
       - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
 
     paths:
       - "code/frontend/**"

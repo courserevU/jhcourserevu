@@ -30,7 +30,7 @@ defaults:
     working-directory: code/backend
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4

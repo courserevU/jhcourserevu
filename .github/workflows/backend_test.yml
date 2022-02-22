@@ -23,7 +23,7 @@ on:
 
     paths:
       - "code/backend/**"
-      - ".github/workflows/backend.yml"
+      - ".github/workflows/backend_test.yml"
 
 defaults:
   run:

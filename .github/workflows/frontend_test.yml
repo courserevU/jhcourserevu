@@ -10,7 +10,7 @@ on:
       - iteration-4
       - iteration-5
       - iteration-6
-  
+
   push:
     branches:
       - main
@@ -31,9 +31,8 @@ defaults:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -47,7 +46,7 @@ jobs:
           npm ci
           npm install
           npm run build --if-present
-      
+
       - name: npm install linters
         run: |
           npm install -g eslint
@@ -55,9 +54,8 @@ jobs:
         env:
           CI: true
       - name: Run Prettier
-        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check 
+        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check
       - name: Run ESLint
         run: eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0
-
 # TODO: add Jest, Vitest, or etc.
 # npm test

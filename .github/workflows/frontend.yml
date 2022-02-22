@@ -49,14 +49,23 @@ jobs:
           npm run build --if-present
 
   deploy:
-    name: 'Deploy to Netlify'
+
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: jsmrcaga/action-netlify-deploy@v1.1.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy Site
+        env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          build_directory: "code/frontend/build"
-          NETLIFY_DEPLOY_TO_PROD: true
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: netlify deploy --dir=public --prod
 
 # TODO: add Jest, Vitest, or etc.
 # npm test

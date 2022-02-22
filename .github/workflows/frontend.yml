@@ -55,8 +55,8 @@ jobs:
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: true
           build_directory: "code/frontend/build"
+          NETLIFY_DEPLOY_TO_PROD: true
 
 # TODO: add Jest, Vitest, or etc.
 # npm test

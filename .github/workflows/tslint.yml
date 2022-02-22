@@ -1,4 +1,4 @@
-name: Frontend Test & Lint
+name: Frontend Linter
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ on:
       - iteration-4
       - iteration-5
       - iteration-6
-
+  
   push:
     branches:
       - main
@@ -23,31 +23,15 @@ on:
 
     paths:
       - "code/frontend/**"
-      - ".github/workflows/frontend_test.yml"
+      - ".github/workflows/tslint.yml"
 
 defaults:
   run:
     working-directory: code/frontend
-
+    
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-          cache-dependency-path: code/frontend/package-lock.json
-      - name: npm install and build webpack
-        run: |
-          npm ci
-          npm install
-          npm run build --if-present
-
   test:
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -71,8 +55,6 @@ jobs:
         env:
           CI: true
       - name: Run Prettier
-        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check
+        run: npx prettier "**/*.{js,jsx,ts,tsx}" --check 
       - name: Run ESLint
         run: eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0
-# TODO: add Jest, Vitest, or etc.
-# npm test

@@ -1,25 +1,9 @@
-name: DEPLOY THE FRONTEND
+name: Deploy Frontend
 
 on:
-  pull_request:
-    branches:
-      - main
-      - iteration-1
-      - iteration-2
-      - iteration-3
-      - iteration-4
-      - iteration-5
-      - iteration-6
-  
   push:
     branches:
       - main
-      - iteration-1
-      - iteration-2
-      - iteration-3
-      - iteration-4
-      - iteration-5
-      - iteration-6
 
     paths:
       - "code/frontend/**"
@@ -53,6 +37,3 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: netlify deploy --dir=public --prod
-
-# TODO: add Jest, Vitest, or etc.
-# npm test

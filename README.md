@@ -30,8 +30,31 @@ A brief description of your project (elevator pitch goes here).
 
 A quick introduction of the minimal setup you need to get the app up & running on a local computer. For example, your advisor might use the instruction here to run the application locally.
 
+### Backend (Django)
 ```shell
-commands here
+cd code/backend
+
+# Assumes you have Python3 installed
+python3 -m venv django-venv
+
+source django-venv/bin/activate  
+
+pip3 install requirements.txt
+
+python manage.py runserver
+
+# EXIT
+# Use command: CTRL-C
+deactivate
+```
+### Frontend (Vue)
+```shell
+cd code/frontend
+
+# Assumes you have npm installed
+npm install
+
+npm run dev
 ```
 
 ## Developing
@@ -39,7 +62,10 @@ commands here
 Detailed and step-by-step documentation for setting up local development. For example, a new team member will use these instructions to start developing the project further. 
 
 ```shell
-commands here
+# Same commands as the previous section
+
+Make sure to setup your Python Virtual environment
+as "django-venv" to avoid pushing it to the remote repository.
 ```
 
 You should include what is needed (e.g. all of the configurations) to set up the dev environment. For instance, global dependencies or any other tools (include download links), explaining what database (and version) has been used, etc. If there is any virtual environment, local server, ..., explain here. 

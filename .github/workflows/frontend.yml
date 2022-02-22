@@ -1,4 +1,4 @@
-name: Deploy the frontend
+name: DEPLOY THE FRONTEND
 
 on:
   pull_request:

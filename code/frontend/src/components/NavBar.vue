@@ -156,7 +156,8 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
 import {
   BookmarkAltIcon,
@@ -232,7 +233,7 @@ const recentPosts = [
   { id: 3, name: 'Improve your customer experience', href: '#' },
 ]
 
-export default {
+export default defineComponent({
   name: "NavBar",
   components: {
     Popover,
@@ -251,5 +252,5 @@ export default {
       recentPosts,
     }
   },
-}
+})
 </script>

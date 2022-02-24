@@ -40,7 +40,7 @@ python3 -m venv django-venv
 
 source django-venv/bin/activate
 
-pip3 install requirements.txt
+pip3 install -r requirements.txt
 
 python manage.py runserver
 

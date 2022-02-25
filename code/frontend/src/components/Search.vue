@@ -8,6 +8,8 @@
           placeholder="Search"
           aria-label="Search"
           aria-describedby="button-addon2"
+          v-model="query"
+          @change="$emit('update-filter', query)"
         />
         <span
           class="input-group-text flex items-center px-3 py-1.5 text-base font-normal text-gray-700 text-center whitespace-nowrap rounded"
@@ -36,7 +38,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
   name: "Search",
+  data() {
+    return {
+      query: "",
+    }
+  },
 });
 </script>

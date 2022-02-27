@@ -23,7 +23,7 @@ const router = createRouter({
       component: ReadView,
     },
     {
-      path: '/:catchAll(.*)*',
+      path: "/:catchAll(.*)*",
       name: "PageNotFound",
       component: PageNotFound,
     },

@@ -1,7 +1,8 @@
 <template>
-  <Menu as="div" class="relative inline-block text-left mx-1">
+  <Menu as="div" class="relative inline-block text-left">
     <div>
-      <MenuButton class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-2 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+      <MenuButton class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-2 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500  mb-3">
+        Please Choose Semester Taken
         <ChevronDownIcon class="mr-1 ml-1 h-5 w-5" aria-hidden="true" />
       </MenuButton>
     </div>
@@ -13,10 +14,10 @@
             <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Fall 2021</a>
           </MenuItem>
           <MenuItem v-slot="{ active }">
-            <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Support</a>
+            <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Spring 2021</a>
           </MenuItem>
           <MenuItem v-slot="{ active }">
-            <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">License</a>
+            <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Fall 2020</a>
           </MenuItem>
           <form method="POST" action="#">
             <MenuItem v-slot="{ active }">
@@ -34,7 +35,7 @@ import { defineComponent } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/solid';
 
-let semesters = ["Semester "]
+let semesters = ["Semester"]
 
 export default defineComponent({
   name: "Dropdown",

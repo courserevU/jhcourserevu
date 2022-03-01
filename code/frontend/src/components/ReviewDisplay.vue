@@ -5,12 +5,12 @@
         <Search @update-filter="updateFilter" />
       </div>
 
-      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Courses</h2>
+      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Reviews</h2>
 
       <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div
-          v-for="course in filteredCourses"
-          :key="course.id"
+          v-for="review in filteredReviews"
+          :key="review.id"
           class="group relative py-2 px-3 shadow-md"
         >
           <div class="mt-2 flex justify-center">
@@ -18,24 +18,12 @@
               <h3 class="text-sm text-gray-700">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
-                  {{ course.name }}
+                  {{ review.name }}
                 </a>
               </h3>
-              <p class="mt-2 text-sm text-gray-500">{{ course.department }}</p>
+              <p class="mt-2 text-sm text-gray-500">{{ review.department }}</p>
             </div>
-            <p class="text-sm font-medium text-gray-900">{{ course.number }}</p>
-          </div>
-          <div class="block inline-flex mt-4 mb-2">
-            <button
-              type="button"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mx-1 rounded"
-              @click="goToWriteReview(course.name)"
-            >Write Review</button>
-            <button
-              type="button"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mx-1 rounded"
-              @click="goToReadReviews(course.name)"
-            >Read Reviews</button>
+            <p class="text-sm font-medium text-gray-900">{{ review.number }}</p>
           </div>
         </div>
       </div>
@@ -48,7 +36,7 @@ import { defineComponent } from 'vue';
 import Search from './Search.vue';
 import Dropdown from './Dropdown.vue';
 
-let courses = [
+let reviews = [
   {
     id: 1,
     name: 'Object-Oriented Software Engineering',
@@ -56,18 +44,21 @@ let courses = [
     number: '601.421',
     department: 'Computer Science',
   },
-  // More courses... load from our db
+  // More reviews... load from our db
 ];
 
 let query = "";
 
 export default defineComponent({
-  name: "CourseDisplay",
+  name: "ReviewDisplay",
   data() {
     return {
       query,
-      courses,
+      reviews,
     }
+  },
+  props: {
+    course,
   },
   components: { Search, Dropdown },
   methods: {
@@ -75,15 +66,15 @@ export default defineComponent({
       this.query = e;
     },
     goToWriteReview(course: any) {
-      this.$router.push({ name: "write", params: { course: course.name } });
+      this.$router.push({ path: "/write", name: "write", params: { course: course } });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { course: course.name } });
+      this.$router.push({ name: "read", params: { course: course } });
     }
   },
   computed: {
-    filteredCourses() {
-      return this.courses.filter((course: any) => {
+    filteredReviews() {
+      return this.reviews.filter((course: any) => {
         return this.query.toLowerCase().split(" ")
           .every(v => course.name.toLowerCase().includes(v) || course.number.toLowerCase().includes(v));
       });

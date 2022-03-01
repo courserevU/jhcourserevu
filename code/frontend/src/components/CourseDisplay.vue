@@ -29,12 +29,12 @@
             <button
               type="button"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mx-1 rounded"
-              @click="goToWriteReview(course)"
+              @click="goToWriteReview(course.name)"
             >Write Review</button>
             <button
               type="button"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mx-1 rounded"
-              @click="goToReadReviews(course)"
+              @click="goToReadReviews(course.name)"
             >Read Reviews</button>
           </div>
         </div>
@@ -75,10 +75,10 @@ export default defineComponent({
       this.query = e;
     },
     goToWriteReview(course: any) {
-      this.$router.push({ path: "/write", name: "write", params: { course: course } });
+      this.$router.push({ name: "write", params: { course: course.name } });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { course: course } });
+      this.$router.push({ name: "read", params: { course: course.name } });
     }
   },
   computed: {

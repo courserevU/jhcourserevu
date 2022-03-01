@@ -6,8 +6,8 @@
       <div
         class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
       >
-        <div class="flex justify-start lg:w-0 lg:flex-1">
-          <a href="#">
+        <div class="flex justify-start lg:w-0 lg:flex-1 cursor-pointer" @click="goToHome">
+          <a>
             <span class="sr-only">Logo</span>
             <p class="text-gray-900">Logo</p>
             <!-- <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" /> -->
@@ -347,6 +347,9 @@ export default defineComponent({
     },
     goToRegister() {
       this.$router.push("/register");
+    },
+    goToHome() {
+      this.$router.push("/");
     }
   },
   setup() {

@@ -1,7 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User, AbstractUser
 
 # from django.utils.translation import ugettext_lazy as _
-# from django.contrib.auth.models import User, AbstractUser
 
 # from django.contrib.auth.models import AbstractUser
 # from django.conf import settings
@@ -25,7 +25,6 @@ class Administrator(models.Model):
     """
 
     user = models.OneToOneField(AbstractUser, on_delete=models.deletion.CASCADE)
-    admin = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Student(models.Model):

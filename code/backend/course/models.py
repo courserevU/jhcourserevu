@@ -49,12 +49,6 @@ class Course(models.Model):
     # return course description summary
 
 
-"""
-TODO: add comments
-
-"""
-
-
 class Review(models.Model):
     """
     TODO: add comments

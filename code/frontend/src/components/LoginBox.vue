@@ -7,8 +7,8 @@
         <h2 v-else class="mt-6 text-center text-3xl font-extrabold text-gray-900">Register for a new account</h2>
         <p class="mt-2 text-center text-sm text-gray-600">
           Or
-          <a v-if="login" href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> register for a new account </a>
-          <a v-else href="#" class="font-medium text-indigo-600 hover:text-indigo-500">sign into an existing account</a>
+          <a v-if="login" class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer" @click="goToRegister"> register for a new account </a>
+          <a v-else class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer" @click="goToLogin">sign into an existing account</a>
         </p>
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST">
@@ -58,6 +58,14 @@ export default defineComponent({
   props: {
     //registration page if false
     login: {type: Boolean, required: true}
+  },
+  methods: {
+    goToLogin() {
+      this.$router.push("/login");
+    },
+    goToRegister() {
+      this.$router.push("/register");
+    }
   }
 });
 </script>

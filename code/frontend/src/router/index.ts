@@ -3,6 +3,8 @@ import HomeView from "@/views/HomeView.vue";
 import WriteView from "@/views/WriteView.vue";
 import ReadView from "@/views/ReadView.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
+import LoginView from "@/views/LoginView.vue";
+import RegisterView from "@/views/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +23,16 @@ const router = createRouter({
       path: "/read",
       name: "read",
       component: ReadView,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterView,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginView,
     },
     {
       path: "/:catchAll(.*)*",

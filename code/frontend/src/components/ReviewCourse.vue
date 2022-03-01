@@ -49,7 +49,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
 import Dropdown from './Dropdown.vue';
 

@@ -29,12 +29,12 @@
             <button
               type="button"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mx-1 rounded"
-              @click="goToWriteReview(course.name)"
+              @click="goToWriteReview(course)"
             >Write Review</button>
             <button
               type="button"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mx-1 rounded"
-              @click="goToReadReviews(course.name)"
+              @click="goToReadReviews(course)"
             >Read Reviews</button>
           </div>
         </div>
@@ -56,6 +56,41 @@ let courses = [
     number: '601.421',
     department: 'Computer Science',
   },
+  {
+    id: 2,
+    name: 'Data Structures',
+    href: '#',
+    number: '601.226',
+    department: 'Computer Science',
+  },
+  {
+    id: 3,
+    name: 'Introduction to Cognitive Psychology',
+    href: '#',
+    number: '200.110',
+    department: 'Psychological & Brain Sciences'
+  },
+  {
+    id: 4,
+    name: 'Guided Tour: The Planets',
+    href: '#',
+    number: '270.114',
+    department: 'Earth & Planetary Sciences'
+  },
+  {
+    id: 5,
+    name: 'Probability & Statistics for the Physical Sciences & Engineering',
+    href: '#',
+    number: '553.310',
+    department: 'Applied Mathematics and Statistics'
+  },
+  {
+    id: 6,
+    name: 'Planetary Surface Processes',
+    href: '#',
+    number: '270.410',
+    department: 'Earth & Planetary Sciences'
+  }
   // More courses... load from our db
 ];
 

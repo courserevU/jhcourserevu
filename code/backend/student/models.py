@@ -10,7 +10,12 @@ from django.contrib.auth.models import User, AbstractUser
 
 class User(models.Model):
     """
-    TODO: add comments
+    TODO: edit
+    Attributes:
+        user (OneToOneField):
+        jhed_id (CharField):
+        jhed_email (EmailField):
+        preferred_name (CharField):
     """
 
     user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
@@ -21,7 +26,9 @@ class User(models.Model):
 
 class Administrator(models.Model):
     """
-    TODO: add comments
+    TODO: edit
+    Attributes:
+        user (OneToOneField):
     """
 
     user = models.OneToOneField(AbstractUser, on_delete=models.deletion.CASCADE)
@@ -29,7 +36,10 @@ class Administrator(models.Model):
 
 class Student(models.Model):
     """
-    TODO: add comments
+    TODO: edit
+    Attributes:
+        username (CharField):
+        student (ForeignKey):
     """
 
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)

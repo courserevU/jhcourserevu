@@ -1,5 +1,3 @@
-# from socketserver import StreamRequestHandler
-# from typing_extensions import Self
 # from students.models import Student
 from django.db import models
 
@@ -25,7 +23,25 @@ class Semester(models.Model):
 
 class Course(models.Model):
     """
-    TODO: add comments
+    Represents a university course containing all relevant information, including
+    name, description, code, number of credits, department, level, prerequisites,
+    corequisities, school, campus, notes, info, exclusions, and instructors.
+    Attributes:
+        name (CharField):
+        description (TextField):
+        code (CharField):
+        num_credits (FloatField):
+        department (CharField):
+        level (CharField):
+        prerequisites (TextField):
+        corequisites (TextField):
+        school (CharField):
+        campus (CharField):
+        notes (TextField):
+        info (TextField):
+        unstopped_description (TextField): ???
+        exclusions (TextField):
+        instructors (CharField):
     """
 
     name = models.CharField(max_length=255)
@@ -51,8 +67,12 @@ class Course(models.Model):
 
 class Review(models.Model):
     """
-    TODO: add comments
-    Each course has multiple reviews
+    Represents a single course review's content (e.g. "Great course!")
+    associated with a single course (e.g. Data Structures).
+    Attributes:
+        content (CharField): the written review by a user (e.g. "Great course!")
+        course (ForeignKey): the course associated with the review (e.g. Data Structures)
+        time_update (DateTimeField): the last time user updated their review
     """
 
     content = models.CharField(max_length=350, default="-")
@@ -62,7 +82,3 @@ class Review(models.Model):
     # def author(self):
     # anonymize
     #    return Student.objects.get(user=self.user).name
-    # COURSES_CHOICES = Student.objects.get(user=self.user).courses
-
-    # def add_review(rev):
-    #     return

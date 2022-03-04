@@ -7,17 +7,17 @@
     </div>
 
     <!-- Class Title -->
-    <div class="flex space-x-2 justify-left px-10">
+    <div class="flex space-x-2 justify-left px-20">
         <h3 class="text-3xl font-medium leading-tight text-gray-800 mb-3 mt-0">Class: {{ course }}</h3>
     </div>
 
     <!-- Semseter and Professor Fields -->
-    <div class="flex space-x-2 justify-left px-10">
+    <div class="flex space-x-10 justify-">
         <!-- Professor -->
-        <div class="form-group mb-3">
+        <div class="form-group mb-3 w-1/2 px-20">
             <input
                 type="text"
-                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                class="form-control block w-full px-5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleInput7"
                 placeholder="Professor"
             />
@@ -27,9 +27,10 @@
     </div>
 
     <!-- Review Text -->
-    <div class="flex space-x-2 justify-left px-10">
-        <div class="form-group mb-3 w-screen">
+    <div class="flex space-x-2 justify-left px-20">
+        <div class="form-group mb-3 w-full ">
             <textarea
+                required
                 class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlTextarea13"
                 rows="3"

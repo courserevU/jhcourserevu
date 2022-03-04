@@ -13,17 +13,16 @@
           :key="course.id"
           class="group relative py-2 px-3 shadow-md"
         >
-          <div class="mt-2 flex justify-center">
-            <div>
+          <div class="mt-2 flex">
+            <div class="justify-left">
               <h3 class="text-sm text-gray-700">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
                   {{ course.name }}
                 </a>
               </h3>
-              <p class="mt-2 text-sm text-gray-500">{{ course.department }}</p>
+              <p class="mt-2 text-sm text-gray-500">{{ course.department }} - {{ course.number }}</p>
             </div>
-            <p class="text-sm font-medium text-gray-900">{{ course.number }}</p>
           </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
@@ -46,7 +45,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Search from './Search.vue';
-import Dropdown from './Dropdown.vue';
 
 let courses = [
   {
@@ -104,7 +102,7 @@ export default defineComponent({
       courses,
     }
   },
-  components: { Search, Dropdown },
+  components: { Search },
   methods: {
     updateFilter(e: any) {
       this.query = e;

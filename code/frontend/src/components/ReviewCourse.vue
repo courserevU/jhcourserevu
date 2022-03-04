@@ -23,7 +23,7 @@
             />
         </div>
         <!-- Semseter -->
-        <Dropdown />
+        <SelectMenu />
     </div>
 
     <!-- Review Text -->
@@ -52,10 +52,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Dropdown from './Dropdown.vue';
+import SelectMenu from './SelectMenu.vue';
 
 export default defineComponent({
-    components: { Dropdown },
+    components: { SelectMenu },
     props: {
         course: String,
     }

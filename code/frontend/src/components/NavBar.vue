@@ -1,16 +1,16 @@
 <!-- Navigation Header Template (can edit to fit our design later) -->
 
 <template>
-  <Popover class="relative bg-white">
+  <Popover class="relative bg-white dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div
-        class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
+        class="flex justify-between items-center border-b-2 border-gray-700 py-6 md:justify-start md:space-x-10"
       >
         <div class="flex justify-start lg:w-0 lg:flex-1 cursor-pointer" @click="goToHome">
           <a>
             <span class="sr-only">Logo</span>
-            <p class="text-gray-900">Logo</p>
-            <!-- <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" /> -->
+            <p class="text-gray-900 dark:text-gray-200">Logo</p>
+            <!-- Replace with our logo img when ready: <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" /> -->
           </a>
         </div>
         <div class="-mr-2 -my-2 md:hidden">
@@ -24,7 +24,7 @@
         <PopoverGroup as="nav" class="hidden md:flex space-x-10">
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton
-              :class="[open ? 'text-gray-900' : 'text-gray-500', 'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']"
+              :class="[open ? 'text-gray-900 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400', 'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']"
             >
               <span>Reviews</span>
               <ChevronDownIcon
@@ -85,12 +85,12 @@
             </transition>
           </Popover>
 
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">Docs</a>
-          <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">About</a>
+          <a href="#" class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">Docs</a>
+          <a href="#" class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">About</a>
 
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton
-              :class="[open ? 'text-gray-900' : 'text-gray-500', 'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']"
+              :class="[open ? 'text-gray-900 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400', 'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']"
             >
               <span>More</span>
               <ChevronDownIcon
@@ -157,7 +157,7 @@
         </PopoverGroup>
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
           <button
-            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 dark:hover:text-gray-200"
             @click="goToLogin"
           >Sign in</button>
           <button

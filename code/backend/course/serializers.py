@@ -34,13 +34,9 @@ class CourseSerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Snippet` instance, given the validated data.
         """
-<<<<<<< HEAD
-=======
-        instance.course_num = validated_data.get('course_num', instance.number)
->>>>>>> 5adaa1cc97df5d076da49c1bf0085a9a740f7f2a
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get('description', instance.description)
-        instance.number = validated_data.get('number', instance.number)
+        instance.course_num = validated_data.get('course_num', instance.number)
         instance.num_credits = validated_data.get('num_credits', instance.num_credits)
         instance.department = validated_data.get('department', instance.department)
         instance.level = validated_data.get('level', instance.level)

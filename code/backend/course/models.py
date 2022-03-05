@@ -29,7 +29,7 @@ class Course(models.Model):
     Attributes:
         name (CharField):
         description (TextField):
-        number (CharField):
+        course_num (CharField):
         num_credits (FloatField):
         department (CharField):
         level (CharField):
@@ -46,7 +46,7 @@ class Course(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField(default="")
-    number = models.CharField(max_length=20) 
+    course_num = models.CharField(max_length=20) 
     num_credits = models.FloatField(default=-1)
     department = models.CharField(max_length=255, default="", null=True)
     level = models.CharField(max_length=500, default="", null=True)

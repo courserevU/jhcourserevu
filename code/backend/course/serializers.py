@@ -1,7 +1,6 @@
-from distutils import core
-from Course.models import Course
+from models import Course, Review
 from rest_framework import serializers
-from course.models import Course
+from course.models import Course, LANGUAGE_CHOICES, STYLE_CHOICES, Review
 
 class CourseSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, allow_blank=False, max_length=255)
@@ -21,7 +20,6 @@ class CourseSerializer(serializers.ModelSerializer):
     
     # faculty = serializers.ManyToManyField(models.faculty)
     # semester = serializers.CharField(required=False, allow_blank=True, max_length=20)
-    
     # pre_reqs = serializers.ManyToManyField(models.course)
 
     def create(self, validated_data):
@@ -52,3 +50,15 @@ class CourseSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
+
+class ReviewSerializer(serializers.ModelSerializer):
+    course = serializers.CharField(required=False, allow_blank=True, max_length=255)
+    content = serializers.CharField(style={'base_template': 'textarea.html'})
+    time_posted = serializers.DateTimeField(required=False, allow_blank=True)
+
+    def create(self, validated_data):
+        return Review.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.course = validated_data.get('course', instance.course)
+        instance.content = validated_data.get('content', instance.content)

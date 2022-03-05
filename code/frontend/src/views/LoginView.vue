@@ -1,12 +1,13 @@
 <template>
-  <NavBar />
-  <LoginBox  v-bind:login="true">
-  </LoginBox>
-  <Footer />
+  <div class="flex flex-col h-screen">
+    <NavBar />
+    <LoginBox class="flex-grow" v-bind:login="true" />
+    <Footer />
+  </div>
 </template>
 
 <script setup lang="ts">
 import NavBar from "../components/NavBar.vue";
 import Footer from "../components/Footer.vue";
-import LoginBox from "../components/LoginBox.vue"
+import LoginBox from "../components/LoginBox.vue";
 </script>

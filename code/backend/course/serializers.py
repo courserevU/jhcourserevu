@@ -6,7 +6,7 @@ from course.models import Course
 class CourseSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, allow_blank=False, max_length=255)
     description = serializers.CharField(style={'base_template': 'textarea.html'})
-    number = serializers.CharField(required=False, allow_blank=True, max_length=20)
+    course_num = serializers.CharField(required=False, allow_blank=True, max_length=20)
     num_credits = serializers.FloatField(max_value=15.0, min_value=-1)
     department = serializers.CharField(required=False, allow_blank=True, max_length=255)
     level = serializers.CharField(required=False, allow_blank=True, max_length=500)
@@ -34,6 +34,10 @@ class CourseSerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Snippet` instance, given the validated data.
         """
+<<<<<<< HEAD
+=======
+        instance.course_num = validated_data.get('course_num', instance.number)
+>>>>>>> 5adaa1cc97df5d076da49c1bf0085a9a740f7f2a
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get('description', instance.description)
         instance.number = validated_data.get('number', instance.number)

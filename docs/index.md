@@ -1,6 +1,6 @@
 # Your App Name
 
-A brief description of your project (elevator pitch goes here).
+JHcourserevU is an application to rate, review, and view reviews for the courses right here at JHU.
 
 ## User Manual
 
@@ -12,4 +12,10 @@ Documentation of your public API.
 
 ## About Us!
 
-Tell your app users who you are! 
+Bridget Carr
+Sebastian Cabrejos
+Melody Hsu
+Tsige Solomon
+Narayani Wagle
+Stephania Rincon Godinez
+Theodore Xie

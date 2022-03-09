@@ -20,7 +20,7 @@ class User(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
     jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    jhed_email = models.EmailField(_("email address"), unique=True)
+    jhed_email = models.EmailField(("email address"), unique=True)
     preferred_name = models.CharField(max_length=30)
 
 

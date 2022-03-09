@@ -28,7 +28,7 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 
 ## Installing / Getting started
 
-A quick introduction of the minimal setup you need to get the app up & running on a local computer. For example, your advisor might use the instruction here to run the application locally.
+<!-- A quick introduction of the minimal setup you need to get the app up & running on a local computer. For example, your advisor might use the instruction here to run the application locally. -->
 
 ### Backend (Django)
 

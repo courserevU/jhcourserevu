@@ -12,10 +12,10 @@ class User(models.Model):
     """
     TODO: edit
     Attributes:
-        user (OneToOneField):
-        jhed_id (CharField):
-        jhed_email (EmailField):
-        preferred_name (CharField):
+        user (:obj:`OneToOneField`):
+        jhed_id (:obj:`CharField`):
+        jhed_email (:obj:`EmailField`):
+        preferred_name (:obj:`CharField`):
     """
 
     user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
@@ -28,7 +28,7 @@ class Administrator(models.Model):
     """
     TODO: edit
     Attributes:
-        user (OneToOneField):
+        user (:obj:`OneToOneField`):
     """
 
     user = models.OneToOneField(AbstractUser, on_delete=models.deletion.CASCADE)
@@ -38,8 +38,8 @@ class Student(models.Model):
     """
     TODO: edit
     Attributes:
-        username (CharField):
-        student (ForeignKey):
+        username (:obj:`CharField`):
+        student (:obj:`ForeignKey`):
     """
 
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)

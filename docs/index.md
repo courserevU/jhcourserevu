@@ -1,4 +1,4 @@
-# Your App Name
+# JHcourserevU
 
 JHcourserevU is an application to rate, review, and view reviews for the courses right here at JHU.
 
@@ -12,10 +12,10 @@ Documentation of your public API.
 
 ## About Us!
 
-Bridget Carr
-Sebastian Cabrejos
-Melody Hsu
-Tsige Solomon
-Narayani Wagle
-Stephania Rincon Godinez
-Theodore Xie
+- Bridget Carr
+- Sebastian Cabrejos
+- Melody Hsu
+- Tsige Solomon
+- Narayani Wagle
+- Stephania Rincon Godinez
+- Theodore Xie

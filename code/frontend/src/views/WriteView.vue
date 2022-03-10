@@ -1,7 +1,9 @@
 <template>
-  <NavBar />
-  <ReviewCourse v-bind:course="course" />
-  <Footer />
+  <div class="flex flex-col h-screen">
+    <NavBar />
+    <ReviewCourse class="flex-grow" v-bind:course="course" />
+    <Footer />
+  </div>
 </template>
 
 <script lang="ts">

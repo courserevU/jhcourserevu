@@ -223,7 +223,7 @@
                 open ? 'text-gray-600' : 'text-gray-400',
                 'h-5 w-5 group-hover:text-gray-500',
               ]"
-              v-if="darkMode === true"
+              v-if="darkMode"
               aria-hidden="true"
             />
             <SunIcon
@@ -377,8 +377,11 @@ import {
 } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 
-// Toggle variable for turning dark mode on/off, string type
-let darkMode = document.documentElement.classList.contains("dark");
+// Toggle variable for turning dark mode on/off, theme persists between sessions
+let darkMode = JSON.parse(localStorage.getItem("user-theme"));
+if (darkMode) {
+  document.documentElement.classList.add("dark");
+}
 
 const solutions = [
   {
@@ -486,12 +489,17 @@ export default defineComponent({
       this.$router.push("/");
     },
     switchTheme() {
+      // Switches the theme of the entire app, all routes
       if (document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.remove("dark");
       } else {
         document.documentElement.classList.add("dark");
       }
+
+      // For switching the dark mode button icon:
       this.darkMode = document.documentElement.classList.contains("dark");
+      // Allows dark mode to persist between sessions:
+      localStorage.setItem("user-theme", JSON.stringify(this.darkMode));
     },
   },
   setup() {

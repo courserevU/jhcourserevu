@@ -213,6 +213,7 @@
           </Popover>
         </PopoverGroup>
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+          <!-- Dark mode toggle button; icon is moon during dark mode, sun during light mode -->
           <button
             class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-100 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
             @click="switchTheme"
@@ -222,7 +223,7 @@
                 open ? 'text-gray-600' : 'text-gray-400',
                 'h-5 w-5 group-hover:text-gray-500',
               ]"
-              v-if="theme === 'dark'"
+              v-if="darkMode === true"
               aria-hidden="true"
             />
             <SunIcon
@@ -377,7 +378,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 
 // Toggle variable for turning dark mode on/off, string type
-let theme = localStorage.getItem('user-theme');
+let darkMode = document.documentElement.classList.contains("dark");
 
 const solutions = [
   {
@@ -469,6 +470,11 @@ export default defineComponent({
     MoonIcon,
     SunIcon,
   },
+  data() {
+    return {
+      darkMode,
+    };
+  },
   methods: {
     goToLogin() {
       this.$router.push("/login");
@@ -480,9 +486,12 @@ export default defineComponent({
       this.$router.push("/");
     },
     switchTheme() {
-      this.theme = (this.theme === "dark" ? "light" : "dark");
-      localStorage.setItem("user-theme", this.theme);
-      document.documentElement.className = this.theme;
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+      this.darkMode = document.documentElement.classList.contains("dark");
     },
   },
   setup() {
@@ -493,10 +502,9 @@ export default defineComponent({
       recentPosts,
     };
   },
-  data() {
-    return {
-      theme,
-    };
+  mounted() {
+    // Ensures that switching views retains correct icon for dark mode toggle button
+    this.darkMode = document.documentElement.classList.contains("dark");
   },
 });
 </script>

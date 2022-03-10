@@ -1,0 +1,8 @@
+db:
+  image: python
+  ports:
+      - "3306:3306"
+  environment:
+      MYSQL_DATABASE: example_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootpw

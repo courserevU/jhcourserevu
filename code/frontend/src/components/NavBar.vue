@@ -6,7 +6,10 @@
       <div
         class="flex justify-between items-center border-b-2 border-gray-700 py-6 md:justify-start md:space-x-10"
       >
-        <div class="flex justify-start lg:w-0 lg:flex-1 cursor-pointer" @click="goToHome">
+        <div
+          class="flex justify-start lg:w-0 lg:flex-1 cursor-pointer"
+          @click="goToHome"
+        >
           <a>
             <span class="sr-only">Logo</span>
             <p class="text-gray-900 dark:text-gray-200">Logo</p>
@@ -24,7 +27,12 @@
         <PopoverGroup as="nav" class="hidden md:flex space-x-10">
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton
-              :class="[open ? 'text-gray-900 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400', 'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']"
+              :class="[
+                open
+                  ? 'text-gray-900 dark:text-gray-200'
+                  : 'text-gray-500 dark:text-gray-400',
+                'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+              ]"
             >
               <span>Reviews</span>
             </PopoverButton>
@@ -36,6 +44,7 @@
               leave-from-class="opacity-100 translate-y-0"
               leave-to-class="opacity-0 translate-y-1"
             >
+            
             <PopoverPanel
               class="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
             >
@@ -48,7 +57,12 @@
 
           <Popover class="relative" v-slot="{ open }">
             <PopoverButton
-              :class="[open ? 'text-gray-900 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400', 'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']"
+              :class="[
+                open
+                  ? 'text-gray-900 dark:text-gray-200'
+                  : 'text-gray-500 dark:text-gray-400',
+                'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+              ]"
             >
               <span>More</span>
             </PopoverButton>
@@ -68,14 +82,40 @@
           </Popover>
         </PopoverGroup>
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+          <!-- Dark mode toggle button; icon is moon during dark mode, sun during light mode -->
           <button
-            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 dark:hover:text-gray-200"
+            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-100 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+            @click="switchTheme"
+          >
+            <MoonIcon
+              :class="[
+                open ? 'text-gray-600' : 'text-gray-400',
+                'h-5 w-5 group-hover:text-gray-500',
+              ]"
+              v-if="darkMode"
+              aria-hidden="true"
+            />
+            <SunIcon
+              :class="[
+                open ? 'text-gray-600' : 'text-gray-400',
+                'h-5 w-5 group-hover:text-gray-500',
+              ]"
+              v-else
+              aria-hidden="true"
+            />
+          </button>
+          <button
+            class="ml-8 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 dark:hover:text-gray-200"
             @click="goToLogin"
-          >Sign in</button>
+          >
+            Sign in
+          </button>
           <button
             class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
             @click="goToRegister"
-          >Sign up</button>
+          >
+            Sign up
+          </button>
         </div>
       </div>
     </div>
@@ -123,14 +163,18 @@
               <button
                 class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                 @click="goToRegister"
-              >Sign up</button>
+              >
+                Sign up
+              </button>
               <p class="mt-6 text-center text-base font-medium text-gray-500">
                 Existing customer?
-                {{ ' ' }}
+                {{ " " }}
                 <button
                   class="text-indigo-600 hover:text-indigo-500"
                   @click="goToLogin"
-                >Sign in</button>
+                >
+                  Sign in
+                </button>
               </p>
             </div>
           </div>
@@ -142,13 +186,26 @@
 
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/vue'
+import { defineComponent } from "vue";
+import {
+  Popover,
+  PopoverButton,
+  PopoverGroup,
+  PopoverPanel,
+} from "@headlessui/vue";
 import {
   MenuIcon,
+  MoonIcon,
+  SunIcon,
   XIcon,
-} from '@heroicons/vue/outline'
-import { ChevronDownIcon } from '@heroicons/vue/solid'
+} from "@heroicons/vue/outline";
+import { ChevronDownIcon } from "@heroicons/vue/solid";
+
+// Toggle variable for turning dark mode on/off, theme persists between sessions
+let darkMode = JSON.parse(localStorage.getItem("user-theme"));
+if (darkMode) {
+  document.documentElement.classList.add("dark");
+}
 
 export default defineComponent({
   name: "NavBar",
@@ -160,6 +217,13 @@ export default defineComponent({
     ChevronDownIcon,
     MenuIcon,
     XIcon,
+    MoonIcon,
+    SunIcon,
+  },
+  data() {
+    return {
+      darkMode,
+    };
   },
   methods: {
     goToLogin() {
@@ -170,12 +234,29 @@ export default defineComponent({
     },
     goToHome() {
       this.$router.push("/");
-    }
+    },
+    switchTheme() {
+      // Switches the theme of the entire app, all routes
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+
+      // For switching the dark mode button icon:
+      this.darkMode = document.documentElement.classList.contains("dark");
+      // Allows dark mode to persist between sessions:
+      localStorage.setItem("user-theme", JSON.stringify(this.darkMode));
+    },
   },
   setup() {
     return {
       repoUrl: "https://github.com/cs421sp22-homework/project-team-08-random"
     }
   },
-})
+  mounted() {
+    // Ensures that switching views retains correct icon for dark mode toggle button
+    this.darkMode = document.documentElement.classList.contains("dark");
+  }
+});
 </script>

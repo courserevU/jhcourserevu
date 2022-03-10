@@ -24,4 +24,4 @@ class User(models.Model):
     class_year = models.IntegerField(blank=True, null=True)
     preferred_name = models.CharField(max_length=30)
 
-    isAdmin = models.BooleanField(null=False)
+    is_admin = models.BooleanField(null=False)

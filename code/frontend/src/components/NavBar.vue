@@ -202,7 +202,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 
 // Toggle variable for turning dark mode on/off, theme persists between sessions
-let darkMode = JSON.parse(localStorage.getItem("user-theme"));
+let darkMode = localStorage.getItem("user-theme") === "true";
 if (darkMode) {
   document.documentElement.classList.add("dark");
 }

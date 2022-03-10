@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 
 # from django.utils.translation import ugettext_lazy as _
 
@@ -30,8 +30,8 @@ class Administrator(models.Model):
     Attributes:
         user (:obj:`OneToOneField`):
     """
-
-    user = models.OneToOneField(AbstractUser, on_delete=models.deletion.CASCADE)
+    # TODO: need to reconfigure for admin capabilities 
+    user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
 
 
 class Student(models.Model):

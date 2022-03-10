@@ -114,8 +114,9 @@ class Review(models.Model):
         time_update (:obj:`DateTimeField`): the last time user updated their review
     """
 
-    content = models.CharField(max_length=350, default="-")
+
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    comments = models.CharField(max_length=350, default="-")
     time_updated = models.DateTimeField(auto_now_add=True)
 
     # def author(self):

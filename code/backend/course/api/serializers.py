@@ -53,7 +53,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     course = serializers.CharField(required=False, allow_blank=True, max_length=255)
-    content = serializers.CharField(style={'base_template': 'textarea.html'})
+    comments = serializers.CharField(style={'base_template': 'textarea.html'})
     time_posted = serializers.DateTimeField(required=False, allow_blank=True)
 
     def create(self, validated_data):
@@ -61,4 +61,4 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.course = validated_data.get('course', instance.course)
-        instance.content = validated_data.get('content', instance.content)
+        instance.content = validated_data.get('content', instance.comments)

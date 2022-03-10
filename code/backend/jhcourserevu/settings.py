@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 
 from pathlib import Path
+import os
 import environ  # to store env vars
 import django_heroku
 
@@ -87,9 +88,11 @@ WSGI_APPLICATION = "jhcourserevu.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
+        "NAME": os.path.join(
+            BASE_DIR, "db.postgresql"
+        ),  # os.path.join(BASE_DIR, 'db.postgresql')
         "USER": "postgres",
-        "PASSWORD": "",
+        "PASSWORD": "postgres",
         "HOST": "localhost",
         "PORT": "5432",
     }

@@ -21,26 +21,7 @@ class User(models.Model):
     user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
     jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
     jhed_email = models.EmailField(("email address"), unique=True)
+    class_year = models.IntegerField(blank=True, null=True)
     preferred_name = models.CharField(max_length=30)
 
-
-class Administrator(models.Model):
-    """
-    TODO: edit
-    Attributes:
-        user (:obj:`OneToOneField`):
-    """
-    # TODO: need to reconfigure for admin capabilities 
-    user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
-
-
-class Student(models.Model):
-    """
-    TODO: edit
-    Attributes:
-        username (:obj:`CharField`):
-        student (:obj:`ForeignKey`):
-    """
-
-    username = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    isAdmin = models.BooleanField(null=False)

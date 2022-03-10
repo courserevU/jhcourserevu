@@ -1,4 +1,4 @@
-# from students.models import Student
+# from user.models import User
 from django.db import models
 
 

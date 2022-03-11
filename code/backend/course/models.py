@@ -68,6 +68,8 @@ class Course(models.Model):
 
 class Section(models.Model):
     """
+    TODO: MAYBE scrap, need to look into SIS Web API and see if all data for Section can be found in courses.
+
     A subset of course. Courses could have one or greater sections and is
     guaranteed to have at least one.
 
@@ -114,9 +116,8 @@ class Review(models.Model):
         time_update (:obj:`DateTimeField`): the last time user updated their review
     """
 
-
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    comments = models.CharField(max_length=350, default="-")
+    comments = models.CharField(max_length=350, default="")
     time_updated = models.DateTimeField(auto_now_add=True)
 
     # def author(self):

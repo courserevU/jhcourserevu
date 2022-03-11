@@ -1,4 +1,10 @@
 from django.shortcuts import render
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+from course.models import Course
+from course.serializers import CourseSerializer
 
 # Create your views here. (The following is copy pasted from https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
 from django.http import HttpResponse

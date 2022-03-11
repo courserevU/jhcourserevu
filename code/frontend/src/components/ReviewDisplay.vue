@@ -8,9 +8,9 @@
         <div
           v-for="review in reviews"
           :key="review.id"
-          class="group relative py-2 px-3 shadow-md dark:shadow-gray-600"
+          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
-          <div class="mt-2 flex justify-left">
+          <div class="mt-2 mb-2 flex justify-left">
             <div>
               <h3 class="text-md text-gray-700 dark:text-gray-300">
                 <a>

@@ -1,27 +1,28 @@
-from models import Course, Review
 from rest_framework import serializers
-from course.models import Course, LANGUAGE_CHOICES, STYLE_CHOICES, Review
+from course.models import Course, Review
 
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = [
-            "name",
-            "description",
-            "number",
-            "num_credits",
-            "department",
-            "level",
-            "prerequisites",
-            "corequisites",
-            "school",
-            "campus",
-            "notes",
-            "info",
-            "exclusions",
-            "instructors",
-        ]
+        fields = "__all__"  # will include all fields in model
+        # [
+        #     "name",
+        #     "description",
+        #     "number",
+        #     "num_credits",
+        #     "department",
+        #     "level",
+        #     "prerequisites",
+        #     "corequisites",
+        #     "school",
+        #     "campus",
+        #     "notes",
+        #     "info",
+        #     "exclusions",
+        #     "instructors",
+        #     "is_writing_intensive"
+        # ]
 
     # name = serializers.CharField(required=True, allow_blank=False, max_length=255)
     # description = serializers.CharField(style={'base_template': 'textarea.html'})
@@ -75,7 +76,7 @@ class CourseSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     course = serializers.CharField(required=False, allow_blank=True, max_length=255)
     comments = serializers.CharField(style={"base_template": "textarea.html"})
-    time_posted = serializers.DateTimeField(required=False, allow_blank=True)
+    time_posted = serializers.DateTimeField(required=False)
 
     def create(self, validated_data):
         return Review.objects.create(**validated_data)

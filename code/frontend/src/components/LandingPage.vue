@@ -12,7 +12,7 @@
                 </p>
                 <br/>
                 <p>
-                    This application would provide a simple and intuitive platform for students to rate and write reviews for the courses at Johns Hopkins University. 
+                    This website would provide a simple and intuitive platform for students to rate and write reviews for the courses at Johns Hopkins University. 
                     They could also directly view all reviews and ratings and have a guarantee they are reading a completely valid review/rating. 
                     It would be appropriately moderated, open source, and affiliated with Semesterly so as to guarantee that it could be sustainable..
                 </p>

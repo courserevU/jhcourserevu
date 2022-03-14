@@ -16,8 +16,6 @@ import os
 import environ  # to store env vars
 import django_heroku
 
-# import os
-
 env = environ.Env()
 environ.Env.read_env()
 
@@ -32,6 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# TODO: this should be False when put into production
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -87,12 +86,12 @@ WSGI_APPLICATION = "jhcourserevu.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ.get("POSTGRES_NAME"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
         "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "PORT": 5432,
     }
 }
 
@@ -104,15 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
@@ -140,3 +133,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # for heroku setup
 django_heroku.settings(locals())
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

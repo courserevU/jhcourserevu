@@ -5,6 +5,7 @@ import ReadView from "@/views/ReadView.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import CourseView from "@/views/CourseView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,11 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+    },
+    {
+      path: "/course-search",
+      name: "CourseSearch",
+      component: CourseView,
     },
     {
       path: "/write",

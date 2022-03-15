@@ -38,6 +38,9 @@
           </div>
         </div>
       </div>
+      <div>
+        <Pagination />
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +48,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Search from './Search.vue';
+import Pagination from './Pagination.vue';
 
 let courses = [
   {
@@ -102,7 +106,7 @@ export default defineComponent({
       courses,
     }
   },
-  components: { Search },
+  components: { Search, Pagination },
   methods: {
     updateFilter(e: any) {
       this.query = e;

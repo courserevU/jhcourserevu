@@ -95,7 +95,6 @@ API Endpoints
       ]
 
    :query review_id: The id of the review to retrieve.
-   :query offset: offset number. default is 0
    :query limit: limit number. default is 15
    :query sort: sort by ``semester`` or ``year``
 

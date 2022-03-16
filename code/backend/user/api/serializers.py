@@ -17,11 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
             "userLastName",
         ]
 
-        def create(self, validated_data):
-            """
-            Create and return a new `User` instance, given the validated data.
-            """
-            return User.objects.create(**validated_data)
+    def create(self, validated_data):
+        """
+        Create and return a new `User` instance, given the validated data.
+        """
+        return User.objects.create(**validated_data)
 
 
 # TODO: remove below?

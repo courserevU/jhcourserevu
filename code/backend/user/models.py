@@ -10,7 +10,6 @@ class User(models.Model):
         user (:obj:`OneToOneField`): inherits Django user basic settings
         jhed_id (:obj:`CharField`): Hopkins affiliate's JHED ID
         jhed_email (:obj:`EmailField`): Hopkins affiliate's University Email
-        jhed_email (:obj:`EmailField`): Hopkins affiliate's University Email
         preferred_name (:obj:`CharField`): user's preferred name
         is_admin (:obj:`BooleanField`): indicates whether user is a moderator or visiting user
     """

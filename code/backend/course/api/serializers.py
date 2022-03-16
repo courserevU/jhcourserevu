@@ -79,8 +79,14 @@ class ReviewSerializer(serializers.ModelSerializer):
     time_posted = serializers.DateTimeField(required=False)
 
     def create(self, validated_data):
+        """
+        Create and return a new `Review` instance, given the validated data.
+        """
         return Review.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
+        """
+        Update and return a new `Review` instance, given the validated data.
+        """
         instance.course = validated_data.get("course", instance.course)
         instance.content = validated_data.get("content", instance.comments)

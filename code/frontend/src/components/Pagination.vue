@@ -1,102 +1,109 @@
 <template>
   <nav aria-label="Page navigation example">
-    <ul class="inline-flex items-center -space-x-px">
+    <ul class="inline-flex items-center -space-x-px mt-8">
       <li>
-        <a
+        <button
+          type="button"
+          @click="prevPage"
           class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
         >
           <span class="sr-only">Previous</span>
-          <svg
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </a>
+          <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
+        </button>
       </li>
       <li>
-        <a
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
-          >1</a
+        <button
+          :disabled="isSelected(1)"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
+          @click="goToPage(1)"
         >
+          1
+        </button>
       </li>
       <li>
-        <a
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
-          >2</a
+        <button
+          :disabled="isSelected(2)"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
+          @click="goToPage(2)"
         >
+          2
+        </button>
       </li>
       <li>
-        <a
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
-          >3</a
+        <button
+          :disabled="isSelected(3)"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
+          @click="goToPage(3)"
         >
+          3
+        </button>
       </li>
       <li>
-        <a
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
-          >4</a
+        <button
+          :disabled="isSelected(4)"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
+          @click="goToPage(4)"
         >
+          4
+        </button>
       </li>
       <li>
-        <a
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
-          >5</a
+        <button
+          :disabled="isSelected(5)"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
+          @click="goToPage(5)"
         >
+          5
+        </button>
       </li>
       <li>
-        <a
+        <button
+          @click="nextPage"
           class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
         >
           <span class="sr-only">Next</span>
-          <svg
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </a>
+          <ChevronRightIcon class="h-5 w-5" aria-hidden="true" />
+        </button>
       </li>
     </ul>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
-let page = 1;
+// let page = 1;
 const maxPage = 5;
 
 export default defineComponent({
+  name: "Pagination",
   data() {
-    page
+    return {
+      page: 1,
+    };
   },
+  components: { ChevronLeftIcon, ChevronRightIcon },
   methods: {
     nextPage() {
-      if (page < maxPage) {
-        page += 1;
+      if (this.page < maxPage) {
+        this.page += 1;
       }
     },
     prevPage() {
-      if (page > 1) {
-        page -= 1;
+      if (this.page > 1) {
+        this.page -= 1;
       }
     },
     goToPage(e: number) {
-      page = e;
-    }
-  }
-})
+      this.page = e;
+    },
+    isSelected(index: number) {
+      if (this.page === index) {
+        return true;
+      }
+      return false;
+    },
+  },
+});
 </script>

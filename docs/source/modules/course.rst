@@ -1,7 +1,15 @@
-Course App
-=============
+Course + Review App
+###########################
 
-The course app is a simple web application that allows users to create, edit, and delete courses.
+The Course & Review App is allows users to access course. These courses are
+directly obtained from the Johns Hopkins University `SIS Web API <https://sis.jhu.edu/api/>`_
+and are unmodifiable. Every course can be associated with one or
+more review. Every user has an associated set of courses that they
+have completed, and thus, are able to review.
+
+API Endpoints
+*************
+TBD
 
 Models
 ~~~~~~

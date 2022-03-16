@@ -28,6 +28,20 @@
     </div>
 
     <!-- Review Text -->
+    <!-- Sample Review Gudied Questions -->
+    <!-- Work -->
+      <!-- What is the Workload-->
+      <!-- Assignments Style -->
+      <!-- Exams Style-->
+      <!-- Outside of class time to dedicate (including studying)? -->
+      
+    <!-- Class/Lecture -->
+      <!-- Teaching Style -->
+      <!-- Teaching Effectiveness  -->
+      <!-- Professor Availably  -->
+      <!-- Grading Style  -->
+      
+    <!-- Biggest Setbacks-->
     <div class="flex space-x-2 justify-left px-20">
         <div class="form-group mb-3 w-full">
             <textarea

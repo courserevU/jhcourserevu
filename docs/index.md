@@ -276,6 +276,8 @@ Content-Type: text/javascript
     "user_id": 1,
     "jhed_id": "scabrej1",
     "jhed_email": "scabrej1@jhu.edu",
+    "preferred_name": "Sebastian",
+    "is_admin": false,
   }
 ]
 ```
@@ -333,6 +335,8 @@ Content-Type: text/javascript
     "user_id": 1,
     "jhed_id": "scabrej1",
     "jhed_email": "scabrej1@jhu.edu",
+    "preferred_name": "Sebastian",
+    "is_admin": false,
   }
 ]
 ```

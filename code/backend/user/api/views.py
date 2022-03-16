@@ -11,7 +11,7 @@ class UserListApiView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        List all the todo items for given requested user
+        Login for returning user
         """
         users = User.objects.filter(user=request.user.id)
         serializer = UserSerializer(users, many=True)
@@ -19,7 +19,7 @@ class UserListApiView(APIView):
 
     def post(self, request, *args, **kwargs):
         """
-        Create user within given info
+        Create new user - Signup
         """
         data = {
             "user": request.data.get("user"),

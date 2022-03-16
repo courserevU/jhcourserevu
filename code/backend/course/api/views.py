@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 # from rest_framework import permissions
-from course.models import Course
+from course.models import Course, Review
 from .serializers import CourseSerializer, ReviewSerializer
 
 
@@ -11,7 +11,7 @@ class CourseListApiView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        List all the todo items for given requested user
+        List all courses
         """
         # TODO: this is incorrect, should get by exact matching
         courses = Course.objects.filter(course_num=request.user.id)
@@ -20,15 +20,15 @@ class CourseListApiView(APIView):
 
     def post(self, request, *args, **kwargs):
         """
-        Create user within given info
+        Create new course
         """
         data = {
             "name": request.data.get("name"),
-            # "jhed_id": request.data.get("jhed_id"),
-            # "jhed_email": request.data.get("jhed_email"),
-            # "class_year": request.data.get("class_year"),
-            # "preferred_name": request.data.get("preferred_name"),
-            # "is_admin": request.data.get("is_admin"),
+            "course_num": request.data.get("course_num"),
+            "description": request.data.get("description"),
+            "instructor": request.data.get("instructor"),
+            "semester": request.data.get("semester"),
+            "year": request.data.get("year"),
         }
 
         serializer = CourseSerializer(data=data)
@@ -43,24 +43,30 @@ class ReviewListApiView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        List all the todo items for given requested user
+        List of all reviews
         """
         # TODO: this is incorrect, should get by exact matching
-        reviews = Course.objects.filter(course_num=request.user.id)
+        reviews = Review.objects.filter(course_num=request.course.id)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get(self, request, *args, **kwargs):
+        """
+        List of all reviews for given course
+        """
+        # TODO: should get by exact matching
+        reviews = Review.objects.filter(course_num=request.user.id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         """
-        Create user within given info
+        Create review associated with given course
         """
         data = {
             "name": request.data.get("name"),
-            # "jhed_id": request.data.get("jhed_id"),
-            # "jhed_email": request.data.get("jhed_email"),
-            # "class_year": request.data.get("class_year"),
-            # "preferred_name": request.data.get("preferred_name"),
-            # "is_admin": request.data.get("is_admin"),
+            "comments": request.data.get("comments"),
+            "course_num": request.data.get("course_num"),
         }
 
         serializer = CourseSerializer(data=data)

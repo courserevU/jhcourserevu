@@ -88,15 +88,18 @@ export default defineComponent({
     nextPage() {
       if (this.page < maxPage) {
         this.page += 1;
+        this.$emit('change-page', this.page);
       }
     },
     prevPage() {
       if (this.page > 1) {
         this.page -= 1;
+        this.$emit('change-page', this.page);
       }
     },
     goToPage(e: number) {
       this.page = e;
+      this.$emit('change-page', this.page);
     },
     isSelected(index: number) {
       if (this.page === index) {

@@ -17,7 +17,7 @@ API Endpoints
    .. sourcecode:: http
 
       GET /user/api/123 HTTP/1.1
-      Host: https://jhcourserevu.herokuapp.com
+      Host: https://jhcourserevu-api.herokuapp.com
       Accept: application/json, text/javascript
 
    **Example response**:
@@ -53,7 +53,7 @@ API Endpoints
    .. sourcecode:: http
 
       GET /user/api/123 HTTP/1.1
-      Host: https://jhcourserevu.herokuapp.com
+      Host: https://jhcourserevu-api.herokuapp.com
       Accept: application/json, text/javascript
 
    **Example response**:

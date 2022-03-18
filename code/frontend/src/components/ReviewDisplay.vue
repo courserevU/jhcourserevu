@@ -6,7 +6,7 @@
 
       <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div
-          v-for="review in reviews"
+          v-for="review in filteredReviews"
           :key="review.id"
           class="group relative py-2 px-3 shadow-md dark:shadow-gray-600"
         >
@@ -22,6 +22,9 @@
           </div>
         </div>
       </div>
+      <div>
+        <Pagination @change-page="changePage" />
+      </div>
     </div>
   </div>
 </template>
@@ -29,23 +32,40 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Search from './Search.vue';
+import Pagination from './Pagination.vue';
 
 let reviews = [
   {
     id: 1,
     professor: "Ali Madooei",
     review: "Greatest teaching ever!",
+    page: 1,
   },
   {
     id: 2,
     professor: "Imaginary Professor",
     review: "Entirely self-directed class - the professor never appeared!",
+    page: 1,
   },
   {
     id: 3,
     professor: "Mr. Anderson",
     review: "We live in a simulation.",
-  }
+    page: 1,
+  },
+  {
+    id: 4,
+    professor: "Mr. Smith",
+    review: "*equip sunglasses*",
+    page: 1,
+  },
+  {
+    id: 5,
+    professor: "[REDACTED]",
+    review: "Alllll byyy MYYYYYSELLLLF!",
+    page: 2,
+  },
+
   // More reviews... load from our db
 ];
 
@@ -57,18 +77,30 @@ export default defineComponent({
     return {
       query,
       reviews,
+      page: 1,
     }
   },
+  components: { Search, Pagination },
   props: {
     course: String,
   },
   methods: {
+    changePage(e: number) {
+      this.page = e;
+    },
     goToWriteReview(course: any) {
       this.$router.push({ path: "/write", name: "write", params: { course: course } });
     },
     goToReadReviews(course: any) {
       this.$router.push({ name: "read", params: { course: course } });
-    }
-  }
+    },
+  },
+  computed: {
+    filteredReviews() {
+      return this.reviews.filter((review: any) => {
+        return (review.page === this.page);
+      });
+    },
+  },
 });
 </script>

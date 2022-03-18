@@ -4,7 +4,17 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 
 ## User Manual
 
-Documentation for your users on how to use the app! 
+* The user will enter the site at the landing page, where its functionality and purpose is introduced
+* There is a button on that landing page that, if clicked, will take the user to the list of courses they can review. There is also a button on the navigation bar at the top that will take the user to the course display page.
+* The dark mode button on the navigation bar (sun/moon icon) can be clicked to switch between light and dark themes for the site as a whole. This preference is saved in local storage so it persists between sessions.
+* There is a search bar for the user to search courses on this course list page. They can search by course name or course number.
+* The course display has a pagination selector underneath the list of courses to split up the courses into manageable tile displays.
+* From the course list page, for each course tile, you can click a button to write a review or click a button to read reviews for that particular course - each of these buttons will take you to a different page for that purpose.
+* The review list page will display all reviews for a course, with a pagination selector underneath to split up the reviews into manageable tile displays.
+* In order to write a review, you will be prompted to enter the name of the professor, pick a semester from a dropdown menu, and answer a series of guided questions about the course. When done, the user can click the submit button to post their review.
+* At any point, if the user wants to return to the landing page, they can click the logo to take them back there.
+* The sign-in and sign-up buttons on the navigation bar take the user to login and registration pages respectively, where the user can enter an email and password and then click the button underneath to submit their account information.
+
 
 ## API Reference
 
@@ -26,7 +36,7 @@ Generate review for a specific course.
 
 ```http
 GET /course/review/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -88,7 +98,7 @@ Obtain reviews for a given course.
 
 ```http
 GET /course/review/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -174,7 +184,7 @@ semester and year.
 
 ```http
 GET /course/review/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -260,7 +270,7 @@ JHED ID and email to sign up or login.
 
 ```http
 GET /user/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -319,7 +329,7 @@ Content-Type: text/javascript
 
 ```http
 GET /user/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 

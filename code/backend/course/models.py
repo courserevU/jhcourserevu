@@ -113,19 +113,21 @@ class Review(models.Model):
         course (:obj:`ForeignKey`): the course associated with the review (e.g. Data Structures)
         time_updated (:obj:`DateTimeField`): the last time user updated their review
     """
+
     # anon_user (:obj:`ForeignKey`): user associated with review (information not stored)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     comments = models.CharField(max_length=350, default="")
-    work = models.CharField(max_length=350, default="")
-    workload = models.CharField(max_length=350, default="")
-    assignment_style = models.CharField(max_length=350, default="")
-    exam_style = models.CharField(max_length=350, default="")
-    outside_time = models.CharField(max_length=350, default="")
-    teaching_style = models.CharField(max_length=350, default="")
-    teaching_effectiveness = models.CharField(max_length=350, default="")
-    prof_availability = models.CharField(max_length=350, default="")
-    grading_style = models.CharField(max_length=350, default="")
-    time_updated = models.DateTimeField(auto_now_add=True)
+    #work = models.CharField(max_length=350, default="")
+    #workload = models.CharField(max_length=350, default="")
+    #assignment_style = models.CharField(max_length=350, default="")
+    #exam_style = models.CharField(max_length=350, default="")
+    #outside_time = models.CharField(max_length=350, default="")
+    #teaching_style = models.CharField(max_length=350, default="")
+    #teaching_effectiveness = models.CharField(max_length=350, default="")
+    #prof_availability = models.CharField(max_length=350, default="")
+    #grading_style = models.CharField(max_length=350, default="")
+    #time_updated = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now_add=True, auto_now=False, blank=True)
 
     # def author(self):
     # anonymize
@@ -136,8 +138,10 @@ class Comment(models.Model):
     """
     Represents all comments from a single associated review
     Attributes:
-        comment (:obj:`ForeignKey`): all comments from single review
+        review (:obj:`ForeignKey`): associated review
+        comment (:obj:`TextField`): single comment in review
     """
 
-    review = models.ForeignKey(Review, on_delete=models.deletion.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    comment = models.TextField(default="", null=True)
 

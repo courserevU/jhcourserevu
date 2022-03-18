@@ -1,9 +1,25 @@
 name: Deploy the Backend
 
 on:
+  pull_request:
+    branches:
+      - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+
   push:
     branches:
       - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
 
     paths:
       - "code/backend/**"
@@ -43,7 +59,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "jhcourserevu" #Must be unique in Heroku
+          heroku_app_name: "jhcourserevu-api-test" #Must be unique in Heroku
           heroku_email: "jhcourserevu@gmail.com"
           appdir: "code/backend"
           env:

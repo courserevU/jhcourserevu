@@ -66,10 +66,11 @@ class ReviewListApiView(APIView):
         data = {
             "name": request.data.get("name"),
             "comments": request.data.get("comments"),
-            "course_num": request.data.get("course_num"),
+            "course_id": request.data.get("course_id"),
+            "course_section_id": request.data.get("course_section_id"),
         }
 
-        serializer = CourseSerializer(data=data)
+        serializer = ReviewSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -110,16 +110,24 @@ class Review(models.Model):
     Represents a single course review's content (e.g. "Great course!")
     associated with a single course (e.g. Data Structures).
     Attributes:
-        anon_user (:obj:`ForeignKey`): user associated with review (information not stored)
-        content (:obj:`CharField`): the written review by a user (e.g. "Great course!")
         course (:obj:`ForeignKey`): the course associated with the review (e.g. Data Structures)
-        time_update (:obj:`DateTimeField`): the last time user updated their review
+        time_updated (:obj:`DateTimeField`): the last time user updated their review
     """
-
+    # anon_user (:obj:`ForeignKey`): user associated with review (information not stored)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    comments = models.CharField(max_length=350, default="")
     time_updated = models.DateTimeField(auto_now_add=True)
 
     # def author(self):
     # anonymize
     #    return Student.objects.get(user=self.user).name
+
+
+class Comment(models.Model):
+    """
+    Represents all comments from a single associated review
+    Attributes:
+        comment (:obj:`ForeignKey`): all comments from single review
+    """
+
+    review = models.ForeignKey(Review, on_delete=models.deletion.CASCADE)
+

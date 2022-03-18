@@ -9,7 +9,7 @@
           aria-label="Search"
           aria-describedby="button-addon2"
           v-model="query"
-          @change="$emit('update-filter', query)"
+          @input="$emit('update-filter', query)"
         />
         <span
           class="input-group-text flex items-center px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-200 text-center whitespace-nowrap rounded"

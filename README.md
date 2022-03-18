@@ -23,12 +23,10 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 ## Documentation
 
 - [Project Document](https://docs.google.com/document/d/1ERXfE-sJ2X_Asr5cXk-hHA5Ayl_FxULpkI7nzGDUnOM)
-- [User Manual](link/to/GitHubPage)
-- [API Documentation](link/to/GitHubPage/api)
+- [User Manual](https://cs421sp22-homework.github.io/project-team-08-random/)
+- [API Documentation](https://cs421sp22-homework.github.io/project-team-08-random/)
 
 ## Installing / Getting started
-
-A quick introduction of the minimal setup you need to get the app up & running on a local computer. For example, your advisor might use the instruction here to run the application locally.
 
 ### Backend (Django)
 
@@ -59,7 +57,6 @@ npm run dev
 ```
 
 ## Developing
-<!-- Detailed and step-by-step documentation for setting up local development. For example, a new team member will use these instructions to start developing the project further. -->
 
 Begin with the same commands as the previous section for frontend and backend, respectively
 ### Backend
@@ -76,5 +73,3 @@ You should include what is needed (e.g. all of the configurations) to set up the
 Additionally, describe and show how to run the tests, explain your code style and show how to check it.
 
 If your project needs some additional steps for the developer to build the project after some code changes, state them here. Moreover, give instructions on how to build and release a new version. In case there's some step you have to take that publishes this project to a server, it must be stated here. -->
-
-Will add Django API documentation via SwaggerUI and/or ReDoc.

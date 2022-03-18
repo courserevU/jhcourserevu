@@ -1,5 +1,6 @@
 from django.test import TestCase
 from course.models import Course
+from course.models import Review
 
 # Create your tests here.
 class CourseModelTests(TestCase):
@@ -61,4 +62,57 @@ class CourseModelTests(TestCase):
     def test_course_inst(self):
         self.assertEqual(self.instructors, "Ali Madooei")
 
+class ReviewModelTests(TestCase):
+
+    def setup(self):
+        Review.objects.create(
+            course='OOSE',
+            comments='This class is great.',
+            work='one group project',
+            workload='8 hrs/week',
+            assignment_style='coding, documentation',
+            exam_style='only one quiz',
+            outside_time='couple hours a week',
+            teaching_style='learn through project',
+            teaching_effectiveness='very effective',
+            prof_availability='accessible via slack/class',
+            grading_style='group grade',
+            time_updated='Friday, March 18, 2022 4:24:50 PM'
+        )
+
+    def test_review_course(self):
+        self.assertEqual(self.course, 'OOSE')
+
+    def test_review_comments(self):
+        self.assertEqual(self.comments, 'This class is great.')
+
+    def test_review_work(self):
+        self.assertEqual(self.work, 'one group project')
+
+    def test_review_workload(self):
+        self.assertEqual(self.workload, '8 hrs/week')
+
+    def test_review_assignment_style(self):
+        self.assertEqual(self.assignment_style, 'coding, documentation')
+
+    def test_review_exam_style(self):
+        self.assertEqual(self.exam_style, 'only one quiz')
+
+    def test_review_outside_time(self):
+        self.assertEqual(self.outside_time, 'couple hours a week')
+
+    def test_review_teaching_style(self):
+        self.assertEqual(self.teaching_style, 'learn through project')
+
+    def test_review_teaching_effectiveness(self):
+        self.assertEqual(self.teaching_effectiveness, 'very effective')
+
+    def test_review_prof_availability(self):
+        self.assertEqual(self.prof_availability, 'accessible via slack/class')
+
+    def test_review_grading_style(self):
+        self.assertEqual(self.grading_style, 'group grade')
+
+    def test_review_time_updated(self):
+        self.assertEqual(self.time_updated, 'Friday, March 18, 2022 4:24:50 PM')
 

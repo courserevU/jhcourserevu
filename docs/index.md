@@ -36,7 +36,7 @@ Generate review for a specific course.
 
 ```http
 GET /course/review/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -98,7 +98,7 @@ Obtain reviews for a given course.
 
 ```http
 GET /course/review/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -184,7 +184,7 @@ semester and year.
 
 ```http
 GET /course/review/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -270,7 +270,7 @@ JHED ID and email to sign up or login.
 
 ```http
 GET /user/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 
@@ -329,7 +329,7 @@ Content-Type: text/javascript
 
 ```http
 GET /user/api/123 HTTP/1.1
-Host: https://jhcourserevu.herokuapp.com
+Host: https://jhcourserevu-api.herokuapp.com
 Accept: application/json, text/javascript
 ```
 

@@ -1,12 +1,12 @@
 alabaster==0.7.12
 appdirs==1.4.4
 asgiref==3.5.0
-attrs @ file:///opt/conda/conda-bld/attrs_1642510447205/work
+attrs==21.4.0
 Babel==2.9.1
 black==19.10b0
 certifi==2020.6.20
 charset-normalizer==2.0.12
-click @ file:///opt/concourse/worker/volumes/live/2d66025a-4d79-47c4-43be-6220928b6c82/volume/click_1646056610594/work
+click==8.0.4
 colorama==0.4.4
 dj-database-url==0.5.0
 Django==4.0.2
@@ -29,7 +29,8 @@ pydash==5.1.0
 Pygments==2.11.2
 pyparsing==3.0.7
 pytz==2021.3
-regex @ file:///Users/builder/ci_310/regex_1642537000927/work
+pyqt5==5.13
+regex==2022.3.15
 requests==2.27.1
 six==1.16.0
 snowballstemmer==2.2.0
@@ -45,10 +46,9 @@ sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 sqlparse==0.4.2
-toml @ file:///tmp/build/80754af9/toml_1616166611790/work
+toml==0.10.2
 tornado==6.1
-typed-ast @ file:///Users/builder/ci_310/typed-ast_1642538648001/work
-typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1631814937681/work
+typed-ast==1.5.2
 unify==0.5
 untokenize==0.1.1
 urllib3==1.26.8

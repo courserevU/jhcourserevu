@@ -87,9 +87,9 @@ WSGI_APPLICATION = "jhcourserevu.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("POSTGRES_NAME"),
-        "USER": os.environ.get("POSTGRES_USER"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": "127.0.0.1",
         "PORT": 5432,
     }
@@ -131,10 +131,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# for heroku setup
-django_heroku.settings(locals())
-
 try:
     from local_settings import *
 except ImportError:
     pass
+
+# for heroku setup
+django_heroku.settings(locals())

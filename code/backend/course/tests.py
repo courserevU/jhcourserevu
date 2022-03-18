@@ -76,7 +76,11 @@ class ReviewModelTests(TestCase):
     grading_style = models.CharField(max_length=350, default="")
     time_updated = models.DateTimeField(auto_now_add=True)"""
     def setup(self):
-        pass
+        Review.objects.create(
+            course='OOSE',
+            comments='This class is great.',
+            time_updated='Friday, March 18, 2022 4:24:50 PM'
+        )
     def test_review_course(self):
         pass
     def test_review_comments(self):

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-screen">
     <NavBar />
-    <CourseDisplay />
+    <CourseDisplay class="flex-grow" />
     <Footer />
   </div>
 </template>

@@ -45,4 +45,7 @@ jobs:
           heroku_app_name: "jhcourserevu" #Must be unique in Heroku
           heroku_email: "jhcourserevu@gmail.com"
           appdir: "code/backend"
+          env:
+            SECRET_KEY: ${{secrets.SECRET_KEY}}
           procfile: "web: python manage.py runserver 0.0.0.0:$PORT"
+

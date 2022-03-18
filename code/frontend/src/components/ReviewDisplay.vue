@@ -25,12 +25,15 @@
               <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 {{ review.review }}
               </p>
-              <div class="mt-4 relative float-right">
+              <!-- Below buttons only appear if user is moderator (not implemented) -->
+              <div class="mt-4 relative float-right" v-if="mod">
                 <button class="mr-3">
+                  <!-- Send warning message to user who wrote given review -->
                   <AnnotationIcon
                     class="h-5 w-5 text-black dark:text-gray-200"
                   />
                 </button>
+                <!-- Delete given review -->
                 <button class="">
                   <XIcon class="h-5 w-5 text-red-600" />
                 </button>
@@ -75,6 +78,7 @@ export default defineComponent({
     return {
       query,
       reviews,
+      mod: false, // true if current user is moderator - will come from API
     };
   },
   props: {

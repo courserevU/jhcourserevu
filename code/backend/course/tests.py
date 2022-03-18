@@ -82,9 +82,9 @@ class ReviewModelTests(TestCase):
             time_updated='Friday, March 18, 2022 4:24:50 PM'
         )
     def test_review_course(self):
-        pass
+        self.assertEqual(self.course, 'OOSE')
     def test_review_comments(self):
-        pass
+        self.assertEqual(self.comments, 'This class is great.')
     def test_review_time_updated(self):
-        pass
+        self.assertEqual(self.time_updated, 'Friday, March 18, 2022 4:24:50 PM')
 

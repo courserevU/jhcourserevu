@@ -115,6 +115,15 @@ class Review(models.Model):
     """
     # anon_user (:obj:`ForeignKey`): user associated with review (information not stored)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    work = models.CharField(max_length=350, default="")
+    workload = models.CharField(max_length=350, default="")
+    assignment_style = models.CharField(max_length=350, default="")
+    exam_style = models.CharField(max_length=350, default="")
+    outside_time = models.CharField(max_length=350, default="")
+    teaching_style = models.CharField(max_length=350, default="")
+    teaching_effectiveness = models.CharField(max_length=350, default="")
+    prof_availability = models.CharField(max_length=350, default="")
+    grading_style = models.CharField(max_length=350, default="")
     comments = models.CharField(max_length=350, default="")
     time_updated = models.DateTimeField(auto_now_add=True)
 

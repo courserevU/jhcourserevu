@@ -32,7 +32,6 @@ class CourseListApiView(APIView):
             "corequisites": request.data.get("corequisites"),
             "school": request.data.get("school"),
             "campus": request.data.get("campus"),
-            "instructors": request.data.get("instructors"),
             "is_writing_intensive": request.data.get("is_writing_intensive"),
             "meeting_section": request.data.get("meeting_section"),
             "size": request.data.get("size"),

@@ -37,7 +37,6 @@ class Course(models.Model):
         corequisites (:obj:`TextField`): required course(s) to complete concurrently
         school (:obj:`CharField`): school associated with course (e.g. Whiting School of Engineering)
         campus (:obj:`CharField`, optional): campus associated with course (e.g. Homewood)
-        instructors (:obj:`CharField`): full name of instructors
         is_writing_intensive (:obj:`CharField`): returned as yes/no string
 
         meeting_section (:obj:`CharField`): the name of the section
@@ -45,7 +44,7 @@ class Course(models.Model):
         size (:obj:`IntegerField`): the capacity of the course (the enrollment cap)
         enrollment (:obj:`IntegerField`): the number of students registered so far
         waitlist (:obj:`IntegerField`): the number of students waitlisted so far 
-        instructors (:obj:`CharField`): comma seperated list of instructors
+        instructors (:obj:`CharField`): comma separated list of instructors
         semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section
         is_full (:obj:`BooleanField`): whether the course is/was full
     """
@@ -61,7 +60,7 @@ class Course(models.Model):
     corequisites = models.TextField(default="", null=True)
     school = models.CharField(db_index=True, max_length=100)
     campus = models.CharField(max_length=300, default="")
-    instructors = models.CharField(max_length=500, default="TBA")
+    # instructors = models.CharField(max_length=500, default="TBA")
     is_writing_intensive = models.CharField(max_length=10, default="")
 
     # section details
@@ -94,6 +93,7 @@ class Course(models.Model):
     # info (:obj:`TextField`, optional): additional information about course
     # exclusions (:obj:`TextField`, optional): any reasons student may be unable to register for this course
     # waitlist_size (:obj:`IntegerField`): the max size of the waitlist
+    # instructors (:obj:`CharField`): full name of instructors
     # section_type (:obj:`CharField`):
     #     the section type, example 'L' is lecture, 'T' is tutorial, `P` is practical
     # notes = models.TextField(default="", null=True)

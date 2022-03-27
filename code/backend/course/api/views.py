@@ -24,11 +24,24 @@ class CourseListApiView(APIView):
         """
         data = {
             "name": request.data.get("name"),
-            "course_num": request.data.get("course_num"),
             "description": request.data.get("description"),
-            "instructor": request.data.get("instructor"),
+            "course_num": request.data.get("course_num"),
+            "num_credits": request.data.get("num_credits"),
+            "department": request.data.get("department"),
+            "level": request.data.get("level"),
+            "prerequisites": request.data.get("prerequisites"),
+            "corequisites": request.data.get("corequisites"),
+            "school": request.data.get("school"),
+            "campus": request.data.get("campus"),
+            "instructors": request.data.get("instructors"),
+            "is_writing_intensive": request.data.get("is_writing_intensive"),
+            "meeting_section": request.data.get("meeting_section"),
+            "size": request.data.get("size"),
+            "enrollment": request.data.get("enrollment"),
+            "waitlist": request.data.get("waitlist"),
+            "instructors": request.data.get("instructors"),
             "semester": request.data.get("semester"),
-            "year": request.data.get("year"),
+            "is_full": request.data.get("is_full"),
         }
 
         serializer = CourseSerializer(data=data)

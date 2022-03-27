@@ -10,5 +10,9 @@ WORKDIR /code
 # Copy project
 COPY . /code/
 
+# Install postgres CLI, helpful if you need to access psql db directly
+RUN apt-get update
+RUN apt-get -y install postgresql
+
 # Install dependencies
 RUN pip install -r requirements.txt

@@ -1,14 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
 # from rest_framework import permissions
 from course.models import Course, Review
 from .serializers import CourseSerializer, ReviewSerializer
 
 
 class CourseListApiView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
-
     def get(self, request, *args, **kwargs):
         """
         List all courses
@@ -51,9 +50,8 @@ class CourseListApiView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ReviewListApiView(APIView):
-    # permission_classes = [permissions.IsAuthenticated]
 
+class ReviewListApiView(APIView):
     def get(self, request, *args, **kwargs):
         """
         List of all reviews

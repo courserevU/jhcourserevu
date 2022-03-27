@@ -1,14 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import permissions
+
+# from rest_framework import permissions
 from user.models import User
 from .serializers import UserSerializer
 
 
 class UserListApiView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
     def get(self, request, *args, **kwargs):
         """
         Login for returning user

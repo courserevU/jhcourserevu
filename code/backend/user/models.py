@@ -17,7 +17,7 @@ class User(models.Model):
     """
 
     user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
-    courses = models.ForeignKey(Course, on_delete=models.deletion.CASCADE)
+    courses = models.ForeignKey(Course, on_delete=models.deletion.CASCADE,default=None)
     jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
     jhed_email = models.EmailField(("email address"), unique=True)
     class_year = models.CharField(max_length=50, blank=True, null=True, unique=True)

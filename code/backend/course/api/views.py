@@ -12,8 +12,8 @@ class CourseListApiView(APIView):
         """
         List all courses
         """
-        # TODO: this is incorrect, should get by exact matching
-        courses = Course.objects.filter(course_num=request.user.id)
+        # TODO: get section_type from request?
+        courses = Course.objects.filter(course_num=request.data.course_num)
         serializer = CourseSerializer(courses, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -55,8 +55,8 @@ class ReviewListApiView(APIView):
         """
         List of all reviews
         """
-        # TODO: this is incorrect, should get by exact matching
-        reviews = Review.objects.filter(course_num=request.course.id)
+        # TODO: get by id or by course_num???
+        reviews = Review.objects.filter(review_id=request.data.review_id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -64,8 +64,8 @@ class ReviewListApiView(APIView):
         """
         List of all reviews for given course
         """
-        # TODO: should get by exact matching
-        reviews = Review.objects.filter(course_num=request.user.id)
+        # TODO: get by course_id
+        reviews = Review.objects.filter(course_id=request.data.course_id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -74,7 +74,6 @@ class ReviewListApiView(APIView):
         Create review associated with given course
         """
         data = {
-            "name": request.data.get("name"),
             "comments": request.data.get("comments"),
             "course_id": request.data.get("course_id"),
             "course_section_id": request.data.get("course_section_id"),

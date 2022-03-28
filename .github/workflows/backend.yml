@@ -62,9 +62,9 @@ jobs:
           heroku_app_name: "jhcourserevu-api-test" #Must be unique in Heroku
           heroku_email: "jhcourserevu@gmail.com"
           appdir: "code/backend"
-          # TODO: remove unless needed later
-          # env:
-          #   SECRET_KEY: ${{secrets.SECRET_KEY}}
           procfile: |
-            web: python manage.py runserver 0.0.0.0:$PORT
-            release: python manage.py migrate
+            web: python manage.py migrate | python manage.py runserver 0.0.0.0:$PORT
+          # TODO: add back, if above fails
+          # procfile: |
+          #   web: python manage.py runserver 0.0.0.0:$PORT
+          #   release: python manage.py migrate

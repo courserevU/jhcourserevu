@@ -13,7 +13,7 @@ class CourseListApiView(APIView):
         List all courses
         """
         # TODO: get section_type from request?
-        courses = Course.objects.filter(course_num=request.data.course_num)
+        courses = Course.objects.filter(course_num=request.user.id)
         serializer = CourseSerializer(courses, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -56,7 +56,7 @@ class ReviewListApiView(APIView):
         List of all reviews
         """
         # TODO: get by id or by course_num???
-        reviews = Review.objects.filter(review_id=request.data.review_id)
+        reviews = Review.objects.filter(review_id=request.user.id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -65,7 +65,7 @@ class ReviewListApiView(APIView):
         List of all reviews for given course
         """
         # TODO: get by course_id
-        reviews = Review.objects.filter(course_id=request.data.course_id)
+        reviews = Review.objects.filter(course_id=request.user.id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

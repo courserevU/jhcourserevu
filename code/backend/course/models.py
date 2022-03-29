@@ -1,4 +1,3 @@
-# from user.models import User
 from django.db import models
 
 
@@ -38,13 +37,19 @@ class Course(models.Model):
         corequisites (:obj:`TextField`): required course(s) to complete concurrently
         school (:obj:`CharField`): school associated with course (e.g. Whiting School of Engineering)
         campus (:obj:`CharField`, optional): campus associated with course (e.g. Homewood)
-        notes (:obj:`TextField`, optional): notes regarding registration
-        info (:obj:`TextField`, optional): additional information about course
-        exclusions (:obj:`TextField`, optional): any reasons student may be unable to register for this course
-        instructors (:obj:`CharField`): full name of instructors
         is_writing_intensive (:obj:`CharField`): returned as yes/no string
+
+        meeting_section (:obj:`CharField`): the name of the section
+            (e.g. 001, L01, LAB2)
+        size (:obj:`IntegerField`): the capacity of the course (the enrollment cap)
+        enrollment (:obj:`IntegerField`): the number of students registered so far
+        waitlist (:obj:`IntegerField`): the number of students waitlisted so far 
+        instructors (:obj:`CharField`): comma separated list of instructors
+        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section
+        is_full (:obj:`BooleanField`): whether the course is/was full
     """
 
+    # course details
     name = models.CharField(max_length=255)
     description = models.TextField(default="")
     course_num = models.CharField(max_length=20)
@@ -55,54 +60,51 @@ class Course(models.Model):
     corequisites = models.TextField(default="", null=True)
     school = models.CharField(db_index=True, max_length=100)
     campus = models.CharField(max_length=300, default="")
-    notes = models.TextField(default="", null=True)
-    info = models.TextField(default="", null=True)
-    exclusions = models.TextField(default="")
-    instructors = models.CharField(max_length=500, default="TBA")
+    # instructors = models.CharField(max_length=500, default="TBA")
     is_writing_intensive = models.CharField(max_length=10, default="")
 
-    # def view_course():
-    #     return "%s, %s" % (Self.name, Self.number)
-    # return course description summary
-
-
-class Section(models.Model):
-    """
-    TODO: MAYBE scrap, need to look into SIS Web API and see if all data for Section can be found in courses.
-
-    A subset of course. Courses could have one or greater sections and is
-    guaranteed to have at least one.
-
-    Attributes:
-        course (:obj:`Course`): The course this section belongs to
-        course_section_id (:obj:`IntegerField`):
-        meeting_section (:obj:`CharField`): the name of the section
-            (e.g. 001, L01, LAB2)
-        size (:obj:`IntegerField`): the capacity of the course (the enrollment cap)
-        enrollment (:obj:`IntegerField`): the number of students registered so far
-        waitlist (:obj:`IntegerField`): the number of students waitlisted so far
-        waitlist_size (:obj:`IntegerField`): the max size of the waitlist
-        section_type (:obj:`CharField`):
-            the section type, example 'L' is lecture, 'T' is tutorial, `P` is practical
-        instructors (:obj:`CharField`): comma seperated list of instructors
-        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section
-        was_full (:obj:`BooleanField`): whether the course was full
-    """
-
-    course = models.ForeignKey(Course, on_delete=models.deletion.CASCADE)
-    course_section_id = models.IntegerField(default=0)
+    # section details
     meeting_section = models.CharField(max_length=50)
     size = models.IntegerField(default=-1)
     enrollment = models.IntegerField(default=-1)
     waitlist = models.IntegerField(default=-1)
-    waitlist_size = models.IntegerField(default=-1)
-    section_type = models.CharField(max_length=50, default="L")
     instructors = models.CharField(max_length=500, default="TBD")
     semester = models.ForeignKey(Semester, on_delete=models.deletion.CASCADE)
-    was_full = models.BooleanField(default=False)
+    is_full = models.BooleanField(default=False)
 
     def is_full(self):
         return self.enrollment >= 0 and self.size >= 0 and self.enrollment >= self.size
+
+    def __str__(self):
+        return "Course: {0}: {0}; Section: {0}; Semester: {0}".format(
+            self.course_num, self.name, self.meeting_section, self.semester
+        )
+
+    def __unicode__(self):
+        return "Course: %s: %s; Section: %s; Semester: %s" % (
+            self.course_num,
+            self.name,
+            self.meeting_section,
+            self.semester,
+        )
+
+    # TODO: REMOVED FOR NOW
+    # notes (:obj:`TextField`, optional): notes regarding registration
+    # info (:obj:`TextField`, optional): additional information about course
+    # exclusions (:obj:`TextField`, optional): any reasons student may be unable to register for this course
+    # waitlist_size (:obj:`IntegerField`): the max size of the waitlist
+    # instructors (:obj:`CharField`): full name of instructors
+    # section_type (:obj:`CharField`):
+    #     the section type, example 'L' is lecture, 'T' is tutorial, `P` is practical
+    # notes = models.TextField(default="", null=True)
+    # info = models.TextField(default="", null=True)
+    # exclusions = models.TextField(default="")
+    # waitlist = models.IntegerField(default=-1)
+    # waitlist_size = models.IntegerField(default=-1)
+    # section_type = models.CharField(max_length=50, default="L")
+    # def view_course():
+    #     return "%s, %s" % (self.name, self.number)
+    # return course description summary
 
 
 class Review(models.Model):
@@ -110,16 +112,37 @@ class Review(models.Model):
     Represents a single course review's content (e.g. "Great course!")
     associated with a single course (e.g. Data Structures).
     Attributes:
-        anon_user (:obj:`ForeignKey`): user associated with review (information not stored)
-        content (:obj:`CharField`): the written review by a user (e.g. "Great course!")
         course (:obj:`ForeignKey`): the course associated with the review (e.g. Data Structures)
-        time_update (:obj:`DateTimeField`): the last time user updated their review
+        time_updated (:obj:`DateTimeField`): the last time user updated their review
     """
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    comments = models.CharField(max_length=350, default="")
-    time_updated = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now_add=True, auto_now=False, blank=True)
 
+    # TODO: REMOVED FOR NOW
+    # comments = models.CharField(max_length=350, default="")
+    # work = models.CharField(max_length=350, default="")
+    # workload = models.CharField(max_length=350, default="")
+    # assignment_style = models.CharField(max_length=350, default="")
+    # exam_style = models.CharField(max_length=350, default="")
+    # outside_time = models.CharField(max_length=350, default="")
+    # teaching_style = models.CharField(max_length=350, default="")
+    # teaching_effectiveness = models.CharField(max_length=350, default="")
+    # prof_availability = models.CharField(max_length=350, default="")
+    # grading_style = models.CharField(max_length=350, default="")
+    # time_updated = models.DateTimeField(auto_now_add=True)
     # def author(self):
     # anonymize
     #    return Student.objects.get(user=self.user).name
+
+
+class Comment(models.Model):
+    """
+    Represents all comments from a single associated review
+    Attributes:
+        review (:obj:`ForeignKey`): associated review
+        comment (:obj:`TextField`): single comment in review
+    """
+
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    comment = models.TextField(default="", null=True)

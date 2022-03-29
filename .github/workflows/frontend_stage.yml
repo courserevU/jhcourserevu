@@ -1,17 +1,29 @@
-name: Deploy Frontend - Production
+name: Deploy Frontend - Staging
 
 on:
+  pull_request:
+    branches:
+      - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
+
   push:
     branches:
       - main
+      - iteration-1
+      - iteration-2
+      - iteration-3
+      - iteration-4
+      - iteration-5
+      - iteration-6
 
     paths:
       - "code/frontend/**"
       - ".github/workflows/frontend.yml"
-    
-  pull_request:
-    branches:
-      - main
 
 defaults:
   run:
@@ -33,12 +45,12 @@ jobs:
         uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: './code/frontend/dist'
-          production-branch: main
+          production-branch: master
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: false
           enable-commit-comment: true
           overwrites-pull-request-comment: true
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_STAGE_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         timeout-minutes: 1

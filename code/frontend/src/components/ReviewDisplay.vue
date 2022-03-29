@@ -55,6 +55,8 @@ import Search from './Search.vue';
 import Pagination from './Pagination.vue';
 import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
 
+
+// Should pull reviews for a specific course from the DB with a GET request
 let reviews = [
   {
     id: 1,

@@ -136,6 +136,7 @@ export default defineComponent({
     },
     changePage(e: number) {
       this.page = e;
+      // possible axios GET request here with different page query?
     },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { course: course.name } });
@@ -158,5 +159,14 @@ export default defineComponent({
       });
     },
   },
+  mounted() {
+    // Retrieves reviews for given course to be displayed by the component
+    /*axios
+      .get(`https://jhcourserevu-api.herokuapp.com/course/api`) //with queries of some sort, like page 1
+      .then((response) => {
+        this.courses = response.data;
+      });
+    */
+  }
 });
 </script>

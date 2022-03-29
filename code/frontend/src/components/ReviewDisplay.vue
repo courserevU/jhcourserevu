@@ -50,13 +50,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Search from './Search.vue';
-import Pagination from './Pagination.vue';
+import { defineComponent } from "vue";
+import Search from "./Search.vue";
+import Pagination from "./Pagination.vue";
 import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
 
+import axios from "axios";
 
-// Should pull reviews for a specific course from the DB with a GET request
+// Pull reviews for a specific course from the DB with a GET request
+
 let reviews = [
   {
     id: 1,
@@ -126,9 +128,18 @@ export default defineComponent({
   computed: {
     filteredReviews() {
       return this.reviews.filter((review: any) => {
-        return (review.page === this.page);
+        return review.page === this.page;
       });
     },
+  },
+  mounted() {
+    // Retrieves reviews for given course to be displayed by the component
+    /*axios
+      .get(`https://jhcourserevu-api.herokuapp.com/course/review/api/${course.id}}`)
+      .then((response) => {
+        this.reviews = response.data;
+      });
+    */
   },
 });
 </script>

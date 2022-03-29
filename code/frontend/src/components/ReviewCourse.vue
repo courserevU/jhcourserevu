@@ -123,6 +123,7 @@
     </div>
 
     <!-- Submit Button -->
+    <!-- When clicked, triggers POST request to send a review to the DB -->
     <div class="flex space-x-2 justify-center w-full">
         <div class="p-4 ...">
             <button

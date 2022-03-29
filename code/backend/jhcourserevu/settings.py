@@ -90,8 +90,8 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": "127.0.0.1",
-        "PORT": 5432,
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": "5432",
     }
 }
 
@@ -131,10 +131,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# for heroku setup
+django_heroku.settings(locals())
+
 try:
     from local_settings import *
 except ImportError:
     pass
-
-# for heroku setup
-django_heroku.settings(locals())

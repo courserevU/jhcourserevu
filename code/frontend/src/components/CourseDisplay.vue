@@ -64,6 +64,8 @@ import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
 
+
+// Should have GET request to pull course list from DB
 let courses = [
   {
     id: 1,

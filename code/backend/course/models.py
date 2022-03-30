@@ -66,11 +66,11 @@ class Course(models.Model):
     # section details
     meeting_section = models.CharField(max_length=50)
     size = models.IntegerField(default=-1)
-    enrollment = models.IntegerField(default=-1)
-    waitlist = models.IntegerField(default=-1)
+    # enrollment = models.IntegerField(default=-1)
+    # waitlist = models.IntegerField(default=-1)
     instructors = models.CharField(max_length=500, default="TBD")
     semester = models.ForeignKey(Semester, on_delete=models.deletion.CASCADE)
-    is_full = models.BooleanField(default=False)
+    # is_full = models.BooleanField(default=False)
 
     def is_full(self):
         return self.enrollment >= 0 and self.size >= 0 and self.enrollment >= self.size

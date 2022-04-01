@@ -6,14 +6,22 @@ from rest_framework import status
 from course.models import Course, Review
 from .serializers import CourseSerializer, ReviewSerializer
 
+from django.http import HttpResponse
+import json
+from django.forms import model_to_dict
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
+
 
 class CourseListApiView(APIView):
     def get(self, request, *args, **kwargs):
         """
-        List all courses
+        Get course by course number
         """
         # TODO: get section_type from request?
-        courses = Course.objects.filter(course_num=request.user.id)
+        courses_per_page = 50
+        courses = Course.objects.filter(course_num=request.course_num)
         serializer = CourseSerializer(courses, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

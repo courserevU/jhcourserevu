@@ -77,7 +77,7 @@ export default defineComponent({
       semesters: [
         {
             id: 1,
-            name: 'Please Choose a option',
+            name: 'Please Choose an Option',
         },
         {
             id: 2,

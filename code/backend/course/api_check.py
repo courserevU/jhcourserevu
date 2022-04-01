@@ -78,7 +78,7 @@ for school in schools:
         c['name'] = course['Title']
         c['description'] = course['SectionDetails'] # ?
         c['course_num'] = course['OfferingName']
-        c['num_credits'] = course['Credits'] # not necessairly a number
+        c['num_credits'] = str(course['Credits']) # not necessairly a number
         c['department'] = course['Department']
         c['level'] = course['Level']
         c['prerequisites'] = course['SectionRegRestrictions'] # string list
@@ -89,7 +89,7 @@ for school in schools:
         c['meeting_section'] = course['SectionName']
         # c['size'] = 
         c['instructors'] = course['InstructorsFullName']
-        c['semester'] = course['Term'].split(' ')[0] # grab first word of term
+        c['semester'] = course['Term'].split(' ')[0] + course['Term'].split(' ')[1] # grab first word of term
 
         courses.append(c)
         test_model = Course.create(c)

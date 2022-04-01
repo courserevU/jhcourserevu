@@ -4,7 +4,12 @@ from concurrent.futures import process
 from urllib import response
 from urllib.parse import scheme_chars
 from venv import create
-from ..course.models import Course
+
+from course.models import Course
+
+# from django.db import models
+# from api.serializers import CourseSerializer
+
 
 import requests
 import json
@@ -15,7 +20,7 @@ pp = pprint.PrettyPrinter(indent=4)
 # API_URL = "https://sis.jhu.edu/api/classes/codes/schools"
 API_URL = "https://sis.jhu.edu/api/classes"
 
-response = requests.get(API_URL, params={"key": 'rZW4VwAUE1WTYZfSZyldykJLOXUC59fr'})
+response = requests.get(API_URL, params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"})
 
 # Convert json to dict
 data = json.loads(response.text)
@@ -26,17 +31,25 @@ data = json.dumps(data)
 
 ### get all possible terms ###
 terms = []
-terms_request = json.loads(requests.get(API_URL + '/codes/terms', params={"key": 'rZW4VwAUE1WTYZfSZyldykJLOXUC59fr'}).text)
+terms_request = json.loads(
+    requests.get(
+        API_URL + "/codes/terms", params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"}
+    ).text
+)
 for term in terms_request:
-    terms.append(term['Name'])
+    terms.append(term["Name"])
 
 # print(terms)
 
 ### get all possible schools ###
 schools = []
-schools_request = json.loads(requests.get(API_URL + '/codes/schools', params={"key": 'rZW4VwAUE1WTYZfSZyldykJLOXUC59fr'}).text)
+schools_request = json.loads(
+    requests.get(
+        API_URL + "/codes/schools", params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"}
+    ).text
+)
 for school in schools_request:
-    schools.append(school['Name'])
+    schools.append(school["Name"])
 
 ### get all possible departments for school ###
 # depts_by_school = {}
@@ -62,33 +75,61 @@ for school in schools:
     # print(school, '\n')
     # print(term, '\n')
     # course_request = json.loads(requests.get(API_URL + '/' + school.replace(" ", "%20") + '/' + term.replace(" ", "%20"), params={"key": 'rZW4VwAUE1WTYZfSZyldykJLOXUC59fr'}).text)
-    course_request = json.loads(requests.get(API_URL + '/AS01052211/' + 'Spring%202022', params={"key": 'rZW4VwAUE1WTYZfSZyldykJLOXUC59fr'}).text)
+    course_request = json.loads(
+        requests.get(
+            API_URL + "/AS01052211/" + "Spring%202022",
+            params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
+        ).text
+    )
 
     courses = []
 
     for course in course_request:
         c = {}
-        if (course['SchoolName'] != school):
+        if course["SchoolName"] != school:
             courses.append(c)
             continue
-        c['name'] = course['Title']
-        c['description'] = course['SectionDetails'] # ?
-        c['course_num'] = course['OfferingName']
-        c['num_credits'] = course['Credits'] # not necessairly a number
-        c['department'] = course['Department']
-        c['level'] = course['Level']
-        c['prerequisites'] = course['SectionRegRestrictions'] # string list
-        c['corequisites'] = course['SectionCoRequisites']
-        c['school'] = course['SchoolName']
-        c['campus'] = course['Location']
-        c['is_writing_intensive'] = True if(course['IsWritingIntensive'] == 'Yes') else False
-        c['meeting_section'] = course['SectionName']
-        # c['size'] = 
-        c['instructors'] = course['InstructorsFullName']
-        c['semester'] = course['Term'].split(' ')[0] # grab first word of term
+        c["name"] = course["Title"]
+        c["description"] = course["SectionDetails"]  # ?
+        c["course_num"] = course["OfferingName"]
+        c["num_credits"] = course["Credits"]  # not necessarily a number
+        c["department"] = course["Department"]
+        c["level"] = course["Level"]
+        # TODO: add try/catch block or something to handle if finds null value
+        c["prerequisites"] = course["SectionDetails"][0]["Prerequisites"][0]["Description"]  # string list
+        c["corequisites"] = course["SectionDetails"][0]["CoRequisites"][0]["Description"]  # string list
+        c["school"] = course["SchoolName"]
+        c["campus"] = course["Location"]
+        c["is_writing_intensive"] = (
+            True if (course["IsWritingIntensive"] == "Yes") else False
+        )
+        c["meeting_section"] = course["SectionName"]
+        # c['size'] =
+        c["instructors"] = course["InstructorsFullName"]
+        c["semester"] = course["Term"].split(" ")[0]  # grab first word of term
 
         courses.append(c)
-        test_model = Course.create(c)
+        test_model = Course(
+            name=course["Title"],
+            description=course["SectionDetails"],
+            course_num=course["OfferingName"],
+            num_credits=course["Credits"],
+            department=course["Department"],
+            level=course["Level"],
+            prerequisites=course["SectionDetails"][0]["Prerequisites"][0]["Description"],
+            corequisites=course["SectionDetails"][0]["CoRequisites"][0]["Description"],
+            school=course["SchoolName"],
+            campus=course["Location"],
+            is_writing_intensive=True
+            if (course["IsWritingIntensive"] == "Yes")
+            else False,
+            meeting_section=course["SectionName"],
+            instructors=course["InstructorsFullName"],
+            semester=(
+                course["Term"].split(" ")[0] + " " + course["Term"].split(" ")[1]
+            ),
+        )
+        test_model.save()
         #     print(course)
     courses_by_school[school] = courses
 
@@ -103,21 +144,16 @@ print(test_model)
 #     # f.write(pretty_print_json)
 
 
-
 # pp.pprint(courses_by_school)
 
 
 ### testing model creation with one class ###
 
 
-
-
 ### create json from dict ###
 
 
-
 ### UPLOADING TO DJANGO: create models from json ###
-
 
 
 # json_response = response.json()

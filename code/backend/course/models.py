@@ -57,16 +57,16 @@ class Course(models.Model):
     corequisites = models.TextField(default="", null=True)
     school = models.CharField(db_index=True, max_length=100)
     campus = models.CharField(max_length=300, default="")
-    # instructors = models.CharField(max_length=500, default="TBA")
     is_writing_intensive = models.CharField(max_length=10, default="")
+    # instructors = models.CharField(max_length=500, default="TBA")
 
     # section details
     meeting_section = models.CharField(max_length=50)
     size = models.IntegerField(default=-1)
+    instructors = models.CharField(max_length=500, default="")
+    semester = models.CharField(max_length=12, default="")
     # enrollment = models.IntegerField(default=-1)
     # waitlist = models.IntegerField(default=-1)
-    instructors = models.CharField(max_length=500, default="TBD")
-    # semester = models.ForeignKey(Semester, on_delete=models.deletion.CASCADE)
     # is_full = models.BooleanField(default=False)
 
     def is_full(self):

@@ -17,6 +17,18 @@ from course.api.serializers import ReviewSerializer
 import json
 from django.forms import model_to_dict
 
+def all_courses(request):
+    courses = (Course.objects.all())
+    courses_list = []
+    for course in courses:
+        course_dict = model_to_dict(course)
+        courses_list.append(course_dict)
+    json_data = {'courses': courses_list}
+
+    #return render(request, 'all_courses.html', json_data)
+    return HttpResponse(json.dumps(json_data), content_type='application/json')
+
+
 def get_reviews_by_course(request, course):
     reviews = (Review.objects.get(course=course))
     review_list = []

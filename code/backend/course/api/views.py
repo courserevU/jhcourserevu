@@ -27,7 +27,14 @@ def all_courses(request):
 
     return render(request, 'all_courses.html', {'page_obj': page_obj})
 
-
+def get_reviews_by_course(request, course):
+    reviews = (Review.objects.get(course=course))
+    review_list = []
+    for review in reviews:
+        review_dict = model_to_dict(review)
+        review_list.append(review_dict)
+    json_data = {'reviews': review_list}
+    return HttpResponse(json.dumps(json_data), content_type='application/json')
 
 class CourseListApiView(APIView):
     def get(self, request, *args, **kwargs):

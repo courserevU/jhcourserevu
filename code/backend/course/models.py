@@ -1,23 +1,23 @@
 from django.db import models
 
 
-class Semester(models.Model):
-    """
-    Represents a semester which is composed of a name (e.g. Spring, Fall)
-    and a year (e.g. 2022).
-    Attributes:
-        name (:obj:`CharField`): the name (e.g. Spring, Fall)
-        year (:obj:`CharField`): the year (e.g. 2022, 2023)
-    """
+# class Semester(models.Model):
+#     """
+#     Represents a semester which is composed of a name (e.g. Spring, Fall)
+#     and a year (e.g. 2022).
+#     Attributes:
+#         name (:obj:`CharField`): the name (e.g. Spring, Fall)
+#         year (:obj:`CharField`): the year (e.g. 2022, 2023)
+#     """
 
-    name = models.CharField(max_length=50)
-    year = models.CharField(max_length=4)
+#     name = models.CharField(max_length=50)
+#     year = models.CharField(max_length=4)
 
-    def __unicode__(self):
-        return "{} {}".format(self.name, self.year)
+#     def __unicode__(self):
+#         return "{} {}".format(self.name, self.year)
 
-    def __str__(self):
-        return "{} {}".format(self.name, self.year)
+#     def __str__(self):
+#         return "{} {}".format(self.name, self.year)
 
 
 class Course(models.Model):
@@ -69,7 +69,7 @@ class Course(models.Model):
     # enrollment = models.IntegerField(default=-1)
     # waitlist = models.IntegerField(default=-1)
     instructors = models.CharField(max_length=500, default="TBD")
-    semester = models.ForeignKey(Semester, on_delete=models.deletion.CASCADE)
+    # semester = models.ForeignKey(Semester, on_delete=models.deletion.CASCADE)
     # is_full = models.BooleanField(default=False)
 
     def is_full(self):

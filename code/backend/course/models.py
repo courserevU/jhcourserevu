@@ -42,11 +42,8 @@ class Course(models.Model):
         meeting_section (:obj:`CharField`): the name of the section
             (e.g. 001, L01, LAB2)
         size (:obj:`IntegerField`): the capacity of the course (the enrollment cap)
-        enrollment (:obj:`IntegerField`): the number of students registered so far
-        waitlist (:obj:`IntegerField`): the number of students waitlisted so far 
         instructors (:obj:`CharField`): comma separated list of instructors
-        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section
-        is_full (:obj:`BooleanField`): whether the course is/was full
+        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section    
     """
 
     # course details
@@ -96,6 +93,9 @@ class Course(models.Model):
     # instructors (:obj:`CharField`): full name of instructors
     # section_type (:obj:`CharField`):
     #     the section type, example 'L' is lecture, 'T' is tutorial, `P` is practical
+    # enrollment (:obj:`IntegerField`): the number of students registered so far
+    # waitlist (:obj:`IntegerField`): the number of students waitlisted so far
+    # is_full (:obj:`BooleanField`): whether the course is/was full
     # notes = models.TextField(default="", null=True)
     # info = models.TextField(default="", null=True)
     # exclusions = models.TextField(default="")

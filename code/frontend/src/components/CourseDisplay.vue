@@ -14,16 +14,16 @@
       </h2>
 
       <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1"
       >
         <div
           v-for="course in filteredCourses"
           :key="course.id"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
-          <div class="mt-2 flex">
+          <div class="mt-2 px-2 flex">
             <div class="justify-left">
-              <h3 class="text-sm text-gray-700 dark:text-gray-300">
+              <h3 class="text-md font-bold text-gray-700 dark:text-gray-300">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
                   {{ course.name }}
@@ -37,16 +37,18 @@
           <div class="block inline-flex mt-4 mb-2">
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
             >
+              <PlusIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
               Write Review
             </button>
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToReadReviews(course)"
             >
+              <EyeIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
               Read Reviews
             </button>
           </div>
@@ -61,6 +63,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import {
+  EyeIcon,
+  PlusIcon
+} from "@heroicons/vue/solid";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
 
@@ -127,7 +133,7 @@ export default defineComponent({
       page: 1,
     };
   },
-  components: { Search, Pagination },
+  components: { Search, Pagination, EyeIcon, PlusIcon },
   methods: {
     updateFilter(e: any) {
       this.query = e;

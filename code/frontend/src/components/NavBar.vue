@@ -31,10 +31,11 @@
                 open
                   ? 'text-gray-900 dark:text-gray-200'
                   : 'text-gray-500 dark:text-gray-400',
-                'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200',
               ]"
+              @click="goToCourses"
             >
-              <span>Reviews</span>
+              <span>Courses</span>
             </PopoverButton>
           </Popover>
 
@@ -56,7 +57,7 @@
                 open
                   ? 'text-gray-900 dark:text-gray-200'
                   : 'text-gray-500 dark:text-gray-400',
-                'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200',
               ]"
             >
               <span>More</span>
@@ -245,6 +246,9 @@ export default defineComponent({
     },
     goToHome() {
       this.$router.push("/");
+    },
+    goToCourses() {
+      this.$router.push("/course-search")
     },
     switchTheme() {
       // Switches the theme of the entire app, all routes

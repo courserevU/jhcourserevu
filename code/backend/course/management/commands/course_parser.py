@@ -10,8 +10,9 @@ import json
 # parser.add_argument("term", type=str)
 # args = parser.parse_args()
 
+
 class Command(BaseCommand):
-    help = 'Adds a user to django'
+    help = "Adds a user to django"
 
     def add_arguments(self, parser):
         parser.add_argument("school", type=str)
@@ -37,23 +38,23 @@ class Command(BaseCommand):
             # "Whiting School of Engineering Programs for Professionals",
         ]
 
-        if options['school'] not in schools:
-            raise CommandError("Invalid school name provided: %s" % options['school'])
+        if options["school"] not in schools:
+            raise CommandError("Invalid school name provided: %s" % options["school"])
 
         # check valid term
         terms = ["Fall 2022", "Summer 2022", "Spring 2022"]
 
-        if options['term'] not in terms:
-            raise CommandError("Invalid term provided: %s" % options['term'])
+        if options["term"] not in terms:
+            raise CommandError("Invalid term provided: %s" % options["term"])
 
         # grab all courses for given school and term
         course_request = json.loads(
             requests.get(
                 API_URL
                 + "/"
-                + options['school'].replace(" ", "%20")
+                + options["school"].replace(" ", "%20")
                 + "/"
-                + options['term'].replace(" ", "%20"),
+                + options["term"].replace(" ", "%20"),
                 params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
             ).text
         )
@@ -66,7 +67,7 @@ class Command(BaseCommand):
                     + course["OfferingName"].replace(".", "")
                     + course["SectionName"]
                     + "/"
-                    + options['term'].replace(" ", "%20"),
+                    + options["term"].replace(" ", "%20"),
                     params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
                 ).text
             )[0]
@@ -94,7 +95,10 @@ class Command(BaseCommand):
                 campus=c["Location"],
                 is_writing_intensive=(c["IsWritingIntensive"] == "Yes"),
                 meeting_section=c["SectionName"],
+                size=(isinstance(c["MaxSeats"], int) if c["MaxSeats"] else 0),
                 instructors=c["InstructorsFullName"],
                 semester=(c["Term"].split(" ")[0] + " " + c["Term"].split(" ")[1]),
             )
             course_model.save()
+
+        self.stdout.write(self.style.SUCCESS("Parsing Complete"))

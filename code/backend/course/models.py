@@ -50,7 +50,7 @@ class Course(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(default="")
     course_num = models.CharField(max_length=20)
-    num_credits = models.FloatField(default=-1)
+    num_credits = models.CharField(max_length=15)
     department = models.CharField(max_length=255, default="", null=True)
     level = models.CharField(max_length=500, default="", null=True)
     prerequisites = models.TextField(default="", null=True)

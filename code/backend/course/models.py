@@ -29,7 +29,7 @@ class Course(models.Model):
         name (:obj:`CharField`): course name (e.g. Intermediate Programming)
         description (:obj:`TextField`): course description (e.g. Learn programming in C++)
         course_num (:obj:`CharField`): course code (e.g. EN.601.421)
-        num_credits (:obj:`FloatField`): number of credits hours (e.g. 3 credits)
+        num_credits (:obj:`CharField`): number of credits hours (e.g. 3 credits)
         department (:obj:`CharField`): department associated with course (e.g. EN)
         level (:obj:`CharField`): course level (e.g. 100, Upper)
         prerequisites (:obj:`TextField`): required courses to complete prior to given course

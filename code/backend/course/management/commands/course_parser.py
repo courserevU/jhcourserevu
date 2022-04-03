@@ -4,12 +4,6 @@ from django.core.management.base import BaseCommand, CommandError
 import requests
 import json
 
-# import argparse
-# parser = argparse.ArgumentParser()
-# parser.add_argument("school", type=str)
-# parser.add_argument("term", type=str)
-# args = parser.parse_args()
-
 
 class Command(BaseCommand):
     help = "Adds a user to django"
@@ -23,10 +17,9 @@ class Command(BaseCommand):
 
         # check valid school
         schools = [
-            # "Bloomberg School of Public Health",
-            # "Bloomberg School of Public Health Non-Credit",
-            # "Carey Business School",
             "Krieger School of Arts and Sciences",
+            "Whiting School of Engineering",
+            # TODO: option to add support for the following schools
             # "Krieger School of Arts and Sciences Advanced Academic Programs",
             # "Nitze School of Advanced International Studies",
             # "School of Education",
@@ -34,7 +27,9 @@ class Command(BaseCommand):
             # "School of Nursing",
             # "The Peabody Institute",
             # "The Peabody Preparatory",
-            "Whiting School of Engineering",
+            # "Bloomberg School of Public Health",
+            # "Bloomberg School of Public Health Non-Credit",
+            # "Carey Business School",
             # "Whiting School of Engineering Programs for Professionals",
         ]
 

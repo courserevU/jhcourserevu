@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "user",
     "course",
+    "simple_sso.sso_server",
 ]
 
 MIDDLEWARE = [

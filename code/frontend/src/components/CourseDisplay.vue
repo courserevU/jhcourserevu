@@ -63,6 +63,7 @@
 import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
+import axios from "axios";
 
 
 // Should have GET request to pull course list from DB
@@ -160,13 +161,12 @@ export default defineComponent({
     },
   },
   mounted() {
-    // Retrieves reviews for given course to be displayed by the component
-    /*axios
-      .get(`https://jhcourserevu-api.herokuapp.com/course/api`) //with queries of some sort, like page 1
-      .then((response) => {
-        this.courses = response.data;
-      });
-    */
+    // Retrieves a certain number of courses (pagination) from the DB through the API, to display
+    // axios
+    //   .get(`https://jhcourserevu-api.herokuapp.com/course/api?limit=10`) //with queries of some sort, like page 1
+    //   .then((response) => {
+    //     this.courses = response.data;
+    //   });
   }
 });
 </script>

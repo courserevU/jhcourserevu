@@ -6,7 +6,7 @@
       <h2
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
       >
-        Reviews for {{ course }}
+        Reviews for {{ course.name }}
       </h2>
 
       <div
@@ -20,10 +20,10 @@
           <div class="mt-2">
             <div class="relative">
               <h3 class="text-md text-gray-700 dark:text-gray-300">
-                <a> Professor: {{ review.professor }} </a>
+                <a> Professor: {{ review.comments[0] }} </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {{ review.review }}
+                {{ review.comments.slice(1) }}
               </p>
               <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
@@ -62,32 +62,27 @@ import axios from "axios";
 let reviews = [
   {
     id: 1,
-    professor: "Ali Madooei",
-    review: "Greatest teaching ever!",
+    comments: ["Prof Madooei", "Greatest teaching ever!"],
     page: 1,
   },
   {
     id: 2,
-    professor: "Imaginary Professor",
-    review: "Entirely self-directed class - the professor never appeared!",
+    comments: ["Imaginary Professor", "Entirely self-directed class - the professor never appeared!"],
     page: 1,
   },
   {
     id: 3,
-    professor: "Mr. Anderson",
-    review: "We live in a simulation.",
+    comments: ["Mr. Anderson", "We live in a simulation."],
     page: 1,
   },
   {
     id: 4,
-    professor: "Mr. Smith",
-    review: "*equip sunglasses*",
+    comments: ["Mr. Smith", "*equip sunglasses*"],
     page: 1,
   },
   {
     id: 5,
-    professor: "[REDACTED]",
-    review: "Alllll byyy MYYYYYSELLLLF!",
+    comments: ["[REDACTED]", "Alllll byyy MYYYYYSELLLLF!"],
     page: 2,
   },
 
@@ -108,7 +103,7 @@ export default defineComponent({
   },
   components: { Search, Pagination, AnnotationIcon, XIcon },
   props: {
-    course: String,
+    course: Object,
   },
   methods: {
     changePage(e: number) {
@@ -133,13 +128,12 @@ export default defineComponent({
     },
   },
   mounted() {
-    // Retrieves reviews for given course to be displayed by the component
-    /*axios
-      .get(`https://jhcourserevu-api.herokuapp.com/course/review/api/${course.id}}`)
+    // Retrieves reviews for the given course from the DB through the API, to display
+    axios
+      .get(`https://jhcourserevu-api.herokuapp.com/course/review/api/${this.course.id}`) // page query?
       .then((response) => {
         this.reviews = response.data;
       });
-    */
   },
 });
 </script>

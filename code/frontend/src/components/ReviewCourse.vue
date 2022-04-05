@@ -17,7 +17,7 @@
       <h3
         class="text-3xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0"
       >
-        Class: {{ course }}
+        Class: {{ course.name }}
       </h3>
     </div>
     <!-- Semseter and Professor Fields -->
@@ -34,6 +34,7 @@
           class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
           id="exampleInput7"
           placeholder="Professor"
+          v-model="prof"
         />
       </div>
       <!-- Semseter -->
@@ -74,6 +75,7 @@
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
+          v-model="teachStyle"
         ></textarea>
       </div>
     </div>
@@ -90,6 +92,7 @@
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
+          v-model="gradeStyle"
         ></textarea>
       </div>
     </div>
@@ -98,7 +101,7 @@
         <h3
           class="text-1xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0"
         >
-          Teaching Effectiveness/ Teacher Feedback:
+          Teacher Feedback:
         </h3>
         <textarea
           required
@@ -106,6 +109,7 @@
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
+          v-model="teachFeedback"
         ></textarea>
       </div>
     </div>
@@ -130,6 +134,7 @@
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
+          v-model="workload"
         ></textarea>
       </div>
     </div>
@@ -146,6 +151,7 @@
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
+          v-model="assignment"
         ></textarea>
       </div>
     </div>
@@ -161,6 +167,7 @@
           class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
           id="exampleFormControlTextarea13"
           rows="3"
+          v-model="exam"
           placeholder="Review"
         ></textarea>
       </div>
@@ -189,19 +196,35 @@ import axios from "axios";
 
 export default defineComponent({
   components: { SelectMenu },
+  data() {
+    return {
+      prof: "",
+      teachStyle: "",
+      gradeStyle: "",
+      teachFeedback: "",
+      workload: "",
+      assignment: "",
+      exam: "",
+    };
+  },
   props: {
-    course: String, // may need to change to object
+    course: Object, // passed along from the DB
   },
   methods: {
     submitReview() {
       axios.post(
-        "https://jhcourserevu-api.herokuapp.com/course/review/api/${course.id}",
+        `https://jhcourserevu-api.herokuapp.com/course/review/api/${this.course.id}`,
         {
-          review_id: 1,
-          professor: "",
-          semester: "",
-          // review contents, etc.
-          // Need to tweak template and data() so we have variables to work with here
+          "author_id": 123,
+          "comments": {
+            "Professor": this.prof,
+            "Teaching Style": this.teachStyle,
+            "Grading Style": this.gradeStyle,
+            "Teacher Feedback": this.teachFeedback,
+            "Workload": this.workload,
+            "Assignment Style": this.assignment,
+            "Exam Style": this.exam,
+          },
         });
     },
   },

@@ -30,9 +30,20 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 
 ### Backend (Django)
 
+Before anything else, enter the backend dir:
 ```shell
 cd code/backend
+```
+There are a few options here to activate the backend:
+### Docker (Recommended)
+Install [Docker](https://www.docker.com/products/docker-desktop/).
+Make sure you open Docker before starting!
+```
+docker compose up
+```
 
+### Python Virtual Environment
+```
 python3 -m venv django-venv # Assumes you have Python3 installed
 
 source django-venv/bin/activate
@@ -45,6 +56,9 @@ python manage.py runserver
 
 deactivate
 ```
+
+Regardless of which method you used, you can then head to `http://0.0.0.0:8000/` and
+get started with developing!
 
 ### Frontend (Vue)
 

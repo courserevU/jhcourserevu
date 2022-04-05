@@ -49,7 +49,7 @@ class CourseNumberList(generics.ListAPIView):
     def get_queryset(self):
         c_n = self.kwargs["course_num"]
         try:
-            Course.objects.filter(course_num=c_n)
+            return Course.objects.filter(course_num=c_n)
         except Course.DoesNotExist:
             raise Http404
 

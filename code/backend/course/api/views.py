@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 
 
 from course.models import Course, Review
@@ -10,6 +10,7 @@ from django.http import Http404, HttpResponse
 import json
 from django.forms import model_to_dict
 from django.core.paginator import Paginator
+from rest_framework.pagination import PageNumberPagination
 
 # from rest_framework import permissions
 # from django.shortcuts import render
@@ -17,40 +18,61 @@ from django.core.paginator import Paginator
 
 class CourseList(APIView):
     def get(self, request, *args, **kwargs):
-        courses = Course.objects.all()
-        courses_per_page = 50
-        paginator = Paginator(courses, courses_per_page)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-        courses_list = []
+        # courses = Course.objects.all()
+        # courses_per_page = 50
+        # paginator = Paginator(courses, courses_per_page)
+        # page_number = request.GET.get("page")
+        # page_obj = paginator.get_page(page_number)
+        # courses_list = []
 
-        for course in courses:
-            course_dict = model_to_dict(course)
-            courses_list.append(course_dict)
+        # for course in courses:
+        #     course_dict = model_to_dict(course)
+        #     courses_list.append(course_dict)
 
-        json_data = {"courses": courses_list}
-        return HttpResponse(json.dumps(json_data), content_type="application/json")
+        # json_data = {"courses": courses_list}
+        # return HttpResponse(json.dumps(json_data), content_type="application/json")
         # return render(request, 'all_courses.html', {'page_obj': page_obj})
 
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        courses = Course.objects.all()
+        result_page = paginator.paginate_queryset(courses, request)
+        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        return paginator.get_paginated_response(serializer.data)
 
-class CourseNumber(APIView):
+
+class CourseNumberList(generics.ListAPIView):
     """
     Get course by course number
     """
 
-    def get_object(self, course_num):
+    def get_queryset(self):
+        c_n = self.kwargs["course_num"]
         try:
-            return Course.objects.get(course_num=course_num)
+            Course.objects.filter(course_num=c_n)
         except Course.DoesNotExist:
             raise Http404
 
-    def get(self, request, course_num, format=None):
-        """
-        Get course by course number
-        """
-        c_n = self.get_object(course_num)
-        serializer = CourseSerializer(c_n)
-        return Response(serializer.data)
+    """
+    Use serializer to return JSON
+    """
+
+    def get_serializer_class(self):
+        return CourseSerializer
+
+    # def get_object(self, course_num):
+    #     try:
+    #         return Course.objects.get(course_num=course_num)[0]
+    #     except Course.DoesNotExist:
+    #         raise Http404
+
+    # def get(self, request, course_num, format=None):
+    #     """
+    #     Get course by course number
+    #     """
+    #     c_n = self.get_object(course_num)
+    #     serializer = CourseSerializer(c_n)
+    #     return Response(serializer.data)
 
 
 class ReviewList(APIView):
@@ -80,7 +102,7 @@ class ReviewList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ReviewDetail(APIView):
+class ReviewIdList(APIView):
     def get(self, request, pk, format=None):
         """
         Get review by id

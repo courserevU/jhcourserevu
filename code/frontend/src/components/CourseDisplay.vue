@@ -13,7 +13,8 @@
         Courses
       </h2>
 
-      <div
+      <div  
+        v-if="sis_courses"
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div
@@ -30,7 +31,7 @@
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {{ course.department }} - {{ course.course_num }}
+                {{ course.department }} - {{ course.number }}
               </p>
             </div>
           </div>
@@ -52,6 +53,9 @@
           </div>
         </div>
       </div>
+      <div v=else>
+        <p> Loading courses.... </p>
+      </div>
       <div>
         <Pagination @change-page="changePage" />
       </div>
@@ -63,16 +67,13 @@
 import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
-import axios from "axios";
 
-
-// Should have GET request to pull course list from DB
 let courses = [
   {
     id: 1,
     name: "Object-Oriented Software Engineering",
     href: "#",
-    course_num: "601.421",
+    number: "601.421",
     department: "Computer Science",
     page: 1,
   },
@@ -80,7 +81,7 @@ let courses = [
     id: 2,
     name: "Data Structures",
     href: "#",
-    course_num: "601.226",
+    number: "601.226",
     department: "Computer Science",
     page: 1,
   },
@@ -88,7 +89,7 @@ let courses = [
     id: 3,
     name: "Introduction to Cognitive Psychology",
     href: "#",
-    course_num: "200.110",
+    number: "200.110",
     department: "Psychological & Brain Sciences",
     page: 1,
   },
@@ -96,7 +97,7 @@ let courses = [
     id: 4,
     name: "Guided Tour: The Planets",
     href: "#",
-    course_num: "270.114",
+    number: "270.114",
     department: "Earth & Planetary Sciences",
     page: 1,
   },
@@ -104,7 +105,7 @@ let courses = [
     id: 5,
     name: "Probability & Statistics for the Physical Sciences & Engineering",
     href: "#",
-    course_num: "553.310",
+    number: "553.310",
     department: "Applied Mathematics and Statistics",
     page: 2,
   },
@@ -112,7 +113,7 @@ let courses = [
     id: 6,
     name: "Planetary Surface Processes",
     href: "#",
-    num: "270.410",
+    number: "270.410",
     department: "Earth & Planetary Sciences",
     page: 2,
   },
@@ -127,9 +128,17 @@ export default defineComponent({
     return {
       query,
       courses,
+      sis_courses: null,
       page: 1,
-    };
+    }
   },
+    mounted() {
+      fetch('http://127.0.0.1:8000/course/api/')
+        .then(res => res.json())
+        .then(data => this.sis_courses = data)
+        .catch(err => console.log(err.message))
+    },
+
   components: { Search, Pagination },
   methods: {
     updateFilter(e: any) {
@@ -137,7 +146,6 @@ export default defineComponent({
     },
     changePage(e: number) {
       this.page = e;
-      // possible axios GET request here with different page query?
     },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { course: course.name } });
@@ -155,18 +163,10 @@ export default defineComponent({
           .every(
             (v) =>
               course.name.toLowerCase().includes(v) ||
-              course.course_num.toLowerCase().includes(v)
+              course.number.toLowerCase().includes(v)
           );
       });
     },
   },
-  mounted() {
-    // Retrieves a certain number of courses (pagination) from the DB through the API, to display
-    // axios
-    //   .get(`https://jhcourserevu-api.herokuapp.com/course/api?limit=10`) //with queries of some sort, like page 1
-    //   .then((response) => {
-    //     this.courses = response.data;
-    //   });
-  }
 });
 </script>

@@ -20,7 +20,7 @@
         Class: {{ course.name }}
       </h3>
     </div>
-    <!-- Semseter and Professor Fields -->
+    <!-- Semester and Professor Fields -->
     <div class="flex space-x-10 justify-left px-16">
       <!-- Professor -->
       <h3

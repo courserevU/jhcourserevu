@@ -49,7 +49,6 @@ Content-Type: text/javascript
 [
   {
     "review_id": 1,
-    "author_id": 123,
     "comments": [
       "Great class",
       "Great professor",

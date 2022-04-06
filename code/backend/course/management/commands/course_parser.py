@@ -34,13 +34,13 @@ class Command(BaseCommand):
         ]
 
         if options["school"] not in schools:
-            raise CommandError("Invalid school name provided: %s" % options["school"])
+            raise CommandError("Invalid school name provided: {}".format(options["school"]))
 
         # check valid term
         terms = ["Fall 2022", "Summer 2022", "Spring 2022"]
 
         if options["term"] not in terms:
-            raise CommandError("Invalid term provided: %s" % options["term"])
+            raise CommandError("Invalid term provided: {}".format(options["term"]))
 
         # grab all courses for given school and term
         course_request = json.loads(
@@ -77,6 +77,11 @@ class Command(BaseCommand):
             except:
                 coreq = ""
 
+            try: 
+                max_size = int(c["MaxSeats"]) 
+            except ValueError:
+                max_size = 0
+
             course_model = Course(
                 name=c["Title"],
                 description=c["SectionDetails"][0]["Description"],
@@ -90,7 +95,7 @@ class Command(BaseCommand):
                 campus=c["Location"],
                 is_writing_intensive=(c["IsWritingIntensive"] == "Yes"),
                 meeting_section=c["SectionName"],
-                size=(isinstance(c["MaxSeats"], int) if c["MaxSeats"] else 0),
+                size=max_size,
                 instructors=c["InstructorsFullName"],
                 semester=(c["Term"].split(" ")[0] + " " + c["Term"].split(" ")[1]),
             )

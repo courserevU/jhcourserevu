@@ -1,71 +1,86 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 
-# from rest_framework import permissions
+
 from course.models import Course, Review
 from .serializers import CourseSerializer, ReviewSerializer
 
+from django.http import Http404, HttpResponse
+import json
+from django.forms import model_to_dict
+from django.core.paginator import Paginator
+from rest_framework.pagination import PageNumberPagination
 
-class CourseListApiView(APIView):
+# from rest_framework import permissions
+# from django.shortcuts import render
+
+
+class CourseList(APIView):
     def get(self, request, *args, **kwargs):
-        """
-        List all courses
-        """
-        # TODO: get section_type from request?
-        courses = Course.objects.filter(course_num=request.user.id)
-        serializer = CourseSerializer(courses, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        # courses = Course.objects.all()
+        # courses_per_page = 50
+        # paginator = Paginator(courses, courses_per_page)
+        # page_number = request.GET.get("page")
+        # page_obj = paginator.get_page(page_number)
+        # courses_list = []
 
-    def post(self, request, *args, **kwargs):
-        """
-        Create new course
-        """
-        data = {
-            "name": request.data.get("name"),
-            "description": request.data.get("description"),
-            "course_num": request.data.get("course_num"),
-            "num_credits": request.data.get("num_credits"),
-            "department": request.data.get("department"),
-            "level": request.data.get("level"),
-            "prerequisites": request.data.get("prerequisites"),
-            "corequisites": request.data.get("corequisites"),
-            "school": request.data.get("school"),
-            "campus": request.data.get("campus"),
-            "is_writing_intensive": request.data.get("is_writing_intensive"),
-            "meeting_section": request.data.get("meeting_section"),
-            "size": request.data.get("size"),
-            "enrollment": request.data.get("enrollment"),
-            "waitlist": request.data.get("waitlist"),
-            "instructors": request.data.get("instructors"),
-            "semester": request.data.get("semester"),
-            "is_full": request.data.get("is_full"),
-        }
+        # for course in courses:
+        #     course_dict = model_to_dict(course)
+        #     courses_list.append(course_dict)
 
-        serializer = CourseSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # json_data = {"courses": courses_list}
+        # return HttpResponse(json.dumps(json_data), content_type="application/json")
+        # return render(request, 'all_courses.html', {'page_obj': page_obj})
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        courses = Course.objects.all()
+        result_page = paginator.paginate_queryset(courses, request)
+        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        return paginator.get_paginated_response(serializer.data)
 
 
-class ReviewListApiView(APIView):
+class CourseNumberList(generics.ListAPIView):
+    """
+    Get course by course number
+    """
+
+    def get_queryset(self):
+        c_n = self.kwargs["course_num"]
+        try:
+            return Course.objects.filter(course_num=c_n)
+        except Course.DoesNotExist:
+            raise Http404
+
+    """
+    Use serializer to return JSON
+    """
+
+    def get_serializer_class(self):
+        return CourseSerializer
+
+    # def get_object(self, course_num):
+    #     try:
+    #         return Course.objects.get(course_num=course_num)[0]
+    #     except Course.DoesNotExist:
+    #         raise Http404
+
+    # def get(self, request, course_num, format=None):
+    #     """
+    #     Get course by course number
+    #     """
+    #     c_n = self.get_object(course_num)
+    #     serializer = CourseSerializer(c_n)
+    #     return Response(serializer.data)
+
+
+class ReviewList(APIView):
     def get(self, request, *args, **kwargs):
         """
         List of all reviews
         """
-        # TODO: get by id or by course_num???
-        reviews = Review.objects.filter(review_id=request.user.id)
-        serializer = ReviewSerializer(reviews, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def get(self, request, *args, **kwargs):
-        """
-        List of all reviews for given course
-        """
-        # TODO: get by course_id
-        reviews = Review.objects.filter(course_id=request.user.id)
+        reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -85,3 +100,42 @@ class ReviewListApiView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReviewIdList(APIView):
+    def get(self, request, pk, format=None):
+        """
+        Get review by id
+        """
+        review = Review.objects.get(pk=pk)
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        """
+        Update review by id
+        """
+        review = Review.objects.get(pk=pk)
+        serializer = ReviewSerializer(review, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        """
+        Delete review by id
+        """
+        review = Review.objects.get(pk=pk)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# def get_reviews_by_course(request, course):
+#     reviews = Review.objects.get(course=course)
+#     review_list = []
+#     for review in reviews:
+#         review_dict = model_to_dict(review)
+#         review_list.append(review_dict)
+#     json_data = {"reviews": review_list}
+#     return HttpResponse(json.dumps(json_data), content_type="application/json")

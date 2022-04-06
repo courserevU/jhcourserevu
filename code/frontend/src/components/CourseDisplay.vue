@@ -34,7 +34,9 @@
               </p>
             </div>
           </div>
-          <Checkbox label="React" inputValue="react" v-model="selectedOptions" />
+          <div class="mt-2"> 
+            <Checkbox label="I have taken this course" inputValue="taken" v-model="selectedOptions" />
+          </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
               type="button"

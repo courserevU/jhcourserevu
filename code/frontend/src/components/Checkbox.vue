@@ -1,7 +1,7 @@
 <template>
     <label>
         <input  type="checkbox" :value="inputValue"  v-model="model" />
-        <span>{{ label }}</span>
+        <span>{{ " " + label }}</span>
     </label>
 </template>
 

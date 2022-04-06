@@ -34,6 +34,7 @@
               </p>
             </div>
           </div>
+          <Checkbox label="React" inputValue="react" v-model="selectedOptions" />
           <div class="block inline-flex mt-4 mb-2">
             <button
               type="button"
@@ -63,6 +64,7 @@
 import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
+import Checkbox from "./Checkbox.vue";
 
 let courses = [
   {
@@ -127,7 +129,7 @@ export default defineComponent({
       page: 1,
     };
   },
-  components: { Search, Pagination },
+  components: { Search, Pagination, Checkbox },
   methods: {
     updateFilter(e: any) {
       this.query = e;

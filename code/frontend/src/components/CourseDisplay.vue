@@ -152,7 +152,7 @@ export default defineComponent({
   computed: {
     filteredCourses() {
       return this.courses.filter((course: any) => {
-        return (course.page === this.page) && this.query
+        return this.query
           .toLowerCase()
           .split(" ")
           .every(

@@ -13,8 +13,7 @@
         Courses
       </h2>
 
-      <div  
-        v-if="sis_courses"
+      <div
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div
@@ -53,9 +52,6 @@
           </div>
         </div>
       </div>
-      <div v=else>
-        <p> Loading courses.... </p>
-      </div>
       <div>
         <Pagination @change-page="changePage" />
       </div>
@@ -67,6 +63,7 @@
 import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
+import axios from "axios";
 
 let courses = [
   {
@@ -128,16 +125,18 @@ export default defineComponent({
     return {
       query,
       courses,
-      sis_courses: null,
       page: 1,
     }
   },
-    mounted() {
-      fetch('http://127.0.0.1:8000/course/api/')
-        .then(res => res.json())
-        .then(data => this.sis_courses = data)
-        .catch(err => console.log(err.message))
-    },
+
+  mounted() {
+    axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+      .then((response) => 
+      { 
+        this.courses = response.data.results; 
+        console.log(this.courses); 
+      });
+  },
 
   components: { Search, Pagination },
   methods: {

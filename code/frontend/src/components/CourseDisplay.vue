@@ -62,54 +62,54 @@ import Pagination from "./Pagination.vue";
 import axios from "axios";
 
 let courses = [
-  {
-    id: 1,
-    name: "Object-Oriented Software Engineering",
-    href: "#",
-    course_num: "601.421",
-    department: "Computer Science",
-    page: 1,
-  },
-  {
-    id: 2,
-    name: "Data Structures",
-    href: "#",
-    course_num: "601.226",
-    department: "Computer Science",
-    page: 1,
-  },
-  {
-    id: 3,
-    name: "Introduction to Cognitive Psychology",
-    href: "#",
-    course_num: "200.110",
-    department: "Psychological & Brain Sciences",
-    page: 1,
-  },
-  {
-    id: 4,
-    name: "Guided Tour: The Planets",
-    href: "#",
-    course_num: "270.114",
-    department: "Earth & Planetary Sciences",
-    page: 1,
-  },
-  {
-    id: 5,
-    name: "Probability & Statistics for the Physical Sciences & Engineering",
-    href: "#",
-    course_num: "553.310",
-    department: "Applied Mathematics and Statistics",
-    page: 2,
-  },
-  {
-    id: 6,
-    name: "Planetary Surface Processes",
-    href: "#",
-    course_num: "270.410",
-    department: "Earth & Planetary Sciences",
-    page: 2,
-  },
+  // {
+  //   id: 1,
+  //   name: "Object-Oriented Software Engineering",
+  //   href: "#",
+  //   course_num: "601.421",
+  //   department: "Computer Science",
+  //   page: 1,
+  // },
+  // {
+  //   id: 2,
+  //   name: "Data Structures",
+  //   href: "#",
+  //   course_num: "601.226",
+  //   department: "Computer Science",
+  //   page: 1,
+  // },
+  // {
+  //   id: 3,
+  //   name: "Introduction to Cognitive Psychology",
+  //   href: "#",
+  //   course_num: "200.110",
+  //   department: "Psychological & Brain Sciences",
+  //   page: 1,
+  // },
+  // {
+  //   id: 4,
+  //   name: "Guided Tour: The Planets",
+  //   href: "#",
+  //   course_num: "270.114",
+  //   department: "Earth & Planetary Sciences",
+  //   page: 1,
+  // },
+  // {
+  //   id: 5,
+  //   name: "Probability & Statistics for the Physical Sciences & Engineering",
+  //   href: "#",
+  //   course_num: "553.310",
+  //   department: "Applied Mathematics and Statistics",
+  //   page: 2,
+  // },
+  // {
+  //   id: 6,
+  //   name: "Planetary Surface Processes",
+  //   href: "#",
+  //   course_num: "270.410",
+  //   department: "Earth & Planetary Sciences",
+  //   page: 2,
+  // },
   // More courses... load from our db
 ];
 
@@ -126,12 +126,14 @@ export default defineComponent({
   },
 
   mounted() {
-    axios.get(`http://localhost:8000/course/api/`,
-      { headers: { "Access-Control-Allow-Origin": "true" } })
+    axios.get(`http://localhost:8000/course/api/`)
       .then((response) => {
-        this.courses = response.data.results;
-        console.log(this.courses);
-      });
+        const data = response.data;
+        this.courses = data.results;
+        console.log(JSON.parse(JSON.stringify(data.results)));
+      })
+      
+    // console.log(this.courses);
   },
 
   components: { Search, Pagination },

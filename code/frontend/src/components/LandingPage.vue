@@ -1,9 +1,9 @@
 <template>
     <div>
-        <main class="h-screen flex items-center px-6 lg:px-32 bg-blue-900 text-white relative">
+        <main class="h-screen flex items-center px-6 lg:px-32 bg-blue-600 dark:bg-blue-900 text-white relative">
             <section class="w-full md:w-9/12 xl:w-8/12">
                
-                <h1 class="text-3xl lg:text-5xl font-bold text-white-500">
+                <h1 class="text-3xl lg:text-5xl font-extrabold text-white-500">
                     JHcourserevU
                 </h1>
                 <br/>
@@ -19,7 +19,7 @@
                 <br/>
                 <button
                     type="submit"
-                    class="w-1/2 px-10 py-2.5 justify-center bg-gray-400 dark:bg-gray-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-200 dark:hover:bg-blue-100 hover:shadow-lg focus:bg-blue-300 dark:focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                    class="w-1/2 px-10 py-2.5 justify-center bg-gray-200 dark:bg-gray-700 text-black dark:text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-200 dark:hover:bg-blue-100 hover:shadow-lg focus:bg-blue-300 dark:focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                     @click="goToCourseSeach"
                 >Seach for Courses!</button>
             </section>

@@ -4,19 +4,19 @@
     <div class="py-5"></div>
     <div class="flex space-x-2 justify-center">
         <div>
-            <h1 class="text-5xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0">Course Review</h1>
+            <h1 class="text-5xl font-bold leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0">Course Review</h1>
         </div>
     </div>
     <div class="py-5"></div>
     <!-- Class Title -->
     <div class="flex space-x-2 justify-left px-20">
-        <h3 class="text-3xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0">Class: {{ course }}</h3>
+        <h3 class="text-3xl font-bold leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0">Class: {{ course }}</h3>
     </div>
     <!-- Semseter and Professor Fields -->
-    <div class="flex space-x-10 justify-left px-16">
+    <div class=" flex flex-wrap overflow-visible space-x-10 justify-left px-10">
         <!-- Professor -->
-        <h3 class="text-1xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-4">Professor:</h3>
-        <div class="form-group mb-3 w-1/2 ">
+        <h3 class="text-1xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-10">Professor:</h3>
+        <div class="flex-none form-group mb-3 w-1/2 sm:w-1/3">
             <input
                 type="text"
                 class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
@@ -24,7 +24,6 @@
                 placeholder="Professor"
             />
         </div>
-        <!-- Semseter -->
         <SelectMenu />
     </div>
     <div class="py-5"></div>
@@ -44,7 +43,7 @@
       <!-- Grading Style  -->
       
     <!-- Feedback to teacher-->
-    <h3 class="text-2xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-20"> General Course Information </h3>
+    <h3 class="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-20"> General Course Information </h3>
     <div class="flex space-x-2 justify-left px-20">
         <div class="form-group mb-3 w-full">
             <h3 class="text-1xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0">Teaching Style: </h3>
@@ -84,7 +83,7 @@
 
     <div class="py-5"></div>
 
-    <h3 class="text-2xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-20"> Workload and Assignment Information </h3>
+    <h3 class="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-20"> Workload and Assignment Information </h3>
     <div class="flex space-x-2 justify-left px-20">
         <div class="form-group mb-3 w-full">
             <h3 class="text-1xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0">Workload/Time Comitmment: </h3>

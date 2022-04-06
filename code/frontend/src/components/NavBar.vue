@@ -162,7 +162,20 @@
             <div class="mt-6">
               <nav class="grid gap-y-8">
                 <div>
-                  <div class="mb-4">
+                  <Popover class="relative" v-slot="{ open }">
+                    <PopoverButton
+                      :class="[
+                        open
+                          ? 'text-gray-900 dark:text-gray-200'
+                          : 'text-gray-500 dark:text-gray-400',
+                        'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200',
+                      ]"
+                      @click="goToCourses"
+                    >
+                      <span>Courses</span>
+                    </PopoverButton>
+                  </Popover>
+                  <div class="my-4">
                     <a
                       :href="repoUrl"
                       target="_blank"
@@ -183,7 +196,9 @@
           </div>
           <div class="py-4 px-5 space-y-6">
             <div>
-              <p class="text-center text-base font-medium text-gray-500  dark:text-gray-400">
+              <p
+                class="text-center text-base font-medium text-gray-500 dark:text-gray-400"
+              >
                 Existing user?
                 {{ " " }}
                 <button
@@ -248,7 +263,7 @@ export default defineComponent({
       this.$router.push("/");
     },
     goToCourses() {
-      this.$router.push("/course-search")
+      this.$router.push("/course-search");
     },
     switchTheme() {
       // Switches the theme of the entire app, all routes

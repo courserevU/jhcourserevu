@@ -3,7 +3,7 @@
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class ="flex flex-row space-x-3">
         <Search @update-filter="updateFilter" />
-        <SelectMenu :options=filters />
+        <SelectMenu :options=filters @update-option="updateOption" />
         <span
           class="input-group-text items-center px-3 py-3 text-base font-normal text-gray-700 dark:text-gray-200 text-center whitespace-nowrap rounded"
           id="basic-addon2"
@@ -115,29 +115,37 @@ let courses = [
 ];
 
 let query = "";
+let option = "";
+
+const optionsToField = {
+  2 : "name",
+  3 : "number",
+  4 : "department"
+};
 
 export default defineComponent({
   name: "CourseDisplay",
   data() {
     return {
       query,
+      option,
       courses,
       filters: [
         {
             id: 1,
-            name: 'Please Choose an Option',
+            name: 'Select Search Criteria',
         },
         {
             id: 2,
-            name: 'Placeholder1',
+            name: 'Course Name',
         },
         {
             id: 3,
-            name: 'Placeholder2',
+            name: 'Course Number',
         },
         {
             id: 4,
-            name: 'Placeholder3',
+            name: 'Department',
         }
       ]
     }
@@ -147,19 +155,31 @@ export default defineComponent({
     updateFilter(e: any) {
       this.query = e;
     },
+    updateOption(e: any) {
+      this.option = e.id;
+    },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { course: course.name } });
     },
     goToReadReviews(course: any) {
       this.$router.push({ name: "read", params: { course: course.name } });
-    }
+    },
+
   },
+  
   computed: {
     filteredCourses() {
-      return this.courses.filter((course: any) => {
-        return this.query.toLowerCase().split(" ")
-          .every(v => course.name.toLowerCase().includes(v) || course.number.toLowerCase().includes(v));
+      const field = optionsToField[this.option];
+    
+      if (field === undefined) {
+        return;
+      }
+     const filtered = this.courses.filter(
+      course => {
+        // console.log(course[field].toLowerCase().includes(this.query.toLowerCase()));
+        course[field].toLowerCase().includes(this.query.toLowerCase());
       });
+      console.log(filtered);
     },
   },
 });

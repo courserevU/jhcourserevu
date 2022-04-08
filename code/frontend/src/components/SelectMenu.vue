@@ -1,7 +1,8 @@
 <template>
-  <Listbox as="div" v-model="selected" @click="$emit('update-option', selected)" >
+  <Listbox as="div" v-model="selected" @click="$emit('update-option', selected)">
     <div class="relative">
       <ListboxButton class="relative w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 border border-gray-300 rounded shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
+        <div v-if="!selected">Select Search Criteria </div>
         <span class="flex items-center">
           <span class="ml-3 block truncate">{{ selected.name }}</span>
         </span>
@@ -49,7 +50,7 @@ export default {
   props: ['options'],
   data() {
     return {
-      selected: "",
+      selected: ""
     };
   }
 }

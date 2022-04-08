@@ -132,10 +132,6 @@ export default defineComponent({
       courses,
       filters: [
         {
-            id: 1,
-            name: 'Select Search Criteria',
-        },
-        {
             id: 2,
             name: 'Course Name',
         },
@@ -171,15 +167,12 @@ export default defineComponent({
     filteredCourses() {
       const field = optionsToField[this.option];
     
-      if (field === undefined) {
-        return;
-      }
-     const filtered = this.courses.filter(
+      if (field === undefined) return this.courses;
+      
+     return this.courses.filter(
       course => {
-        // console.log(course[field].toLowerCase().includes(this.query.toLowerCase()));
-        course[field].toLowerCase().includes(this.query.toLowerCase());
+        return course[field].toLowerCase().includes(this.query.toLowerCase());
       });
-      console.log(filtered);
     },
   },
 });

@@ -123,18 +123,15 @@ AUTHENTICATION_BACKENDS = [
 # CHANGE ENTIRE SECTION BELOW with info from Azure AD app
 # https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
 # values you got from step 2 from your Mirosoft app
-MICROSOFT_AUTH_CLIENT_ID = 'your-client-id-from-apps.dev.microsoft.com'
-MICROSOFT_AUTH_CLIENT_SECRET = 'your-client-secret-from-apps.dev.microsoft.com'
+MICROSOFT_AUTH_CLIENT_ID = 'd6ad94da-955d-4097-8efc-0520fe2139c6'
+MICROSOFT_AUTH_CLIENT_SECRET = 'Yr97Q~6HygFY~rKfaAQjnf3yFXperM2DnQXzF'
 # Tenant ID is also needed for single tenant applications
-# MICROSOFT_AUTH_TENANT_ID = 'your-tenant-id-from-apps.dev.microsoft.com'
+MICROSOFT_AUTH_TENANT_ID = 'f8cdef31-a31e-4b4a-93e4-5f571e91255a'
 
 # pick one MICROSOFT_AUTH_LOGIN_TYPE value
 # Microsoft authentication
 # include Microsoft Accounts, Office 365 Enterpirse and Azure AD accounts
 MICROSOFT_AUTH_LOGIN_TYPE = 'ma'
-
-# Xbox Live authentication
-MICROSOFT_AUTH_LOGIN_TYPE = 'xbl'  # Xbox Live authentication
 
 # END MICROSOFT AUTH SECTION
 

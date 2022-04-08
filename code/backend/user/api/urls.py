@@ -37,10 +37,10 @@ def callback(request):
 
     user = authenticate(username=username, password=password)
     if user is not None:
-              login(request,user)
-              messages.success(request,"Success: You were successfully logged in.")
-              return redirect('home') # need to modify this
-          return redirect('home') # need to modify this
+        login(request,user)
+        messages.success(request,"Success: You were successfully logged in.")
+        return redirect('home') # need to modify this
+    return redirect('home') # need to modify this
 
     def sign_out(request):
 

@@ -54,3 +54,4 @@ untokenize==0.1.1
 urllib3==1.26.8
 whitenoise==6.0.0
 yapf==0.32.0
+django_microsoft_auth

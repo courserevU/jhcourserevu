@@ -216,6 +216,7 @@ export default defineComponent({
         `https://jhcourserevu-api.herokuapp.com/course/review/api/${this.course.id}`,
         {
           "author_id": 123,
+          "time_updated": Date.now(),
           "comments": {
             "Professor": this.prof,
             "Teaching Style": this.teachStyle,

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from course.models import Course
+from django.contrib.sites.models import Site
 
 
 class User(models.Model):

@@ -76,6 +76,13 @@ export default defineComponent({
   },
 
   mounted() {
+    // axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+    //   .then((response) => {
+    //     const data = response.data;
+    //     this.courses = data.results;
+    //     console.log(JSON.parse(JSON.stringify(data.results)));
+    //   })
+
     axios.get(`http://localhost:8000/course/api/`)
       .then((response) => {
         const data = response.data;

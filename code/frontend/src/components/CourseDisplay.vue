@@ -61,12 +61,7 @@ import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
 import axios from "axios";
 
-let courses = [{
-  "id": 12345678,
-  "name": "Object-Oriented Software Engineering",
-  "department": "Computer Science",
-  "course_num": "EN.601.421"
-}];
+let courses = [];
 
 let query = "";
 
@@ -81,14 +76,12 @@ export default defineComponent({
   },
 
   mounted() {
-    // axios.get(`http://localhost:8000/course/api/`)
-    //   .then((response) => {
-    //     const data = response.data;
-    //     this.courses = data.results;
-    //     console.log(JSON.parse(JSON.stringify(data.results)));
-    //   })
-      
-    // console.log(this.courses);
+    axios.get(`http://localhost:8000/course/api/`)
+      .then((response) => {
+        const data = response.data;
+        this.courses = data.results;
+        console.log(JSON.parse(JSON.stringify(data.results)));
+      })
   },
 
   components: { Search, Pagination },
@@ -115,7 +108,7 @@ export default defineComponent({
           .every(
             (v) =>
               course.name.toLowerCase().includes(v) ||
-              course.course_num.includes(v)
+              course.course_num.toLowerCase().includes(v)
           );
       });
     },

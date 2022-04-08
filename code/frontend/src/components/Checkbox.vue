@@ -1,7 +1,7 @@
 <template>
     <label>
-        <input  type="checkbox" :value="inputValue"  v-model="model" />
-        <span>{{ " " + label }}</span>
+        <input type="checkbox" :value="inputValue" v-model="model" />
+        <span class="text-sm text-gray-700 dark:text-gray-300 font-bold">{{ " " + label }}</span>
     </label>
 </template>
 

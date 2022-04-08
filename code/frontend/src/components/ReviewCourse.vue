@@ -213,10 +213,8 @@ export default defineComponent({
   methods: {
     submitReview() {
       axios.post(
-        `http://127.0.0.1:8000/course/review/api/`,
+        `http://127.0.0.1:8000/course/review/api/${this.course.id}`,
         {
-          "author_id": 123,
-          "time_updated": Date.now() / 1000,
           "comments": {
             "Professor": this.prof,
             "Teaching Style": this.teachStyle,
@@ -225,8 +223,7 @@ export default defineComponent({
             "Workload": this.workload,
             "Assignment Style": this.assignment,
             "Exam Style": this.exam,
-          },
-          "course_id": this.course,
+          }
         })
           .then(function (response) {
             console.log(response);

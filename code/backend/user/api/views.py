@@ -6,6 +6,13 @@ from rest_framework import status
 from user.models import User
 from .serializers import UserSerializer
 
+from django.contrib.sites.shortcuts import get_current_site
+def test_sso_view(request):
+    current_site = get_current_site(request)
+    if current_site.domain == 'login.microsoftonline.com'
+        pass
+    else:
+        pass
 
 class UserList(APIView):
     def get(self, request, *args, **kwargs):

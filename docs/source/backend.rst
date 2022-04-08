@@ -5,4 +5,5 @@ Backend Documentation
    :maxdepth: 2
 
    modules/course
+   modules/course_parser
    modules/user

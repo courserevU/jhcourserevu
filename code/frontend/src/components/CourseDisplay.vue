@@ -145,10 +145,10 @@ export default defineComponent({
       this.page = e;
     },
     goToWriteReview(course: any) {
-      this.$router.push({ name: "write", params: { course: course } });
+      this.$router.push({ name: "write", params: { "course": course.id } });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { course: course } });
+      this.$router.push({ name: "read", params: { "course": course.id } });
     },
   },
   computed: {

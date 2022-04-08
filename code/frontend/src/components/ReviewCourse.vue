@@ -208,15 +208,15 @@ export default defineComponent({
     };
   },
   props: {
-    course: Object, // passed along from the DB
+    course: String, // passed along from parent component (WriteView)
   },
   methods: {
     submitReview() {
       axios.post(
-        `https://jhcourserevu-api.herokuapp.com/course/review/api/${this.course.id}`,
+        `http://127.0.0.1:8000/course/review/api/`,
         {
           "author_id": 123,
-          "time_updated": Date.now(),
+          "time_updated": Date.now() / 1000,
           "comments": {
             "Professor": this.prof,
             "Teaching Style": this.teachStyle,
@@ -226,7 +226,14 @@ export default defineComponent({
             "Assignment Style": this.assignment,
             "Exam Style": this.exam,
           },
-        });
+          "course_id": this.course,
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
   },
 });

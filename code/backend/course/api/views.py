@@ -1,3 +1,4 @@
+import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -89,9 +90,9 @@ class ReviewList(APIView):
         Create review associated with given course
         """
         data = {
+            "time_updated": datetime.date.fromtimestamp(request.data.get("time_updated")),
             "comments": request.data.get("comments"),
-            "course_id": request.data.get("course_id"),
-            "course_section_id": request.data.get("course_section_id"),
+            "course": request.data.get("course_id"),
         }
 
         serializer = ReviewSerializer(data=data)

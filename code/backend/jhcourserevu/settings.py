@@ -48,8 +48,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "user",
     "course",
-    "simple_sso.sso_server",
+    "django.contrib.sites",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -91,7 +93,7 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST"),
+        #"HOST": os.environ.get("DB_HOST"),
         "PORT": "5432",
     }
 }

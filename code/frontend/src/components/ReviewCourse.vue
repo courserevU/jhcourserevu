@@ -17,7 +17,7 @@
       <h3
         class="text-3xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0"
       >
-        Class: {{ course.name }}
+        Class: {{ JSON.parse(course).name }}
       </h3>
     </div>
     <!-- Semester and Professor Fields -->
@@ -208,12 +208,12 @@ export default defineComponent({
     };
   },
   props: {
-    course: String, // passed along from parent component (WriteView)
+    course: String, // passed as stringified Object, needs to be parsed
   },
   methods: {
     submitReview() {
       axios.post(
-        `http://127.0.0.1:8000/course/review/api/${this.course.id}`,
+        `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}`,
         {
           "comments": {
             "Professor": this.prof,

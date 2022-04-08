@@ -82,8 +82,6 @@ export default defineComponent({
         this.courses = data.results;
         console.log(JSON.parse(JSON.stringify(data.results)));
       })
-      
-    // console.log(this.courses);
   },
 
   components: { Search, Pagination },
@@ -95,10 +93,10 @@ export default defineComponent({
       this.page = e;
     },
     goToWriteReview(course: any) {
-      this.$router.push({ name: "write", params: { "course": course.id } });
+      this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { "course": course.id } });
+      this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
     },
   },
   computed: {

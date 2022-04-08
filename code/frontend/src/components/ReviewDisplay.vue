@@ -6,7 +6,7 @@
       <h2
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
       >
-        Reviews for {{ course.name }}
+        Reviews for {{ JSON.parse(course).name }}
       </h2>
 
       <div
@@ -103,21 +103,11 @@ export default defineComponent({
   },
   components: { Search, Pagination, AnnotationIcon, XIcon },
   props: {
-    course: Object,
+    course: String, // passed as stringified Object, needs to be parsed
   },
   methods: {
     changePage(e: number) {
       this.page = e;
-    },
-    goToWriteReview(course: any) {
-      this.$router.push({
-        path: "/write",
-        name: "write",
-        params: { course: course },
-      });
-    },
-    goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { course: course } });
     },
   },
   computed: {
@@ -130,7 +120,7 @@ export default defineComponent({
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios
-      .get(`https://jhcourserevu-api.herokuapp.com/course/review/api/${this.course.id}`) // page query?
+      .get(`https://jhcourserevu-api.herokuapp.com/course/review/api/${JSON.parse(this.course).id}`) // page query?
       .then((response) => {
         this.reviews = response.data;
       });

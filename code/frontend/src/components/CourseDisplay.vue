@@ -82,6 +82,7 @@
 import { defineComponent } from 'vue';
 import Search from './Search.vue';
 import SelectMenu from "./SelectMenu.vue";
+import Pagination from "./Pagination.vue";
 
 let courses = [
   {
@@ -167,13 +168,16 @@ export default defineComponent({
       ]
     }
   },
-  components: { Search, SelectMenu },
+  components: { Search, SelectMenu, Pagination },
   methods: {
     updateFilter(e: any) {
       this.query = e;
     },
     updateOption(e: any) {
       this.option = e.id;
+    },
+    changePage(e: number) {
+      this.page = e;
     },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { course: course.name } });

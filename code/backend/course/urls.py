@@ -1,12 +1,11 @@
-from django.urls import path
+from django.urls import path, re_path
+from course.api.views import CourseList, ReviewList, CourseNumberList, ReviewIdList
 
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('api/write_review/', views.write, name='write'),
-    path('api/read/', views.read, name='read'),
-    path('api/browse/', views.browse, name='browse'),
-    path('api/login/', views.login, name='login'),
-    path('api/dashboard/', views.dashboard, name='dashboard'),
+    path('api/', CourseList.as_view(), name='course_api'),
+    re_path('^api/(?P<course_num>.+)/$', CourseNumberList.as_view(), name='course_num_api'),
+    path('review/api/', ReviewList.as_view(), name='review_api'),
+    re_path('^review/api/(?P<course_num>.+)/$', ReviewIdList.as_view(), name='review_by_course_api'),
 ]

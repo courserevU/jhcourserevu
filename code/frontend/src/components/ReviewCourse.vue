@@ -1,6 +1,7 @@
 <template>
   <div class="bg-white dark:bg-gray-800">
     <!-- page title -->
+    <div class="py-5"></div>
     <div class="flex space-x-2 justify-center">
       <div>
         <h1
@@ -10,7 +11,7 @@
         </h1>
       </div>
     </div>
-
+    <div class="py-5"></div>
     <!-- Class Title -->
     <div class="flex space-x-2 justify-left px-20">
       <h3
@@ -19,7 +20,6 @@
         Class: {{ course }}
       </h3>
     </div>
-
     <!-- Semseter and Professor Fields -->
     <div class="flex space-x-10 justify-left">
       <!-- Professor -->
@@ -34,8 +34,24 @@
       <!-- Semseter -->
       <SelectMenu :options="semesters" />
     </div>
+    <div class="py-5"></div>
 
     <!-- Review Text -->
+    <!-- Sample Review Gudied Questions -->
+    <!-- Work -->
+      <!-- What is the Workload-->
+      <!-- Assignments Style -->
+      <!-- Exams Style-->
+      <!-- Outside of class time to dedicate (including studying)? -->
+      
+    <!-- Class/Lecture -->
+      <!-- Teaching Style -->
+      <!-- Teaching Effectiveness  -->
+      <!-- Professor Availably  -->
+      <!-- Grading Style  -->
+      
+    <!-- Feedback to teacher-->
+    <h3 class="text-2xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0 px-20"> General Course Information </h3>
     <div class="flex space-x-2 justify-left px-20">
       <div class="form-group mb-3 w-full">
         <textarea

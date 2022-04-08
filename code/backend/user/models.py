@@ -24,6 +24,6 @@ class User(models.Model):
     class_year = models.CharField(max_length=50, blank=True, null=True, unique=True)
     preferred_name = models.CharField(max_length=30, blank=True, null=True, unique=True)
     is_admin = models.BooleanField(null=False)
-
+    sitefieldtest = models.ForeignKey(Site)
     def get_courses(self):
         return self.courses.all()

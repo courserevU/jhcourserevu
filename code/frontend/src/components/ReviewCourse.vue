@@ -213,10 +213,9 @@ export default defineComponent({
   methods: {
     submitReview() {
       axios.post(
-        // `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}`,
+        // `http://127.0.0.1:8000/course/review/api/${JSON.parse(course).id}`,
         `http://localhost:8000/course/review/api/`,
         {
-          // "time_updated" : Date.now(),
           "comments": {
             "Professor": this.prof,
             "Teaching Style": this.teachStyle,
@@ -226,7 +225,7 @@ export default defineComponent({
             "Assignment Style": this.assignment,
             "Exam Style": this.exam,
           },
-          // "course_id" : JSON.parse(this.course).id, // how do we get the course id?
+          "course_id" : JSON.parse(this.course).id,
         })
           .then(function (response) {
             console.log(response);

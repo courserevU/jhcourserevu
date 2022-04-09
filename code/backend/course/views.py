@@ -1,5 +1,5 @@
 # TODO: delete
-# from django.shortcuts import render
+#from django.shortcuts import render
 # from rest_framework import status
 # from rest_framework.response import Response
 # from rest_framework.decorators import api_view
@@ -8,7 +8,43 @@
 # from course.serializers import CourseSerializer
 
 # Create your views here. (The following is copy pasted from https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
-# from django.http import HttpResponse
+from django.http import HttpResponse
+#from course.models import Course
+#from course.models import Review
+from course.api.serializers import CourseSerializer
+from course.api.serializers import ReviewSerializer
+
+#import json
+#from django.forms import model_to_dict
+#from django.core.paginator import Paginator
+
+#def all_courses(request):
+#    courses = (Course.objects.all())
+#    courses_per_page = 50
+#    paginator = Paginator(courses, courses_per_page)
+#    page_number = request.GET.get('page')
+#    page_obj = paginator.get_page(page_number)
+    #courses_list = []
+    #for course in courses:
+    #    course_dict = model_to_dict(course)
+    #    courses_list.append(course_dict)
+    #json_data = {'courses': courses_list}
+    # return HttpResponse(json.dumps(json_data), content_type='application/json')
+
+#    return render(request, 'all_courses.html', {'page_obj': page_obj})
+
+
+
+#def get_reviews_by_course(request, course):
+#    reviews = (Review.objects.get(course=course))
+#    review_list = []
+#    for review in reviews:
+#        review_dict = model_to_dict(review)
+#        review_list.append(review_dict)
+#    json_data = {'reviews': review_list}
+#    return HttpResponse(json.dumps(json_data), content_type='application/json')
+
+
 
 
 # def home(request):

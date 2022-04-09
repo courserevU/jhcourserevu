@@ -7,7 +7,7 @@ from user.models import User
 from .serializers import UserSerializer
 
 
-class UserListApiView(APIView):
+class UserList(APIView):
     def get(self, request, *args, **kwargs):
         """
         Login for returning user

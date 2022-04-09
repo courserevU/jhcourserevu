@@ -89,18 +89,21 @@ class ReviewList(APIView):
         """
         Create review associated with given course
         """
-        data = {
-            "time_updated": datetime.date.fromtimestamp(request.data.get("time_updated")),
-            "comments": request.data.get("comments"),
-            "course": request.data.get("course_id"),
-        }
+        comments = request.data.get("comments")
+        for comment in comments.values() :
 
-        serializer = ReviewSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            data = {
+                "time_updated": datetime.date.fromtimestamp(request.data.get("time_updated") / 1000.0),
+                "comment": comment,
+                "course": request.data.get("course_id"),
+            }
+            
+            serializer = ReviewSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ReviewIdList(APIView):

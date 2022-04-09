@@ -47,11 +47,14 @@
               <h3 class="text-sm text-gray-700 dark:text-gray-300">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
-                  {{ course.name }}
+                  {{ course.name }} ({{ course.meeting_section }})
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 {{ course.department }} - {{ course.course_num }}
+              </p>
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                {{ course.semester }}
               </p>
             </div>
           </div>

@@ -1,6 +1,14 @@
 <template>
   <div class="bg-white dark:bg-gray-800">
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
+
+      <h2
+        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
+      >
+        Courses
+      </h2>
+
+      <!-- Search Bar + Dropdown for more specific search -->
       <div class ="flex flex-row space-x-3">
         <Search @update-filter="updateFilter" />
         <SelectMenu :options=filters @update-option="updateOption" />
@@ -24,16 +32,6 @@
             />
           </svg>
         </span>
-      </div>
-      
-      <h2
-        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
-      >
-        Courses
-      </h2>
-
-      <div>
-        <Search @update-filter="updateFilter" />
       </div>
 
       <div
@@ -92,7 +90,7 @@ let option = "";
 
 const optionsToField = {
   2 : "name",
-  3 : "number",
+  3 : "course_num",
   4 : "department"
 };
 

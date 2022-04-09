@@ -23,7 +23,7 @@ const router = createRouter({
     {
       path: "/write/:course",
       name: "write",
-      
+
       component: WriteView,
     },
     {

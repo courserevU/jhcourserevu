@@ -1,7 +1,8 @@
 <template>
-  <Listbox as="div" v-model="selected">
+  <Listbox as="div" v-model="selected" @click="$emit('update-option', selected)">
     <div class="relative">
       <ListboxButton class="relative w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 border border-gray-300 rounded shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
+        <div v-if="!selected">Select Search Criteria </div>
         <span class="flex items-center">
           <span class="ml-3 block truncate">{{ selected.name }}</span>
         </span>
@@ -12,11 +13,11 @@
 
       <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
         <ListboxOptions class="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black dark:ring-white ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-          <ListboxOption as="template" v-for="semester in semesters" :key="semester.id" :value="semester" v-slot="{ active, selected }">
+          <ListboxOption as="template" v-for="option in options" :key="option.id" :value="option" v-slot="{ active, selected }">
             <li :class="[active ? 'text-white bg-indigo-600' : 'text-gray-900 dark:text-gray-200', 'cursor-default select-none relative py-2 pl-3 pr-9']">
               <div class="flex items-center">
                 <span :class="[selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate']">
-                  {{ semester.name }}
+                  {{ option.name }}
                 </span>
               </div>
 
@@ -36,25 +37,6 @@ import { ref } from 'vue'
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 
-const semesters = [
-  {
-    id: 1,
-    name: 'Please Choose a Semester',
-  },
-  {
-    id: 2,
-    name: 'Fall 2021',
-  },
-  {
-    id: 3,
-    name: 'Spring 2021',
-  },
-  {
-    id: 4,
-    name: 'Fall 2020',
-  },
-]
-
 export default {
   components: {
     Listbox,
@@ -65,13 +47,11 @@ export default {
     CheckIcon,
     SelectorIcon,
   },
-  setup() {
-    const selected = ref(semesters[0])
-
+  props: ['options'],
+  data() {
     return {
-      semesters,
-      selected,
-    }
-  },
+      selected: ""
+    };
+  }
 }
 </script>

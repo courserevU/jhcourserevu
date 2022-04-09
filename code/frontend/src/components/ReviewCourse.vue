@@ -37,8 +37,8 @@
           v-model="prof"
         />
       </div>
-      <!-- Semseter -->
-      <SelectMenu />
+      <!-- Semester -->
+      <SelectMenu :options="semesters" />
     </div>
     <div class="py-5"></div>
 
@@ -75,6 +75,7 @@
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
+
           v-model="teachStyle"
         ></textarea>
       </div>
@@ -194,6 +195,7 @@ import { defineComponent } from "vue";
 import SelectMenu from "./SelectMenu.vue";
 import axios from "axios";
 
+
 export default defineComponent({
   components: { SelectMenu },
   data() {
@@ -205,6 +207,24 @@ export default defineComponent({
       workload: "",
       assignment: "",
       exam: "",
+      semesters: [
+        {
+            id: 1,
+            name: 'Please Choose an Option',
+        },
+        {
+            id: 2,
+            name: 'Fall 2021',
+        },
+        {
+            id: 3,
+            name: 'Spring 2021',
+        },
+        {
+            id: 4,
+            name: 'Fall 2020',
+        }
+      ],
     };
   },
   props: {

@@ -124,7 +124,6 @@ export default defineComponent({
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
-        console.log(JSON.parse(JSON.stringify(data.results)));
       })
 
     // axios.get(`http://localhost:8000/course/api/`)
@@ -143,6 +142,13 @@ export default defineComponent({
     },
     changePage(e: number) {
       this.page = e;
+
+      // Gets correct page of courses via API page query
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`)
+      .then((response) => {
+        const data = response.data;
+        this.courses = data.results;
+      })
     },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });

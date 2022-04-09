@@ -21,12 +21,13 @@ const router = createRouter({
       component: CourseView,
     },
     {
-      path: "/write",
+      path: "/write/:course",
       name: "write",
+
       component: WriteView,
     },
     {
-      path: "/read",
+      path: "/read/:course",
       name: "read",
       component: ReadView,
     },

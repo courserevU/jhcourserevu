@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from course.models import Course, Review
+from course.models import Course, Review, Comment
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -34,3 +34,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         #instance.teaching_effectiveness = validated_data.get('teaching_effectiveness', instance.teaching_effectiveness)
         #instance.prof_availability = validated_data.get('prof_availability', instance.prof_availability)
         #instance.grading_style = validated_data.get('grading_style', instance.grading_style)
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = "__all__"  # will include all fields in model

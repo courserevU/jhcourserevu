@@ -35,10 +35,18 @@
             </div>
           </div>
           <div class="mt-2"> 
-            <Checkbox label="I have taken this course" inputValue="taken" v-model="selectedOptions" />
+            <!-- <Checkbox label="I have taken this course" inputValue="takens" v-model="taken" /> -->
+            <!-- <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">{{ checked }}</label> -->
           </div>
+
+          <!-- TODO make it so the write review button only appears when the check box has been ticked,  -->
+          <!-- check from user if the user has previously ticked the box check box has been ticked -->
+          <!-- have a vraiable that keeps track of the check mark -->
+          <!-- only ifthe varibale is ture than check it -->
           <div class="block inline-flex mt-4 mb-2">
             <button
+              v-if="taken"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToWriteReview(course)"
@@ -49,6 +57,7 @@
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToReadReviews(course)"
+              
             >
               Read Reviews
             </button>
@@ -67,7 +76,7 @@ import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
-
+let taken = true;
 let courses = [
   {
     id: 1,

@@ -58,6 +58,9 @@
               </p>
             </div>
           </div>
+          <div class="mt-2"> 
+            <Checkbox label="I have taken this course" inputValue="taken" v-model="selectedOptions" />
+          </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
               type="button"
@@ -84,7 +87,9 @@ import { defineComponent } from 'vue';
 import Search from './Search.vue';
 import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
+import Checkbox from "./Checkbox.vue";
 import axios from "axios";
+
 
 let courses = [];
 
@@ -121,7 +126,7 @@ export default defineComponent({
       page: 1,
     }
   },
-  components: { Search, SelectMenu, Pagination },
+  components: { Search, SelectMenu, Pagination, Checkbox },
   mounted() {
     axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
       .then((response) => {

@@ -10,6 +10,7 @@ click==8.0.4
 colorama==0.4.4
 dj-database-url==0.5.0
 Django==4.0.2
+django-cors-headers==3.11.0
 django-environ==0.8.1
 django-heroku==0.3.1
 django-rest-framework==0.1.0
@@ -29,7 +30,6 @@ pydash==5.1.0
 Pygments==2.11.2
 pyparsing==3.0.7
 pytz==2021.3
-pyqt5==5.13
 regex==2022.3.15
 requests==2.27.1
 six==1.16.0

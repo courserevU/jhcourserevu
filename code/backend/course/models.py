@@ -146,3 +146,4 @@ class Comment(models.Model):
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     comment = models.TextField(default="", null=True)
+    category = models.TextField(default="", null=True)

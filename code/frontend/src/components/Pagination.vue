@@ -73,8 +73,7 @@
 import { defineComponent } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
-// let page = 1;
-const maxPage = 5;
+const maxPage = 5; //temporary
 
 export default defineComponent({
   name: "Pagination",

@@ -47,11 +47,14 @@
               <h3 class="text-sm text-gray-700 dark:text-gray-300">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
-                  {{ course.name }}
+                  {{ course.name }} ({{ course.meeting_section }})
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 {{ course.department }} - {{ course.course_num }}
+              </p>
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                {{ course.semester }}
               </p>
             </div>
           </div>
@@ -124,7 +127,6 @@ export default defineComponent({
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
-        console.log(JSON.parse(JSON.stringify(data.results)));
       })
 
     // axios.get(`http://localhost:8000/course/api/`)
@@ -143,6 +145,13 @@ export default defineComponent({
     },
     changePage(e: number) {
       this.page = e;
+
+      // Gets correct page of courses via API page query
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`)
+      .then((response) => {
+        const data = response.data;
+        this.courses = data.results;
+      })
     },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });

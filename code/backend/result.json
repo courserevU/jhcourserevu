@@ -1,0 +1,93 @@
+{
+    "Bloomberg School of Public Health": [
+        {}
+    ],
+    "Bloomberg School of Public Health Non-Credit": [
+        {}
+    ],
+    "Carey Business School": [
+        {}
+    ],
+    "Krieger School of Arts and Sciences": [
+        {
+            "name": "Honors Thesis",
+            "description": [
+                {
+                    "Description": "You must request Independent Academic Work using the Independent Academic Work form found in Student Self-Service: Registration > Online Forms.",
+                    "Departments": "AS History of Art",
+                    "DepartmentID": "10",
+                    "Credits": "3.00",
+                    "CreditType": "Writing Intensive",
+                    "WebNotes": "",
+                    "Meetings": [
+                        {
+                            "DOW": "None",
+                            "Dates": "01-24-2022 to 04-29-2022",
+                            "Times": "",
+                            "Location": "Homewood Campus",
+                            "Building": "",
+                            "Room": ""
+                        }
+                    ],
+                    "Fees": [],
+                    "Prerequisites": [
+                        {
+                            "Description": "You must request Independent Academic Work using the Independent Academic Work form found in Student Self-Service: Registration > Online Forms.",
+                            "Expression": "AS.990.500[C]",
+                            "IsNegative": "N"
+                        }
+                    ],
+                    "EvaluationUrls": [],
+                    "PosTags": [],
+                    "CoRequisites": [],
+                    "Restrictions": [],
+                    "Instructors": [
+                        {
+                            "HopkinsID": "QMSFS1"
+                        }
+                    ],
+                    "Equivalencies": []
+                }
+            ],
+            "course_num": "AS.010.522",
+            "num_credits": "3.00",
+            "department": "AS History of Art",
+            "level": "Independent Academic Work",
+            "prerequisites": "",
+            "corequisites": "",
+            "school": "Krieger School of Arts and Sciences",
+            "campus": "Homewood Campus",
+            "is_writing_intensive": true,
+            "meeting_section": "11",
+            "instructors": "Deleonardis, Lisa",
+            "semester": "Spring"
+        }
+    ],
+    "Krieger School of Arts and Sciences Advanced Academic Programs": [
+        {}
+    ],
+    "Nitze School of Advanced International Studies": [
+        {}
+    ],
+    "School of Education": [
+        {}
+    ],
+    "School of Medicine": [
+        {}
+    ],
+    "School of Nursing": [
+        {}
+    ],
+    "The Peabody Institute": [
+        {}
+    ],
+    "The Peabody Preparatory": [
+        {}
+    ],
+    "Whiting School of Engineering": [
+        {}
+    ],
+    "Whiting School of Engineering Programs for Professionals": [
+        {}
+    ]
+}

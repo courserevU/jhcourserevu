@@ -7,5 +7,5 @@ urlpatterns = [
     path('api/', CourseList.as_view(), name='course_api'),
     re_path('^api/(?P<course_num>.+)/$', CourseNumberList.as_view(), name='course_num_api'),
     path('review/api/', ReviewList.as_view(), name='review_api'),
-    re_path('^review/api/(?P<course_num>.+)/$', ReviewIdList.as_view(), name='review_by_course_api'),
+    re_path('^review/api/(?P<course_id>.+)/$', ReviewList.as_view(), name='review_by_course_api'),
 ]

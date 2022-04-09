@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 
 
-from course.models import Course, Review
-from .serializers import CourseSerializer, ReviewSerializer
+from course.models import Course, Review, Comment
+from .serializers import CourseSerializer, ReviewSerializer, CommentSerializer
 
 from django.http import Http404, HttpResponse
 import json
@@ -81,7 +81,7 @@ class ReviewList(APIView):
         """
         List of all reviews
         """
-        reviews = Review.objects.all()
+        comments = Comment.objects.all()
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -89,21 +89,33 @@ class ReviewList(APIView):
         """
         Create review associated with given course
         """
-        comments = request.data.get("comments")
-        for comment in comments.values() :
+        comments = []
+        data = {
+            "course": request.data.get("course_id"),
+        }
+        review_serializer = ReviewSerializer(data=data)
+        if review_serializer.is_valid():
+            review_serializer.save()
+        else:
+            return Response(review_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        comments_data = request.data.get("comments")
+        for category, comment in comments_data.items() :
 
             data = {
-                "time_updated": datetime.date.fromtimestamp(request.data.get("time_updated") / 1000.0),
+                "review": review_serializer.data.get('id'),
                 "comment": comment,
-                "course": request.data.get("course_id"),
+                "category": category,
             }
             
-            serializer = ReviewSerializer(data=data)
+            serializer = CommentSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                comments.append(serializer.data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(comments, status=status.HTTP_201_CREATED)
 
 
 class ReviewIdList(APIView):

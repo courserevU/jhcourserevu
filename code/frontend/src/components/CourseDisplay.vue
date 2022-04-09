@@ -8,13 +8,13 @@
       </div>
 
       <h2
-        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
+        class="text-2xl  font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
       >
         Courses
       </h2>
 
       <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid  grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div
           v-for="course in filteredCourses"
@@ -29,13 +29,13 @@
                   {{ course.name }}
                 </a>
               </h3>
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p class="mt-2  text-sm text-gray-500 dark:text-gray-400">
                 {{ course.department }} - {{ course.number }}
               </p>
             </div>
           </div>
           <div class="mt-2"> 
-            <!-- <Checkbox label="I have taken this course" inputValue="takens" v-model="taken" /> -->
+            <Checkbox label="I  have taken this course" inputValue="takens" v-model="taken" />
             <!-- <input type="checkbox" id="checkbox" v-model="checked">
             <label for="checkbox">{{ checked }}</label> -->
           </div>
@@ -45,17 +45,24 @@
           <!-- have a vraiable that keeps track of the check mark -->
           <!-- only ifthe varibale is ture than check it -->
           <div class="block inline-flex mt-4 mb-2">
-            <button
+            <!-- <button
               v-if="taken"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToWriteReview(course)"
             >
               Write Review
+            </button> -->
+            <button
+              type="button"
+              class="bg-blue-500  hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              @click="goToWriteReview(course)"
+            >
+              Write Review
             </button>
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500  hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToReadReviews(course)"
               
             >

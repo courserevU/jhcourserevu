@@ -6,13 +6,13 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 
 | Name                     | JHU Email        | GitHub Username |
 | ------------------------ | ---------------- | --------------- |
-| Theodore Xie             | txie10@jhu.edu   | theodore-xie    |
-| Sebastian Cabrejos       | scabrej1@jhu.edu | boccca2014      |
-| Melody Hsu               | mhsu13@jhu.edu   | melodymhsu      |
 | Bridget Carr             | bcarr15@jhu.edu  | bcarr15         |
-| Tsige Solomon            | tsolomo8@jhu.edu | tsigeas         |
-| Narayani Wagle           | nwagle1@jhu.edu  | nhwagle         |
+| Sebastian Cabrejos       | scabrej1@jhu.edu | boccca2014      |
 | Stephania Rincon Godinez | srincon3@jhu.edu | Stephrg         |
+| Tsige Solomon            | tsolomo8@jhu.edu | tsigeas         |
+| Melody Hsu               | mhsu13@jhu.edu   | melodymhsu      |
+| Narayani Wagle           | nwagle1@jhu.edu  | nhwagle         |
+| Theodore Xie             | txie10@jhu.edu   | theodore-xie    |
 
 **Advisors**
 
@@ -28,15 +28,18 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 
 # Installing / Getting started
 
+We recommend forking the repository before starting, so you can maintain
+your own instance of the application.
+
 ## Backend (Django)
 
-Before anything else, enter the backend dir:
+Before anything else, enter the backend directory:
 
 ```shell
 cd code/backend
 ```
 
-There are a TWO options here to activate the backend:
+There are a **two** options here to activate the backend:
 
 ### Docker (Recommended)
 
@@ -63,7 +66,7 @@ python3 -m venv django-venv # Assumes you have Python3 installed
 ```
 
 2. Enter the environment (Make sure to setup your Python Virtual environment
-as "django-venv" to avoid pushing it to your remote repository!)
+   as "django-venv" to avoid pushing it to your remote repository!)
 
 ```
 source django-venv/bin/activate
@@ -81,7 +84,7 @@ pip3 install -r requirements.txt
 python manage.py runserver
 ```
 
-5. Head to [http://0.0.0.0:8000/](http://0.0.0.0:8000/) and get started with developing!
+5. Head to [http://0.0.0.0:8000/](http://0.0.0.0:8000/) and start developing!
 
 EXITING
 
@@ -94,6 +97,7 @@ deactivate
 ```
 
 ## Setting up Your Environment Variables
+
 In order to use our application locally, you need to
 set up the environment variables (i.e. secrets, token, etc.)
 to get data from the other platforms this product relies on.
@@ -145,7 +149,7 @@ data (currently all the way back to 2009):
 
 - Fall 2021
 
-and so on.
+and so on...
 
 # Frontend Local Development (Vue)
 
@@ -168,15 +172,16 @@ npm run dev
 ```
 
 # Test Suite
+
 ## Frontend
 
 ## Backend
 
 # Deploying the Application & Release Process
+
 ## Frontend
 
 ## Backend
-
 
 <!--
 You should include what is needed (e.g. all of the configurations) to set up the dev environment. For instance, global dependencies or any other tools (include download links), explaining what database (and version) has been used, etc. If there is any virtual environment, local server, ..., explain here.

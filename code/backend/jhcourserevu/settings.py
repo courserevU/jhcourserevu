@@ -134,21 +134,14 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend"
 ]
 
-
 # Documentation: https://django-microsoft-auth.readthedocs.io/en/latest/usage.html
 # CHANGE ENTIRE SECTION BELOW with info from Azure AD app
 # https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
-# values you got from step 2 from your Mirosoft app
+# values you got from step 2 from your Microsoft app
 MICROSOFT_AUTH_CLIENT_ID = os.environ.get("MICROSOFT_AUTH_CLIENT_ID")
 MICROSOFT_AUTH_CLIENT_SECRET = os.environ.get("MICROSOFT_AUTH_CLIENT_SECRET")
 MICROSOFT_AUTH_TENANT_ID = os.environ.get("MICROSOFT_AUTH_TENANT_ID")
-
-# pick one MICROSOFT_AUTH_LOGIN_TYPE value
-# Microsoft authentication
-# include Microsoft Accounts, Office 365 Enterpirse and Azure AD accounts
 MICROSOFT_AUTH_LOGIN_TYPE = 'ma'
-
-# END MICROSOFT AUTH SECTION
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

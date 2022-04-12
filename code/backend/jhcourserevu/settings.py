@@ -103,7 +103,9 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
-        #"HOST": os.environ.get("DB_HOST"),
+        # Set DB_HOST = "localhost" if using Python Virtual Environment
+        # Set DB_HOST = "db" if using Docker
+        "HOST": os.environ.get("DB_HOST"),
         "PORT": "5432",
     }
 }
@@ -137,10 +139,9 @@ AUTHENTICATION_BACKENDS = [
 # CHANGE ENTIRE SECTION BELOW with info from Azure AD app
 # https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
 # values you got from step 2 from your Mirosoft app
-MICROSOFT_AUTH_CLIENT_ID = 'd6ad94da-955d-4097-8efc-0520fe2139c6'
-MICROSOFT_AUTH_CLIENT_SECRET = 'Yr97Q~6HygFY~rKfaAQjnf3yFXperM2DnQXzF'
-# Tenant ID is also needed for single tenant applications
-MICROSOFT_AUTH_TENANT_ID = 'f8cdef31-a31e-4b4a-93e4-5f571e91255a'
+MICROSOFT_AUTH_CLIENT_ID = os.environ.get("MICROSOFT_AUTH_CLIENT_ID")
+MICROSOFT_AUTH_CLIENT_SECRET = os.environ.get("MICROSOFT_AUTH_CLIENT_SECRET")
+MICROSOFT_AUTH_TENANT_ID = os.environ.get("MICROSOFT_AUTH_TENANT_ID")
 
 # pick one MICROSOFT_AUTH_LOGIN_TYPE value
 # Microsoft authentication

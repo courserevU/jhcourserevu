@@ -20,15 +20,15 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 | ---------- | --------------- | --------------- |
 | Melody Lee | hlee244@jhu.edu | melodyhplee     |
 
-## Documentation
+# Documentation
 
 - [Project Document](https://docs.google.com/document/d/1ERXfE-sJ2X_Asr5cXk-hHA5Ayl_FxULpkI7nzGDUnOM)
 - [User Manual](https://cs421sp22-homework.github.io/project-team-08-random/)
 - [API Documentation](https://cs421sp22-homework.github.io/project-team-08-random/)
 
-## Installing / Getting started
+# Installing / Getting started
 
-### Backend (Django)
+## Backend (Django)
 
 Before anything else, enter the backend dir:
 
@@ -36,7 +36,7 @@ Before anything else, enter the backend dir:
 cd code/backend
 ```
 
-There are a few options here to activate the backend:
+There are a TWO options here to activate the backend:
 
 ### Docker (Recommended)
 
@@ -50,6 +50,10 @@ docker compose up
 
 4. Head to [http://0.0.0.0:8000/](http://0.0.0.0:8000/) and get started with developing!
 
+EXITING
+
+5. Use CTRL-C to stop the docker container.
+
 ### Python Virtual Environment
 
 1. Create the Python Virtual Environment
@@ -58,7 +62,8 @@ docker compose up
 python3 -m venv django-venv # Assumes you have Python3 installed
 ```
 
-2. Enter the environment
+2. Enter the environment (Make sure to setup your Python Virtual environment
+as "django-venv" to avoid pushing it to your remote repository!)
 
 ```
 source django-venv/bin/activate
@@ -78,16 +83,26 @@ python manage.py runserver
 
 5. Head to [http://0.0.0.0:8000/](http://0.0.0.0:8000/) and get started with developing!
 
-OPTIONAL STEPS
+EXITING
 
-6. Use command: CTRL-C to exit 7. Exit the Python Virtual Environment.
-7.
+6. Use CTRL-C to stop program.
+
+7. Exit the Python Virtual Environment.
 
 ```shell
 deactivate
 ```
 
-### Populating the Local Database
+## Setting up Your Environment Variables
+In order to use our application locally, you need to
+set up the environment variables (i.e. secrets, token, etc.)
+to get data from the other platforms this product relies on.
+
+Please head to `code/backend/jhcourserevu` and create a file
+called `.env`. Refer to `.env.example` to see how your original
+`.env` file should look like.
+
+## Populating the Local Database
 
 In order to populate your local database, we need to
 get data from the [SIS Web API](https://sis.jhu.edu/api/).
@@ -132,7 +147,7 @@ data (currently all the way back to 2009):
 
 and so on.
 
-### Frontend (Vue)
+# Frontend Local Development (Vue)
 
 1. Enter the directory.
 
@@ -152,18 +167,16 @@ npm install # Assumes you have npm installed
 npm run dev
 ```
 
-## Developing
+# Test Suite
+## Frontend
 
-Begin with the same commands as the previous section for frontend and backend, respectively
+## Backend
 
-### Backend
+# Deploying the Application & Release Process
+## Frontend
 
-Make sure to setup your Python Virtual environment
-as "django-venv" to avoid pushing it to your remote repository!
+## Backend
 
-<!-- ```shell
-
-``` -->
 
 <!--
 You should include what is needed (e.g. all of the configurations) to set up the dev environment. For instance, global dependencies or any other tools (include download links), explaining what database (and version) has been used, etc. If there is any virtual environment, local server, ..., explain here.

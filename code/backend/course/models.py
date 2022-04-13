@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
+
 
 # class Semester(models.Model):
 #     """
@@ -118,7 +118,6 @@ class Review(models.Model):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     time_updated = models.DateTimeField(auto_now_add=True, auto_now=False, blank=True)
-    comments = ArrayField(models.TextField(default="", null=True), default=list, size=7, blank=True)
 
     # TODO: REMOVED FOR NOW
     # comments = models.CharField(max_length=350, default="")
@@ -143,7 +142,6 @@ class Comment(models.Model):
     Attributes:
         review (:obj:`ForeignKey`): associated review
         comment (:obj:`TextField`): single comment in review
-        category (:obj:`TextField`): question/field comment is associated with
     """
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE)

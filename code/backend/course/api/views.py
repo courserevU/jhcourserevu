@@ -79,13 +79,13 @@ class CourseNumberList(generics.ListAPIView):
 class CommentList(APIView):
     def get(self, request, *args, **kwargs):
         """
-        List of all possible reviews and their comments
+        List of all possible comments
         """
         paginator = PageNumberPagination()
         paginator.page_size = 10
-        reviews = Review.objects.get(course=request.data.get("course_id"))
-        result_page = paginator.paginate_queryset(reviews, request)
-        serializer = ReviewSerializer(result_page, many=True)
+        comments = Comment.objects.all()
+        result_page = paginator.paginate_queryset(comments, request)
+        serializer = CommentSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
     def post(self, request, *args, **kwargs):
@@ -93,6 +93,16 @@ class CommentList(APIView):
         Create review associated with given course
         """
         comments = []
+        data = {
+            "course": request.data.get("course_id"),
+        }
+        review_serializer = ReviewSerializer(data=data)
+        if review_serializer.is_valid():
+            review_serializer.save()
+        else:
+            return Response(
+                review_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            )
 
         comments_data = request.data.get("comments")
         for category, comment in comments_data.items():
@@ -109,19 +119,6 @@ class CommentList(APIView):
                 comments.append(serializer.data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # Now create the review with the serialized comments
-        data = {
-            "course": request.data.get("course_id"),
-            "comments": comments,
-        }
-        review_serializer = ReviewSerializer(data=data)
-        if review_serializer.is_valid():
-            review_serializer.save()
-        else:
-            return Response(
-                review_serializer.errors, status=status.HTTP_400_BAD_REQUEST
-            )
 
         return Response(comments, status=status.HTTP_201_CREATED)
 

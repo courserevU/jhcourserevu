@@ -38,7 +38,7 @@
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div
-          v-for="course in filteredCourses"
+          v-for="course in this.courses"
           :key="course.id"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
@@ -144,9 +144,9 @@ export default defineComponent({
   methods: {
     updateFilter(e: any) {
       this.query = e;
-
+      console.log("updateFilter")
       // Gets correct page of courses via API page query
-      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/search/?q=${this.query}/?page=${this.page}`)
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`)
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
@@ -154,12 +154,14 @@ export default defineComponent({
     },
     updateOption(e: any) {
       this.option = e.id;
+      console.log("updateOption")
     },
     changePage(e: number) {
       this.page = e;
 
       // Gets correct page of courses via API page query
-      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?q=${this.query}/?page=${this.page}`)
+      // axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?q=${this.query}/?page=${this.page}`)
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`)
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
@@ -174,16 +176,18 @@ export default defineComponent({
   },
   
   computed: {
-    filteredCourses() {
-      const field = optionsToField[this.option];
+    // filteredCourses() {
+    //   const field = optionsToField[this.option];
     
-      if (field === undefined) return this.courses;
+    //   if (field === undefined) return this.courses;
       
-      return this.courses.filter(
-        course => {
-          return course[field].toLowerCase().includes(this.query.toLowerCase());
-        });
-    },
+      
+
+      // return this.courses.filter(
+      //   course => {
+      //     return course[field].toLowerCase().includes(this.query.toLowerCase());
+      //   });
+    // },
   },
 });
 </script>

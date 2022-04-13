@@ -124,7 +124,7 @@ class CommentList(APIView):
 
 
 class ReviewIdList(APIView):
-    def get(self, request, pk, format=None):
+    def get(self, request, format=None):
         """
         Get review by course id
         """
@@ -132,8 +132,10 @@ class ReviewIdList(APIView):
         paginator.page_size = 10
 
         review_comments = []
+
+        course_id = self.kwargs["course_id"]
         
-        reviews = Review.objects.get(course=pk) # Unsure what pk is, clarification would be nice
+        reviews = Review.objects.get(course=course_id)
         for review in reviews:
           comments = Comment.objects.get(review=review.id)
           for comment in comments:

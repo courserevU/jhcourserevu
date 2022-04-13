@@ -126,11 +126,22 @@ class CommentList(APIView):
 class ReviewIdList(APIView):
     def get(self, request, pk, format=None):
         """
-        Get review by id
+        Get review by course id
         """
-        review = Review.objects.get(pk=pk)
-        serializer = ReviewSerializer(review)
-        return Response(serializer.data)
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        review_comments = []
+        
+        reviews = Review.objects.get(course=pk) # Unsure what pk is, clarification would be nice
+        for review in reviews:
+          comments = Comment.objects.get(review=review.id)
+          for comment in comments:
+            review_comments.append(comment)
+
+        result_page = paginator.paginate_queryset(review_comments, request)
+        serializer = CommentSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def put(self, request, pk, format=None):
         """

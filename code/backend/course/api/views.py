@@ -41,6 +41,17 @@ class CourseList(APIView):
         serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
         return paginator.get_paginated_response(serializer.data)
 
+class QueryCourseList(APIView) :
+    def get(self, request, *args, **kwargs):
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        query = self.request.GET.get("q")
+        courses = Course.objects.filter(name__icontains=query)
+
+        result_page = paginator.paginate_queryset(courses, request)
+        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        return paginator.get_paginated_response(serializer.data)
 
 class CourseNumberList(generics.ListAPIView):
     """

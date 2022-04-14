@@ -23,27 +23,45 @@
                 <span class="font-bold"> Professor: </span>
                 <span>{{ review[0].comment }}</span>
               </h3>
-              <p v-if="review[1] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p
+                v-if="review[1].comment !== '-'"
+                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              >
                 <span class="font-bold">Teaching Style: </span>
                 <span>{{ review[1].comment }}</span>
               </p>
-              <p v-if="review[2] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p
+                v-if="review[2].comment !== '-'"
+                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              >
                 <span class="font-bold">Grading Style: </span>
                 <span>{{ review[2].comment }}</span>
               </p>
-              <p v-if="review[3] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p
+                v-if="review[3].comment !== '-'"
+                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              >
                 <span class="font-bold">Teacher Feedback: </span>
                 <span>{{ review[3].comment }}</span>
               </p>
-              <p v-if="review[4] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p
+                v-if="review[4].comment !== '-'"
+                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              >
                 <span class="font-bold">Workload: </span>
                 <span>{{ review[4].comment }}</span>
               </p>
-              <p v-if="review[5] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p
+                v-if="review[5].comment !== '-'"
+                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              >
                 <span class="font-bold">Assignment Style: </span>
                 <span>{{ review[5].comment }}</span>
               </p>
-              <p v-if="review[6] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p
+                v-if="review[6].comment !== '-'"
+                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+              >
                 <span class="font-bold">Exam Style: </span>
                 <span>{{ review[6].comment }}</span>
               </p>
@@ -131,25 +149,27 @@ export default defineComponent({
     changePage(e: number) {
       this.page = e;
 
-      axios.get(`http://127.0.0.1:8000/course/review/api/1/?page=${this.page}`)
-      .then((response) => {
-        const data = response.data;
-        this.reviews = data.results;
-      });
+      axios
+        .get(`http://127.0.0.1:8000/course/review/api/1/?page=${this.page}`)
+        .then((response) => {
+          const data = response.data;
+          this.reviews = data.results;
+        });
     },
   },
   computed: {
     filteredReviews() {
       let grouped_comments = [];
-      for (let i = 7; i <= this.reviews.length; i+=7) {
-        grouped_comments.push(this.reviews.slice(i - 7, i))
+      for (let i = 7; i <= this.reviews.length; i += 7) {
+        grouped_comments.push(this.reviews.slice(i - 7, i));
       }
       return grouped_comments;
     },
   },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
-    axios.get(`http://127.0.0.1:8000/course/review/api/1/`) // running locally, using course_id=1 for local DB courses
+    axios
+      .get(`http://127.0.0.1:8000/course/review/api/1/`) // running locally, using course_id=1 for local DB courses
       .then((response) => {
         const data = response.data;
         this.reviews = data.results;

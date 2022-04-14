@@ -20,10 +20,32 @@
           <div class="mt-2">
             <div class="relative">
               <h3 class="text-md text-gray-700 dark:text-gray-300">
-                <a> Professor: {{ review.comments[0] }} </a>
+                <span class="font-bold"> Professor: </span>
+                <span>{{ review[0].comment }}</span>
               </h3>
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {{ review.comments.slice(1) }}
+              <p v-if="review[1] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-bold">Teaching Style: </span>
+                <span>{{ review[1].comment }}</span>
+              </p>
+              <p v-if="review[2] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-bold">Grading Style: </span>
+                <span>{{ review[2].comment }}</span>
+              </p>
+              <p v-if="review[3] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-bold">Teacher Feedback: </span>
+                <span>{{ review[3].comment }}</span>
+              </p>
+              <p v-if="review[4] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-bold">Workload: </span>
+                <span>{{ review[4].comment }}</span>
+              </p>
+              <p v-if="review[5] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-bold">Assignment Style: </span>
+                <span>{{ review[5].comment }}</span>
+              </p>
+              <p v-if="review[6] !== '-'" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-bold">Exam Style: </span>
+                <span>{{ review[6].comment }}</span>
               </p>
               <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
@@ -59,35 +81,35 @@ import axios from "axios";
 
 // Pull reviews for a specific course from the DB with a GET request
 
-let reviews = [
-  {
-    id: 1,
-    comments: ["Prof Madooei", "Greatest teaching ever!"],
-    page: 1,
-  },
-  {
-    id: 2,
-    comments: ["Imaginary Professor", "Entirely self-directed class - the professor never appeared!"],
-    page: 1,
-  },
-  {
-    id: 3,
-    comments: ["Mr. Anderson", "We live in a simulation."],
-    page: 1,
-  },
-  {
-    id: 4,
-    comments: ["Mr. Smith", "*equip sunglasses*"],
-    page: 1,
-  },
-  {
-    id: 5,
-    comments: ["[REDACTED]", "Alllll byyy MYYYYYSELLLLF!"],
-    page: 2,
-  },
+// let reviews = [
+//   {
+//     id: 1,
+//     comments: ["Prof Madooei", "Greatest teaching ever!"],
+//     page: 1,
+//   },
+//   {
+//     id: 2,
+//     comments: ["Imaginary Professor", "Entirely self-directed class - the professor never appeared!"],
+//     page: 1,
+//   },
+//   {
+//     id: 3,
+//     comments: ["Mr. Anderson", "We live in a simulation."],
+//     page: 1,
+//   },
+//   {
+//     id: 4,
+//     comments: ["Mr. Smith", "*equip sunglasses*"],
+//     page: 1,
+//   },
+//   {
+//     id: 5,
+//     comments: ["[REDACTED]", "Alllll byyy MYYYYYSELLLLF!"],
+//     page: 2,
+//   },
 
-  // More reviews... load from our db
-];
+//   // More reviews... load from our db
+// ];
 
 let query = "";
 
@@ -96,7 +118,7 @@ export default defineComponent({
   data() {
     return {
       query,
-      reviews,
+      reviews: [],
       page: 1,
       mod: false, // true if current user is moderator - will come from API
     };
@@ -108,21 +130,29 @@ export default defineComponent({
   methods: {
     changePage(e: number) {
       this.page = e;
+
+      axios.get(`http://127.0.0.1:8000/course/review/api/1/?page=${this.page}`)
+      .then((response) => {
+        const data = response.data;
+        this.reviews = data.results;
+      });
     },
   },
   computed: {
     filteredReviews() {
-      return this.reviews.filter((review: any) => {
-        return review.page === this.page;
-      });
+      let grouped_comments = [];
+      for (let i = 7; i <= this.reviews.length; i+=7) {
+        grouped_comments.push(this.reviews.slice(i - 7, i))
+      }
+      return grouped_comments;
     },
   },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
-    axios
-      .get(`https://jhcourserevu-api.herokuapp.com/course/review/api/${JSON.parse(this.course).id}`) // page query?
+    axios.get(`http://127.0.0.1:8000/course/review/api/1/`) // running locally, using course_id=1 for local DB courses
       .then((response) => {
-        this.reviews = response.data;
+        const data = response.data;
+        this.reviews = data.results;
       });
   },
 });

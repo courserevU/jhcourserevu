@@ -143,8 +143,10 @@ export default defineComponent({
   },
   methods: {
     updateFilter(e: any) {
+
       this.query = e;
       console.log("updateFilter")
+      const field = optionsToField[this.option]
       // Gets correct page of courses via API page query
       axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`)
       .then((response) => {
@@ -161,6 +163,7 @@ export default defineComponent({
 
       // Gets correct page of courses via API page query
       // axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?q=${this.query}/?page=${this.page}`)
+      const field = optionsToField[this.option]
       axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`)
       .then((response) => {
         const data = response.data;

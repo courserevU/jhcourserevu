@@ -19,52 +19,26 @@
         >
           <div class="mt-2">
             <div class="relative">
-              <h3 class="text-md text-gray-700 dark:text-gray-300">
-                <span class="font-bold"> Professor: </span>
-                <span>{{ review[0].comment }}</span>
-              </h3>
-              <p
-                v-if="review[1].comment !== '-'"
-                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-              >
-                <span class="font-bold">Teaching Style: </span>
-                <span>{{ review[1].comment }}</span>
-              </p>
-              <p
-                v-if="review[2].comment !== '-'"
-                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-              >
-                <span class="font-bold">Grading Style: </span>
-                <span>{{ review[2].comment }}</span>
-              </p>
-              <p
-                v-if="review[3].comment !== '-'"
-                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-              >
-                <span class="font-bold">Teacher Feedback: </span>
-                <span>{{ review[3].comment }}</span>
-              </p>
-              <p
-                v-if="review[4].comment !== '-'"
-                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-              >
-                <span class="font-bold">Workload: </span>
-                <span>{{ review[4].comment }}</span>
-              </p>
-              <p
-                v-if="review[5].comment !== '-'"
-                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-              >
-                <span class="font-bold">Assignment Style: </span>
-                <span>{{ review[5].comment }}</span>
-              </p>
-              <p
-                v-if="review[6].comment !== '-'"
-                class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-              >
-                <span class="font-bold">Exam Style: </span>
-                <span>{{ review[6].comment }}</span>
-              </p>
+              <div
+          v-for="review in reviews"
+          :key="review[0].review"
+          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
+        >
+          <div class="mt-2">
+            <div class="relative">
+              <div v-for="comment in review" :key="comment.id">
+                <h3
+                  class="text-md text-gray-700 dark:text-gray-300"
+                  v-if="comment.category === 'Professor'"
+                >
+                  <span class="font-bold"> Professor: </span>
+                  <span>{{ comment.comment }}</span>
+                </h3>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" v-else>
+                  <span class="font-bold">{{ comment.category }}: </span>
+                  <span>{{ comment.comment }}</span>
+                </p>
+              </div>
               <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
                 <button class="mr-3">
@@ -118,7 +92,11 @@ export default defineComponent({
       this.page = e;
 
       axios
-        .get(`https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/?page=${this.page}`)
+        .get(
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+            JSON.parse(this.course).id
+          }/?page=${this.page}`
+        )
         .then((response) => {
           const data = response.data;
           this.reviews = data.results;
@@ -137,7 +115,11 @@ export default defineComponent({
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios
-      .get(`https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/`)
+      .get(
+        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+          JSON.parse(this.course).id
+        }/`
+      )
       .then((response) => {
         const data = response.data;
         this.reviews = data.results;

@@ -106,8 +106,8 @@ class CommentList(APIView):
 
         comments_data = request.data.get("comments")
         for category, comment in comments_data.items():
-          if (not(comment and not comment.isspace())):
-              continue
+            if (not(comment and not comment.isspace())):
+                continue
 
             data = {
                 "review": review_serializer.data.get("id"),

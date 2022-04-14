@@ -97,38 +97,6 @@ import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
 
 import axios from "axios";
 
-// Pull reviews for a specific course from the DB with a GET request
-
-// let reviews = [
-//   {
-//     id: 1,
-//     comments: ["Prof Madooei", "Greatest teaching ever!"],
-//     page: 1,
-//   },
-//   {
-//     id: 2,
-//     comments: ["Imaginary Professor", "Entirely self-directed class - the professor never appeared!"],
-//     page: 1,
-//   },
-//   {
-//     id: 3,
-//     comments: ["Mr. Anderson", "We live in a simulation."],
-//     page: 1,
-//   },
-//   {
-//     id: 4,
-//     comments: ["Mr. Smith", "*equip sunglasses*"],
-//     page: 1,
-//   },
-//   {
-//     id: 5,
-//     comments: ["[REDACTED]", "Alllll byyy MYYYYYSELLLLF!"],
-//     page: 2,
-//   },
-
-//   // More reviews... load from our db
-// ];
-
 let query = "";
 
 export default defineComponent({
@@ -150,7 +118,7 @@ export default defineComponent({
       this.page = e;
 
       axios
-        .get(`http://127.0.0.1:8000/course/review/api/1/?page=${this.page}`)
+        .get(`https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/?page=${this.page}`)
         .then((response) => {
           const data = response.data;
           this.reviews = data.results;
@@ -169,7 +137,7 @@ export default defineComponent({
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios
-      .get(`http://127.0.0.1:8000/course/review/api/1/`) // running locally, using course_id=1 for local DB courses
+      .get(`https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/`)
       .then((response) => {
         const data = response.data;
         this.reviews = data.results;

@@ -14,7 +14,7 @@
       >
         <div
           v-for="review in filteredReviews"
-          :key="review.id"
+          :key="review[0].review"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
           <div class="mt-2">
@@ -24,42 +24,42 @@
                 <span>{{ review[0].comment }}</span>
               </h3>
               <p
-                v-if="review[1] !== '-'"
+                v-if="review[1].comment !== '-'"
                 class="mt-2 text-sm text-gray-500 dark:text-gray-400"
               >
                 <span class="font-bold">Teaching Style: </span>
                 <span>{{ review[1].comment }}</span>
               </p>
               <p
-                v-if="review[2] !== '-'"
+                v-if="review[2].comment !== '-'"
                 class="mt-2 text-sm text-gray-500 dark:text-gray-400"
               >
                 <span class="font-bold">Grading Style: </span>
                 <span>{{ review[2].comment }}</span>
               </p>
               <p
-                v-if="review[3] !== '-'"
+                v-if="review[3].comment !== '-'"
                 class="mt-2 text-sm text-gray-500 dark:text-gray-400"
               >
                 <span class="font-bold">Teacher Feedback: </span>
                 <span>{{ review[3].comment }}</span>
               </p>
               <p
-                v-if="review[4] !== '-'"
+                v-if="review[4].comment !== '-'"
                 class="mt-2 text-sm text-gray-500 dark:text-gray-400"
               >
                 <span class="font-bold">Workload: </span>
                 <span>{{ review[4].comment }}</span>
               </p>
               <p
-                v-if="review[5] !== '-'"
+                v-if="review[5].comment !== '-'"
                 class="mt-2 text-sm text-gray-500 dark:text-gray-400"
               >
                 <span class="font-bold">Assignment Style: </span>
                 <span>{{ review[5].comment }}</span>
               </p>
               <p
-                v-if="review[6] !== '-'"
+                v-if="review[6].comment !== '-'"
                 class="mt-2 text-sm text-gray-500 dark:text-gray-400"
               >
                 <span class="font-bold">Exam Style: </span>
@@ -74,7 +74,7 @@
                   />
                 </button>
                 <!-- Delete given review -->
-                <button @click="deleteReview(review.id)">
+                <button @click="deleteReview(review[0].review)">
                   <XIcon class="h-5 w-5 text-red-600" />
                 </button>
               </div>
@@ -106,7 +106,7 @@ export default defineComponent({
       query,
       reviews: [],
       page: 1,
-      mod: false, // true if current user is moderator - will come from API
+      mod: true, // true if current user is moderator - will come from API
     };
   },
   components: { Search, Pagination, AnnotationIcon, XIcon },
@@ -152,7 +152,7 @@ export default defineComponent({
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios
-      .get(`http://127.0.0.1:8000/course/review/api/1/`) // running locally, using course_id=1 for local DB courses
+      .get(`http://127.0.0.1:8000/course/review/api/1/`)
       .then((response) => {
         const data = response.data;
         this.reviews = data.results;

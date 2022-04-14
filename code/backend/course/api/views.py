@@ -109,7 +109,7 @@ class CommentList(APIView):
 
             data = {
                 "review": review_serializer.data.get("id"),
-                "comment": comment,
+                "comment": comment if (comment and not comment.isspace()) else "-",
                 "category": category,
             }
 
@@ -124,20 +124,20 @@ class CommentList(APIView):
 
 
 class ReviewIdList(APIView):
-    def get(self, request, format=None):
+    def get(self, request, course_id, format=None):
         """
         Get review by course id
         """
         paginator = PageNumberPagination()
-        paginator.page_size = 10
+        paginator.page_size = 70
 
         review_comments = []
 
         course_id = self.kwargs["course_id"]
-        
-        reviews = Review.objects.get(course=course_id)
+        reviews = Review.objects.filter(course=course_id)
+
         for review in reviews:
-          comments = Comment.objects.get(review=review.id)
+          comments = Comment.objects.filter(review=review.id)
           for comment in comments:
             review_comments.append(comment)
 

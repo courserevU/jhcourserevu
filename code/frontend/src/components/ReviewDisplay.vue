@@ -97,13 +97,17 @@ export default defineComponent({
     },
     deleteReview(id: number) {
       axios
-        .delete(`http://127.0.0.1:8000/course/review/api/${id}/`)
-        .then((response) => {
-          console.log(response);
-
+        .delete(
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`
+        )
+        .then(() => {
           // Reload page with updated review list
           axios
-            .get(`http://127.0.0.1:8000/course/review/api/1/?page=${this.page}`)
+            .get(
+              `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+                JSON.parse(this.course).id
+              }/`
+            )
             .then((response) => {
               const data = response.data;
               this.reviews = data.results;

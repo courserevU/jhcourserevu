@@ -2,40 +2,33 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-# from rest_framework import permissions
 from user.models import User
 from .serializers import UserSerializer
 
 from django.contrib.sites.shortcuts import get_current_site
 
 
-def test_sso_view(request):
-    current_site = get_current_site(request)
-    if current_site.domain == 'login.microsoftonline.com':
-        pass
-    else:
-        pass
-
-class UserList(APIView):
+class UserDetail(APIView):
     def get(self, request, *args, **kwargs):
         """
-        Login for returning user
+        Get users' courses by user's id
         """
-        users = User.objects.filter(user=request.user.id)
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        user_id = self.kwargs["user_id"]
+        curr_user = User.objects.filter(user=user_id)
+
+        curr_user_courses = []
+        for course in curr_user:
+            curr_user_courses.append(course.course)
+            
+        
+        return Response(curr_user_courses)
 
     def post(self, request, *args, **kwargs):
         """
-        Create new user - Signup
+        Add user courses' to "my courses"
         """
         data = {
-            "user": request.data.get("user"),
-            "jhed_id": request.data.get("jhed_id"),
-            "jhed_email": request.data.get("jhed_email"),
-            "class_year": request.data.get("class_year"),
-            "preferred_name": request.data.get("preferred_name"),
-            "is_admin": request.data.get("is_admin"),
+            "course": request.data.get("course_id"),
         }
 
         serializer = UserSerializer(data=data)
@@ -44,3 +37,11 @@ class UserList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def test_sso_view(request):
+    current_site = get_current_site(request)
+    if current_site.domain == "login.microsoftonline.com":
+        pass
+    else:
+        pass

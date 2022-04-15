@@ -14,7 +14,7 @@
       >
         <div
           v-for="review in reviews"
-          :key="review[0].review"
+          :key="reviews.indexOf(review)"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
           <div class="mt-2">

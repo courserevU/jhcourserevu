@@ -5,68 +5,87 @@ from course.models import Review
 # Create your tests here.
 class CourseModelTests(TestCase):
     def setUp(self):
-        Course.objects.create(name = "OOSE", 
-                              description = "Object-Oriented Software Engineering",
-                              course_num = "EN.601.421",
-                              num_credits = 3,
-                              department = "Computer Science",
-                              level = "Upper level undergraduate",
-                              prerequisites = "Data Structures, UIMA or Full-Stack JS",
-                              corequisites = "None",
-                              school = "Whiting School of Engineering",
-                              campus = "Homewood", 
-                              notes = "Project-based",
-                              info = "A course for OOSE",
-                              exclusions = "No exclusions",
-                              instructors = "Ali Madooei") 
+        self.name = "OOSE",
+        self.description = "Object-Oriented Software Engineering",
+        self.course_num = "EN.601.421",
+        self.num_credits = "3",
+        self.department = "Computer Science",
+        self.level = "Upper level undergraduate",
+        self.prerequisites = "Data Structures, UIMA or Full-Stack JS",
+        self.corequisites = "None",
+        self.school = "Whiting School of Engineering",
+        self.campus = "Homewood",
+        self.is_writing_intensive = "Yes",
+        self.meeting_section = "2",
+        self.size = 20,
+        self.instructors = "Ali Madooei",
+        self.semester = "FA2019"
+        # Course.objects.create(name="OOSE",
+        #                       description="Object-Oriented Software Engineering",
+        #                       course_num="EN.601.421",
+        #                       num_credits="3",
+        #                       department="Computer Science",
+        #                       level="Upper level undergraduate",
+        #                       prerequisites="Data Structures, UIMA or Full-Stack JS",
+        #                       corequisites="None",
+        #                       school="Whiting School of Engineering",
+        #                       campus="Homewood",
+        #                       is_writing_intensive="Yes",
+        #                       meeting_section="2",
+        #                       size=20,
+        #                       instructors="Ali Madooei",
+        #                       semester="FA2019")
 
     def test_course_name(self):
-        self.assertEqual(self.name, "OOSE")
+        self.assertEqual(self.name[0], "OOSE")
 
     def test_course_des(self):
-        self.assertEqual(self.description, "Object-Oriented Software Engineering")
+        self.assertEqual(self.description[0], "Object-Oriented Software Engineering")
     
     def test_course_num(self):
-        self.assertEqual(self.course_num, "EN.601.421")
+        self.assertEqual(self.course_num[0], "EN.601.421")
     
     def test_course_credits(self):
-        self.assertEqual(self.num_credits, 3)
+        self.assertEqual(self.num_credits[0], "3")
     
     def test_course_dept(self):
-        self.assertEqual(self.department, "Computer Science")
+        self.assertEqual(self.department[0], "Computer Science")
 
     def test_course_level(self):
-        self.assertEqual(self.level, "Upper level undergraduate")
+        self.assertEqual(self.level[0], "Upper level undergraduate")
 
     def test_course_prereq(self):
-        self.assertEqual(self.prerequisites, "Data Structures, UIMA or Full-Stack JS")
+        self.assertEqual(self.prerequisites[0], "Data Structures, UIMA or Full-Stack JS")
     
     def test_course_coreq(self):
-        self.assertEqual(self.corequisites, "None")
+        self.assertEqual(self.corequisites[0], "None")
 
     def test_course_school(self):
-        self.assertEqual(self.school, "Whiting School of Engineering")
+        self.assertEqual(self.school[0], "Whiting School of Engineering")
     
     def test_course_campus(self):
-        self.assertEqual(self.campus, "Homewood")
-    
-    def test_course_notes(self):
-        self.assertEqual(self.notes, "Project-based")
-    
-    def test_course_info(self):
-        self.assertEqual(self.info, "A course for OOSE")
-    
-    def test_course_excl(self):
-        self.assertEqual(self.exclusions, "No exclusions")
+        self.assertEqual(self.campus[0], "Homewood")
+
+    def test_is_writing_intensive(self):
+        self.assertEqual(self.is_writing_intensive[0], "Yes")
+
+    def test_meeting_section(self):
+        self.assertEqual(self.meeting_section[0], "2")
+
+    def test_size(self):
+        self.assertEqual(self.size[0], 20)
     
     def test_course_inst(self):
-        self.assertEqual(self.instructors, "Ali Madooei")
+        self.assertEqual(self.instructors[0], "Ali Madooei")
+
+    def test_semester(self):
+        self.assertEqual(self.semester, "FA2019")
 
 class ReviewModelTests(TestCase):
 
     def setup(self):
         Review.objects.create(
-            course='OOSE',
+            course=Course.objects.create(),
             time_updated='Friday, March 18, 2022 4:24:50 PM'
         )
         # Review.objects.create(

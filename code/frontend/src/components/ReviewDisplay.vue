@@ -41,7 +41,7 @@
                   />
                 </button>
                 <!-- Delete given review -->
-                <button class="">
+                <button @click="deleteReview(review[0].review)">
                   <XIcon class="h-5 w-5 text-red-600" />
                 </button>
               </div>
@@ -73,7 +73,7 @@ export default defineComponent({
       query,
       reviews: [],
       page: 1,
-      mod: false, // true if current user is moderator - will come from API
+      mod: true, // true if current user is moderator - will come from API
     };
   },
   components: { Search, Pagination, AnnotationIcon, XIcon },
@@ -93,6 +93,25 @@ export default defineComponent({
         .then((response) => {
           const data = response.data;
           this.reviews = data.results;
+        });
+    },
+    deleteReview(id: number) {
+      axios
+        .delete(
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`
+        )
+        .then(() => {
+          // Reload page with updated review list
+          axios
+            .get(
+              `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+                JSON.parse(this.course).id
+              }/`
+            )
+            .then((response) => {
+              const data = response.data;
+              this.reviews = data.results;
+            });
         });
     },
   },

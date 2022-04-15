@@ -161,12 +161,20 @@ class ReviewIdList(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, course_id, format=None):
         """
         Delete review by id
+        NOTE: course_id is actually the review id in this case
         """
-        review = Review.objects.get(pk=pk)
+        review_id = self.kwargs["course_id"]
+
+        review = Review.objects.get(id=review_id)
         review.delete()
+
+        comments = Comment.objects.filter(review=review.id)
+        for comment in comments:
+          comment.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

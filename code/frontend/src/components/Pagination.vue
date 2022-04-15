@@ -11,7 +11,14 @@
           <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
         </button>
       </li>
-      <li>
+      <li v-for="index in maxPage" :key="index">
+        <button
+          :disabled="isSelected(index)"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
+          @click="goToPage(index)"
+        >{{ index }}</button>
+      </li>
+      <!-- <li>
         <button
           :disabled="isSelected(1)"
           class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
@@ -55,7 +62,7 @@
         >
           5
         </button>
-      </li>
+      </li> -->
       <li>
         <button
           @click="nextPage"
@@ -73,8 +80,6 @@
 import { defineComponent } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
-const maxPage = 5; //temporary
-
 export default defineComponent({
   name: "Pagination",
   data() {
@@ -82,23 +87,26 @@ export default defineComponent({
       page: 1,
     };
   },
+  props: {
+    maxPage: Number,
+  },
   components: { ChevronLeftIcon, ChevronRightIcon },
   methods: {
     nextPage() {
-      if (this.page < maxPage) {
+      if (this.page < this.maxPage) {
         this.page += 1;
-        this.$emit('change-page', this.page);
+        this.$emit("change-page", this.page);
       }
     },
     prevPage() {
       if (this.page > 1) {
         this.page -= 1;
-        this.$emit('change-page', this.page);
+        this.$emit("change-page", this.page);
       }
     },
     goToPage(e: number) {
       this.page = e;
-      this.$emit('change-page', this.page);
+      this.$emit("change-page", this.page);
     },
     isSelected(index: number) {
       if (this.page === index) {

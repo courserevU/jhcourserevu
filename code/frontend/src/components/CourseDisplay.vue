@@ -76,7 +76,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" :maxPage="total_pages" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
@@ -124,7 +124,7 @@ export default defineComponent({
         }
       ],
       page: 1,
-      total_pages: 0,
+      totalPages: Number,
     }
   },
   components: { Search, SelectMenu, Pagination, Checkbox },
@@ -133,15 +133,8 @@ export default defineComponent({
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
-        this.total_pages = Math.ceil(data.count / 10);
+        this.totalPages = Math.ceil(data.count / 10);
       })
-
-    // axios.get(`http://localhost:8000/course/api/`)
-    //   .then((response) => {
-    //     const data = response.data;
-    //     this.courses = data.results;
-    //     console.log(JSON.parse(JSON.stringify(data.results)));
-    //   })
   },
   methods: {
     updateFilter(e: any) {

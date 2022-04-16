@@ -10,6 +10,24 @@ from .serializers import UserSerializer, MyCoursesSerializer
 from django.contrib.sites.shortcuts import get_current_site
 
 
+class UserUpdate(APIView):
+    def post(self, request, *args, **kwargs):
+        """
+        Add course to user's set of "my courses"
+        """
+        data = {
+            "course": request.data.get("course_id"),
+        }
+
+        serializer = MyCoursesSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserDetail(APIView):
     def get(self, request, user_id, format=None):
         """
@@ -23,24 +41,8 @@ class UserDetail(APIView):
             c = Course.objects.filter(course=course.course_id)
             serializer = CourseSerializer(c)
             courses.append(serializer.data)
-        
+
         return Response(courses, status=status.HTTP_200_OK)
-
-    def post(self, request, *args, **kwargs):
-        """
-        Add course to user's set of "my courses"
-        """
-        data = {
-            "course": request.data.get("course_id"),
-        }
-
-        serializer = MyCoursesSerializer(data=data)
-        
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def test_sso_view(request):

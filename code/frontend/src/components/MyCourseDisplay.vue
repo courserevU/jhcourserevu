@@ -125,7 +125,7 @@ export default defineComponent({
   },
   components: { Search, SelectMenu, Pagination, Checkbox },
   mounted() {
-    //swap out for user query
+    //this should be swapped out for whatever call gets a given user's courses
     axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
       .then((response) => {
         console.log(response);
@@ -143,7 +143,7 @@ export default defineComponent({
     changePage(e: number) {
       this.page = e;
 
-      //search then filter user query 
+      //this should be swapped out for whatever call gets a given user's courses with searching
       axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`)
       .then((response) => {
         

@@ -76,7 +76,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
@@ -124,6 +124,7 @@ export default defineComponent({
         }
       ],
       page: 1,
+      totalPages: Number,
     }
   },
   components: { Search, SelectMenu, Pagination, Checkbox },

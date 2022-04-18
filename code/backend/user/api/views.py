@@ -37,16 +37,23 @@ class UserDetail(APIView):
         user_id = self.kwargs["user_id"]
         user_courses = MyCourses.objects.filter(user=user_id)
         s = MyCoursesSerializer(user_courses, many=True)
-        
+
         if not s.data:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
-        # paginator = PageNumberPagination()
-        # paginator.page_size = 10
-        courses = Course.objects.filter(id__in=s.data[0]["courses"])
-        serializer = CourseSerializer(courses, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        courses = Course.objects.filter(id__in=s.data[0]["courses"])
+        result_page = paginator.paginate_queryset(courses, request)
+        serializer = CourseSerializer(result_page, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
+
+        # TODO: no pagination, may remove
+        # courses = Course.objects.filter(id__in=s.data[0]["courses"])
+        # serializer = CourseSerializer(courses, many=True)
+
+        # return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 def test_sso_view(request):

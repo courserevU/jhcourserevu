@@ -119,7 +119,8 @@ export default defineComponent({
       this.page = e;
 
       //this should be swapped out for whatever call gets a given user's courses with searching
-      axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/1/?page=${this.page}`)
+      // http://localhost:8000/user/api/1/?page=${this.page}
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/1?page=${this.page}`)
       .then((response) => {
         
         const data = response.data;

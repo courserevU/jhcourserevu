@@ -26,6 +26,8 @@ class User(models.Model):
 
 class MyCourses(models.Model):
     """
+    The set of courses a user is enrolled in
+    Attributes:
     user (:obj:`ForeignKey`): user associated with set of courses
     courses(:obj:`ForeignKey`): courses that the user is enrolled in
     """

@@ -8,6 +8,7 @@ from user.models import User, MyCourses
 from .serializers import UserSerializer, MyCoursesSerializer
 
 from django.contrib.sites.shortcuts import get_current_site
+from rest_framework.pagination import PageNumberPagination
 
 
 class UserUpdate(APIView):
@@ -35,14 +36,17 @@ class UserDetail(APIView):
         """
         user_id = self.kwargs["user_id"]
         user_courses = MyCourses.objects.filter(user=user_id)
+        s = MyCoursesSerializer(user_courses, many=True)
+        
+        if not s.data:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # paginator = PageNumberPagination()
+        # paginator.page_size = 10
+        courses = Course.objects.filter(id__in=s.data[0]["courses"])
+        serializer = CourseSerializer(courses, many=True)
 
-        courses = []
-        for course in user_courses:
-            c = Course.objects.filter(course=course.course_id)
-            serializer = CourseSerializer(c)
-            courses.append(serializer.data)
-
-        return Response(courses, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 def test_sso_view(request):

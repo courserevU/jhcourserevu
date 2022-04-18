@@ -100,8 +100,7 @@ export default defineComponent({
   },
   components: { Search, SelectMenu, Pagination, Checkbox },
   mounted() {
-    //this should be swapped out for whatever call gets a given user's courses
-    // https://jhcourserevu-api-test.herokuapp.com/course/api/
+    // https://jhcourserevu-api-test.herokuapp.com/user/api/${user_id}
     axios.get(`http://localhost:8000/user/api/1`)
       .then((response) => {
         console.log(response);

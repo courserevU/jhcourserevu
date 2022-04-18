@@ -14,7 +14,7 @@
       >
         <div
           v-for="review in reviews"
-          :key="review[0].review"
+          :key="reviews.indexOf(review)"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
           <div class="mt-2">
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
@@ -73,6 +73,7 @@ export default defineComponent({
       query,
       reviews: [],
       page: 1,
+      totalPages: 0,
       mod: true, // true if current user is moderator - will come from API
     };
   },
@@ -111,17 +112,9 @@ export default defineComponent({
             .then((response) => {
               const data = response.data;
               this.reviews = data.results;
+              this.totalPages = Math.ceil(data.count / 10);
             });
         });
-    },
-  },
-  computed: {
-    filteredReviews() {
-      let grouped_comments = [];
-      for (let i = 7; i <= this.reviews.length; i += 7) {
-        grouped_comments.push(this.reviews.slice(i - 7, i));
-      }
-      return grouped_comments;
     },
   },
   mounted() {
@@ -135,6 +128,7 @@ export default defineComponent({
       .then((response) => {
         const data = response.data;
         this.reviews = data.results;
+        this.totalPages = Math.ceil(data.count / 10);
       });
   },
 });

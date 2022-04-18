@@ -100,8 +100,9 @@ export default defineComponent({
   },
   components: { Search, SelectMenu, Pagination, Checkbox },
   mounted() {
+    // http://localhost:8000/user/api/1
     // https://jhcourserevu-api-test.herokuapp.com/user/api/${user_id}
-    axios.get(`http://localhost:8000/user/api/1`)
+    axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/1`)
       .then((response) => {
         console.log(response);
         const data = response.data;

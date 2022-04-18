@@ -77,6 +77,7 @@
           placeholder="Review"
 
           v-model="teachStyle"
+          
         ></textarea>
       </div>
     </div>
@@ -180,7 +181,7 @@
       <div class="p-4 ...">
         <button
           type="submit"
-          class="w-full px-6 py-2.5 bg-blue-600 dark:bg-blue-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 dark:hover:bg-blue-900 hover:shadow-lg focus:bg-blue-700 dark:focus:bg-blue-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          class="w-full px-6 py-2.5 bg-blue-600 dark:bg-blue-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 dark:hover:bg-blue-900 hover:shadow-lg focus:bg-blue-700 dark:focus:bg-blue-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg peer-required:disable transition duration-150 ease-in-out"
           @click="submitReview"
         >
           Send
@@ -194,6 +195,10 @@
 import { defineComponent } from "vue";
 import SelectMenu from "./SelectMenu.vue";
 import axios from "axios";
+import 'mosha-vue-toastify/dist/style.css';
+import { createToast } from 'mosha-vue-toastify';
+
+
 
 
 export default defineComponent({
@@ -232,27 +237,55 @@ export default defineComponent({
   },
   methods: {
     submitReview() {
-      axios.post(
-        // `http://127.0.0.1:8000/course/review/api/${JSON.parse(course).id}`,
-        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/`,
-        {
-          "comments": {
-            "Professor": this.prof,
-            "Teaching Style": this.teachStyle,
-            "Grading Style": this.gradeStyle,
-            "Teacher Feedback": this.teachFeedback,
-            "Workload": this.workload,
-            "Assignment Style": this.assignment,
-            "Exam Style": this.exam,
-          },
-          "course_id" : JSON.parse(this.course).id,
-        })
-          .then(function (response) {
-            console.log(response);
+      
+      if (this.prof == "" || this.teachStyle  == ""|| this.gradeStyle == ""||
+        this.teachFeedback == ""|| this.workload == ""|| this.assignment == ""|| this.exam == "") {
+        createToast('Please Fill Out All Fields',
+            {
+            type: 'warning',
+            transition: 'zoom',
+            position: 'bottom-center',
+            showIcon: true,
+            });
+      } else {
+        axios.post(
+          // `http://127.0.0.1:8000/course/review/api/${JSON.parse(course).id}`,
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/`,
+          {
+            "comments": {
+              "Professor": this.prof,
+              "Teaching Style": this.teachStyle,
+              "Grading Style": this.gradeStyle,
+              "Teacher Feedback": this.teachFeedback,
+              "Workload": this.workload,
+              "Assignment Style": this.assignment,
+              "Exam Style": this.exam,
+            },
+            "course_id" : JSON.parse(this.course).id,
           })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .then(function (response) {
+              console.log(response);
+              createToast('Review Successfully Sent',
+              {
+              type: 'success',
+              transition: 'zoom',
+              position: 'bottom-center',
+              showIcon: true,
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+              createToast('Review Could Not be Sent',
+                {
+                type: 'danger',
+                transition: 'zoom',
+                position: 'bottom-center',
+                showIcon: true,
+                });
+              
+              });
+      }
+      
     },
   },
 });

@@ -2,26 +2,19 @@
   <div class="bg-white dark:bg-gray-800">
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
 
-      <h2
-        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
-      >
+      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4">
         Courses
       </h2>
 
       <!-- Search Bar + Dropdown for more specific search -->
-      <div class ="flex flex-row space-x-3">
+      <div class="flex flex-row space-x-3">
         <Search @update-filter="updateFilter" />
         <SelectMenu :options=filters @update-option="updateOption" />
       </div>
 
-      <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
-      >
-        <div
-          v-for="course in filteredCourses"
-          :key="course.id"
-          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
-        >
+      <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div v-for="course in filteredCourses" :key="course.id"
+          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded">
           <div class="mt-2 flex">
             <div class="justify-left">
               <h3 class="text-sm text-gray-700 dark:text-gray-300">
@@ -38,20 +31,17 @@
               </p>
             </div>
           </div>
-          <div class="mt-2"> 
-            <Checkbox label="I have taken this course" inputValue="taken" v-model="selectedOptions" />
+          <div class="mt-2">
+            <Checkbox @click="addCourse(course)" label="I have taken this course" inputValue="taken"
+              v-model="selectedOptions" />
           </div>
           <div class="block inline-flex mt-4 mb-2">
-            <button
-              type="button"
+            <button type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
-              @click="goToWriteReview(course)"
-            >Write Review</button>
-            <button
-              type="button"
+              @click="goToWriteReview(course)">Write Review</button>
+            <button type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
-              @click="goToReadReviews(course)"
-            >Read Reviews</button>
+              @click="goToReadReviews(course)">Read Reviews</button>
           </div>
         </div>
       </div>
@@ -77,9 +67,9 @@ let query = "";
 let option = "";
 
 const optionsToField = {
-  2 : "name",
-  3 : "course_num",
-  4 : "department"
+  2: "name",
+  3: "course_num",
+  4: "department"
 };
 
 export default defineComponent({
@@ -91,16 +81,16 @@ export default defineComponent({
       courses,
       filters: [
         {
-            id: 2,
-            name: 'Course Name',
+          id: 2,
+          name: 'Course Name',
         },
         {
-            id: 3,
-            name: 'Course Number',
+          id: 3,
+          name: 'Course Number',
         },
         {
-            id: 4,
-            name: 'Department',
+          id: 4,
+          name: 'Department',
         }
       ],
       page: 1,
@@ -123,15 +113,26 @@ export default defineComponent({
     updateOption(e: any) {
       this.option = e.id;
     },
+    addCourse(course: any) {
+      axios.post(`http://localhost:8000/user/api/`, {
+        "user_id": 1,
+        "course_id": course.id
+      })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          // this.courses = data.results;
+        })
+    },
     changePage(e: number) {
       this.page = e;
 
       // Gets correct page of courses via API page query
       axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`)
-      .then((response) => {
-        const data = response.data;
-        this.courses = data.results;
-      })
+        .then((response) => {
+          const data = response.data;
+          this.courses = data.results;
+        })
     },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
@@ -140,13 +141,13 @@ export default defineComponent({
       this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
     },
   },
-  
+
   computed: {
     filteredCourses() {
       const field = optionsToField[this.option];
-    
+
       if (field === undefined) return this.courses;
-      
+
       return this.courses.filter(
         course => {
           return course[field].toLowerCase().includes(this.query.toLowerCase());

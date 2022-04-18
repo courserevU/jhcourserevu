@@ -17,7 +17,8 @@ class UserUpdate(APIView):
         Add course to user's set of "my courses"
         """
         data = {
-            "course": request.data.get("course_id"),
+            "user": request.data.get("user_id"),
+            "courses": [request.data.get("course_id")],
         }
 
         serializer = MyCoursesSerializer(data=data)

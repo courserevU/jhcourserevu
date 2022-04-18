@@ -272,6 +272,13 @@ export default defineComponent({
               position: 'bottom-center',
               showIcon: true,
               });
+              // console.log(this);
+              // this.teachStyle  = "";
+              // this.gradeStyle = "";
+              // this.teachFeedback = "";
+              // this.workload = "";
+              // this.assignment = "";
+              // this.exam = "";
             })
             .catch(function (error) {
               console.log(error);

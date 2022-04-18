@@ -6,6 +6,8 @@
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
       >
         My Courses
+        <!-- <font-awesome-icon :icon="['fab', 'github']" /> -->
+        <!-- <i class="fa-brands fa-github"></i> -->
       </h2>
       <div
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"

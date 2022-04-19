@@ -11,12 +11,14 @@
           <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
         </button>
       </li>
-      <li v-for="index in 5" :key="index">
+      <li v-for="index in pagesAtATime" :key="index">
         <button
           :disabled="isSelected(index + firstPage)"
           class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
           @click="goToPage(index + firstPage)"
-        >{{ index + firstPage }}</button>
+        >
+          {{ index + firstPage }}
+        </button>
       </li>
       <li>
         <button
@@ -41,16 +43,18 @@ export default defineComponent({
     return {
       currentPage: 1,
       firstPage: 0,
-      lastPage: 1,
     };
   },
   props: {
     maxPage: Number,
+    pageReplacement: Number,
+  },
+  computed: {
+    pagesAtATime() {
+      return (this.maxPage < 5) ? this.maxPage : 5;
+    }
   },
   components: { ChevronLeftIcon, ChevronRightIcon },
-  mounted() {
-    this.lastPage = this.maxPage < 5 ? this.maxPage : 5;
-  },
   methods: {
     nextPage() {
       if (this.currentPage < this.maxPage) {
@@ -63,10 +67,10 @@ export default defineComponent({
     },
     prevPage() {
       if (this.currentPage > 1) {
-        if (this.firstPage > 0 && this.currentPage > this.maxPage - 3) {
+        this.currentPage -= 1;
+        if (this.firstPage > 0 && this.currentPage > 2) {
           this.firstPage -= 1;
         }
-        this.currentPage -= 1;
         this.$emit("change-page", this.currentPage);
       }
     },
@@ -75,11 +79,14 @@ export default defineComponent({
 
       if (this.currentPage > 2 && this.currentPage < this.maxPage - 2) {
         this.firstPage = this.currentPage - 3;
+      } else if (this.currentPage > 1) {
+        this.firstPage = this.currentPage - 2;
       }
 
       this.$emit("change-page", this.currentPage);
     },
     isSelected(index: number) {
+      this.currentPage = this.pageReplacement; // in case of review deletion
       if (this.currentPage === index) {
         return true;
       }

@@ -61,8 +61,8 @@
           </div>
           <div class="mt-2"> 
             <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
-            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken" @click="updateTakenStatus(course)">
-            <label for="checkbox">{{ "I have taken this course"}}</label>
+            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken"  @click="updateTakenStatus(course)">
+            <label for="checkbox" class="text-sm text-gray-700 dark:text-gray-300">{{ " I have taken this course"}}</label>
           </div>
 
           <div class="block inline-flex mt-4 mb-2">

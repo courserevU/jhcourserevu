@@ -43,7 +43,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'localhost:3000',
 # )
 
-# Application definition
+AUTHENTICATION_BACKENDS = [
+    # "microsoft_auth.backends.MicrosoftAuthenticationBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 
 INSTALLED_APPS = [
     "corsheaders",
@@ -57,10 +61,13 @@ INSTALLED_APPS = [
     "user",
     "course",
     "django.contrib.sites",
-    "microsoft_auth",
+    # "microsoft_auth",
+    # for django-allauth
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",  # for Google OAuth 2.0
 ]
-
-SITE_ID = 1
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -87,7 +94,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "microsoft_auth.context_processors.microsoft",
+                # "microsoft_auth.context_processors.microsoft",
             ],
         },
     },
@@ -131,19 +138,38 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    "microsoft_auth.backends.MicrosoftAuthenticationBackend",
-    "django.contrib.auth.backends.ModelBackend"
-]
-
+# TODO: remove
 # Documentation: https://django-microsoft-auth.readthedocs.io/en/latest/usage.html
 # CHANGE ENTIRE SECTION BELOW with info from Azure AD app
 # https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
 # values you got from step 2 from your Microsoft app
-MICROSOFT_AUTH_CLIENT_ID = os.environ.get("MICROSOFT_AUTH_CLIENT_ID")
-MICROSOFT_AUTH_CLIENT_SECRET = os.environ.get("MICROSOFT_AUTH_CLIENT_SECRET")
-MICROSOFT_AUTH_TENANT_ID = os.environ.get("MICROSOFT_AUTH_TENANT_ID")
-MICROSOFT_AUTH_LOGIN_TYPE = 'ma'
+# MICROSOFT_AUTH_CLIENT_ID = os.environ.get("MICROSOFT_AUTH_CLIENT_ID")
+# MICROSOFT_AUTH_CLIENT_SECRET = os.environ.get("MICROSOFT_AUTH_CLIENT_SECRET")
+# MICROSOFT_AUTH_TENANT_ID = os.environ.get("MICROSOFT_AUTH_TENANT_ID")
+# MICROSOFT_AUTH_LOGIN_TYPE = "ma"
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+# CLIENT_ID = os.environ.get("CLIENT_ID")
+# CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

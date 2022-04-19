@@ -50,7 +50,19 @@ class UserDetail(APIView):
 
         return paginator.get_paginated_response(serializer.data)
 
-        # TODO: no pagination, may remove
+    # def delete(self, request, user_id, format=None):
+    #     """
+    #     Delete user's course by user's id
+    #     """
+    #     user_id = self.kwargs["user_id"]
+    #     course_id = self.kwargs["course_id"]
+    #     user_courses = MyCourses.objects.filter(user=user_id)
+    #     s = MyCoursesSerializer(user_courses, many=True)
+
+    #     if not s.data:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    #     # TODO: no pagination, may remove
         # courses = Course.objects.filter(id__in=s.data[0]["courses"])
         # serializer = CourseSerializer(courses, many=True)
 

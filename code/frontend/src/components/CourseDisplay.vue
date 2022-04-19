@@ -57,29 +57,19 @@
                 {{ course.semester }}
               </p>
             </div>
+            
           </div>
           <div class="mt-2"> 
-            <Checkbox label="I  have taken this course" inputValue="takens" v-model="taken" />
-            <!-- <input type="checkbox" id="checkbox" v-model="checked">
-            <label for="checkbox">{{ checked }}</label> -->
+            <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
+            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken" @click="updateTakenStatus(course)">
+            <label for="checkbox">{{ "I have taken this course"}}</label>
           </div>
 
-          <!-- TODO make it so the write review button only appears when the check box has been ticked,  -->
-          <!-- check from user if the user has previously ticked the box check box has been ticked -->
-          <!-- have a vraiable that keeps track of the check mark -->
-          <!-- only ifthe varibale is ture than check it -->
           <div class="block inline-flex mt-4 mb-2">
-            <!-- <button
-              v-if="taken"
+            <button
+              v-if="taken.includes(course.name+course.meeting_section)"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
-              @click="goToWriteReview(course)"
-            >
-              Write Review
-            </button> -->
-            <button
-              type="button"
-              class="bg-blue-500  hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToWriteReview(course)"
             >
               Write Review
@@ -109,7 +99,7 @@ import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
 
-
+let taken = [];
 let courses = [];
 
 let query = "";
@@ -127,6 +117,7 @@ export default defineComponent({
     return {
       query,
       option,
+      taken,
       courses,
       filters: [
         {
@@ -178,6 +169,16 @@ export default defineComponent({
     goToReadReviews(course: any) {
       this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
     },
+    updateTakenStatus(course: any) {
+
+      //if becomes uncheked take out from user courses, otherwise 
+      if(taken.includes(course.name+course.meeting_section)){
+        console.log("remove)");
+      } else {
+        console.log("add");
+      }
+      //else if checked add to user course
+    }
   },
   
   computed: {

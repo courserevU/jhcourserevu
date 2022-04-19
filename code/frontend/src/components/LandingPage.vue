@@ -8,13 +8,12 @@
                 </h1>
                 <br/>
                 <p class="font-bold mb-1">
-                    JHcourserevU is an application to rate, review, and view reviews for the courses right here at JHU.
+                    Review courses at JHU (Johns Hopkins University)
                 </p>
                 <br/>
                 <p>
-                    This website would provide a simple and intuitive platform for students to rate and write reviews for the courses at Johns Hopkins University. 
-                    They could also directly view all reviews and ratings and have a guarantee they are reading a completely valid review/rating. 
-                    It would be appropriately moderated, open source, and affiliated with Semesterly so as to guarantee that it could be sustainable..
+                    Evaluate courses and share your feedback to guide fellow
+                    students' semesterly schedules.
                 </p>
                 <br/>
                 <button
@@ -24,10 +23,10 @@
                 >Seach for Courses!</button>
             </section>
             
-            <footer class="absolute right-0 bottom-0 p-6 lg:p-32">
+            <!-- <footer class="absolute right-0 bottom-0 p-6 lg:p-32">
                 <p class="font-bold mb-1">Yours Truly</p>
                 <p>Contact Info</p>
-            </footer>
+            </footer> -->
         </main>
         
     </div>

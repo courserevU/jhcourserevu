@@ -86,7 +86,9 @@ export default defineComponent({
       this.$emit("change-page", this.currentPage);
     },
     isSelected(index: number) {
-      this.currentPage = this.pageReplacement; // in case of review deletion
+      if (this.pageReplacement) {
+        this.currentPage = this.pageReplacement; // in case of review deletion
+      }
       if (this.currentPage === index) {
         return true;
       }

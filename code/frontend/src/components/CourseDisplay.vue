@@ -1,20 +1,20 @@
 <template>
   <div class="bg-white dark:bg-gray-800">
-    <div
-      class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8"
-    >
-      <div>
-        <Search @update-filter="updateFilter" />
-      </div>
+    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
 
-      <h2
-        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
-      >
+      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4">
         Courses
       </h2>
 
+      <!-- Search Bar + Dropdown for more specific search -->
+      <div class="flex flex-row space-x-3">
+        <Search @update-filter="updateFilter" />
+        <SelectMenu :options=filters @update-option="updateOption" />
+      </div>
+
       <div
         class="mt-6 grid grid-cols-1"
+        <!-- class="mt-6 grid  grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8" -->
       >
         <div
           v-for="course in filteredCourses"
@@ -26,16 +26,27 @@
               <h3 class="text-md font-bold text-gray-700 dark:text-gray-300">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
-                  {{ course.name }}
+                  {{ course.name }} ({{ course.meeting_section }})
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {{ course.department }} - {{ course.number }}
+                {{ course.department }} - {{ course.course_num }}
+              </p>
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                {{ course.semester }}
               </p>
             </div>
+            
           </div>
+          <div class="mt-2"> 
+            <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
+            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken"  @click="updateTakenStatus(course)">
+            <label for="checkbox" class="text-sm text-gray-700 dark:text-gray-300">{{ " I have taken this course"}}</label>
+          </div>
+
           <div class="block inline-flex mt-4 mb-2">
             <button
+              v-if="taken.includes(course.name+course.meeting_section)"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
@@ -55,7 +66,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
@@ -68,98 +79,126 @@ import {
   PlusIcon
 } from "@heroicons/vue/solid";
 import Search from "./Search.vue";
+import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
+import Checkbox from "./Checkbox.vue";
+import axios from "axios";
 
-let courses = [
-  {
-    id: 1,
-    name: "Object-Oriented Software Engineering",
-    href: "#",
-    number: "601.421",
-    department: "Computer Science",
-    page: 1,
-  },
-  {
-    id: 2,
-    name: "Data Structures",
-    href: "#",
-    number: "601.226",
-    department: "Computer Science",
-    page: 1,
-  },
-  {
-    id: 3,
-    name: "Introduction to Cognitive Psychology",
-    href: "#",
-    number: "200.110",
-    department: "Psychological & Brain Sciences",
-    page: 1,
-  },
-  {
-    id: 4,
-    name: "Guided Tour: The Planets",
-    href: "#",
-    number: "270.114",
-    department: "Earth & Planetary Sciences",
-    page: 1,
-  },
-  {
-    id: 5,
-    name: "Probability & Statistics for the Physical Sciences & Engineering",
-    href: "#",
-    number: "553.310",
-    department: "Applied Mathematics and Statistics",
-    page: 2,
-  },
-  {
-    id: 6,
-    name: "Planetary Surface Processes",
-    href: "#",
-    number: "270.410",
-    department: "Earth & Planetary Sciences",
-    page: 2,
-  },
-  // More courses... load from our db
-];
+let taken = [];
+let courses = [];
 
 let query = "";
+let option = "";
+
+const optionsToField = {
+  2: "name",
+  3: "course_num",
+  4: "department"
+};
 
 export default defineComponent({
   name: "CourseDisplay",
   data() {
     return {
       query,
+      option,
+      taken,
       courses,
+      filters: [
+        {
+          id: 2,
+          name: 'Course Name',
+        },
+        {
+          id: 3,
+          name: 'Course Number',
+        },
+        {
+          id: 4,
+          name: 'Department',
+        }
+      ],
       page: 1,
-    };
+      totalPages: Number,
+    }
+  },
+  components: { Search, SelectMenu, Pagination, Checkbox },
+  mounted() {
+    axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+      .then((response) => {
+        const data = response.data;
+        this.courses = data.results;
+        this.totalPages = Math.ceil(data.count / 10);
+      })
   },
   components: { Search, Pagination, EyeIcon, PlusIcon },
   methods: {
     updateFilter(e: any) {
       this.query = e;
     },
+    updateOption(e: any) {
+      this.option = e.id;
+    },
+    addCourse(course: any) {
+      axios.post(`http://localhost:8000/user/api/`, {
+        "user_id": 1,
+        "course_id": course.id
+      })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          // this.courses = data.results;
+        })
+    },
     changePage(e: number) {
       this.page = e;
+
+      // Gets correct page of courses via API page query
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`)
+        .then((response) => {
+          const data = response.data;
+          this.courses = data.results;
+        })
     },
     goToWriteReview(course: any) {
-      this.$router.push({ name: "write", params: { course: course.name } });
+      this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { course: course.name } });
+      this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
     },
+    updateTakenStatus(course: any) {
+
+      //if becomes unchecked take out from user courses, otherwise 
+      // if(taken.includes(course.name+course.meeting_section)){
+      //   console.log("remove)");
+      // } else {
+      //   console.log("add");
+      // }
+      //else if checked add to user course
+
+      // console.log(course.id);
+
+      axios.delete(`http://localhost:8000/user/api/1`, {
+        "course_id": course.id
+      })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          // this.courses = data.results;
+        })
+    }
   },
+
   computed: {
     filteredCourses() {
-      return this.courses.filter((course: any) => {
-        return (course.page === this.page) && this.query
-          .toLowerCase()
-          .split(" ")
-          .every(
-            (v) =>
-              course.name.toLowerCase().includes(v) ||
-              course.number.toLowerCase().includes(v)
-          );
-      });
+      const field = optionsToField[this.option];
+
+      if (field === undefined) return this.courses;
+
+      return this.courses.filter(
+        course => {
+          return course[field].toLowerCase().includes(this.query.toLowerCase());
+        });
     },
   },
 });

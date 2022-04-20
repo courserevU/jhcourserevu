@@ -10,9 +10,10 @@ WORKDIR /code
 # Copy project
 COPY . /code/
 
+# TODO: removed for now, causing compilation errors
 # Install postgres CLI, helpful if you need to access psql db directly
-RUN apt-get update
-RUN apt-get -y install postgresql
+# RUN apt-get update
+# RUN apt-get -y install postgresql
 
 # Install dependencies
 RUN pip install -r requirements.txt

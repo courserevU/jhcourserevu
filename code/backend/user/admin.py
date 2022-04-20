@@ -1,11 +1,16 @@
+from django.contrib import admin
+from .models import MyCourses, User
+
+admin.site.register(User)
+admin.site.register(MyCourses)
+
+# TODO: subject to change, need to review
 # from django.contrib import admin
 # from django.utils.translation import ugettext_lazy as _
 # from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # from django.contrib.auth import get_user_model
 # from django.contrib.auth.admin import UserAdmin
 # from .models import User
-
-# TODO: subject to change, need to review
 # class UserAdmin(BaseUserAdmin):
 #   form = UserChangeForm
 #   fieldsets = (

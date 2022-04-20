@@ -1,23 +1,23 @@
 from django.db import models
 
 
-class Semester(models.Model):
-    """
-    Represents a semester which is composed of a name (e.g. Spring, Fall)
-    and a year (e.g. 2022).
-    Attributes:
-        name (:obj:`CharField`): the name (e.g. Spring, Fall)
-        year (:obj:`CharField`): the year (e.g. 2022, 2023)
-    """
+# class Semester(models.Model):
+#     """
+#     Represents a semester which is composed of a name (e.g. Spring, Fall)
+#     and a year (e.g. 2022).
+#     Attributes:
+#         name (:obj:`CharField`): the name (e.g. Spring, Fall)
+#         year (:obj:`CharField`): the year (e.g. 2022, 2023)
+#     """
 
-    name = models.CharField(max_length=50)
-    year = models.CharField(max_length=4)
+#     name = models.CharField(max_length=50)
+#     year = models.CharField(max_length=4)
 
-    def __unicode__(self):
-        return "{} {}".format(self.name, self.year)
+#     def __unicode__(self):
+#         return "{} {}".format(self.name, self.year)
 
-    def __str__(self):
-        return "{} {}".format(self.name, self.year)
+#     def __str__(self):
+#         return "{} {}".format(self.name, self.year)
 
 
 class Course(models.Model):
@@ -29,7 +29,7 @@ class Course(models.Model):
         name (:obj:`CharField`): course name (e.g. Intermediate Programming)
         description (:obj:`TextField`): course description (e.g. Learn programming in C++)
         course_num (:obj:`CharField`): course code (e.g. EN.601.421)
-        num_credits (:obj:`FloatField`): number of credits hours (e.g. 3 credits)
+        num_credits (:obj:`CharField`): number of credits hours (e.g. 3 credits)
         department (:obj:`CharField`): department associated with course (e.g. EN)
         level (:obj:`CharField`): course level (e.g. 100, Upper)
         prerequisites (:obj:`TextField`): required courses to complete prior to given course
@@ -42,35 +42,32 @@ class Course(models.Model):
         meeting_section (:obj:`CharField`): the name of the section
             (e.g. 001, L01, LAB2)
         size (:obj:`IntegerField`): the capacity of the course (the enrollment cap)
-        enrollment (:obj:`IntegerField`): the number of students registered so far
-        waitlist (:obj:`IntegerField`): the number of students waitlisted so far 
         instructors (:obj:`CharField`): comma separated list of instructors
-        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section
-        is_full (:obj:`BooleanField`): whether the course is/was full
+        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section    
     """
 
     # course details
     name = models.CharField(max_length=255)
     description = models.TextField(default="")
     course_num = models.CharField(max_length=20)
-    num_credits = models.FloatField(default=-1)
+    num_credits = models.CharField(max_length=15)
     department = models.CharField(max_length=255, default="", null=True)
     level = models.CharField(max_length=500, default="", null=True)
     prerequisites = models.TextField(default="", null=True)
     corequisites = models.TextField(default="", null=True)
     school = models.CharField(db_index=True, max_length=100)
     campus = models.CharField(max_length=300, default="")
-    # instructors = models.CharField(max_length=500, default="TBA")
     is_writing_intensive = models.CharField(max_length=10, default="")
+    # instructors = models.CharField(max_length=500, default="TBA")
 
     # section details
     meeting_section = models.CharField(max_length=50)
     size = models.IntegerField(default=-1)
-    enrollment = models.IntegerField(default=-1)
-    waitlist = models.IntegerField(default=-1)
-    instructors = models.CharField(max_length=500, default="TBD")
-    semester = models.ForeignKey(Semester, on_delete=models.deletion.CASCADE)
-    is_full = models.BooleanField(default=False)
+    instructors = models.CharField(max_length=500, default="")
+    semester = models.CharField(max_length=12, default="")
+    # enrollment = models.IntegerField(default=-1)
+    # waitlist = models.IntegerField(default=-1)
+    # is_full = models.BooleanField(default=False)
 
     def is_full(self):
         return self.enrollment >= 0 and self.size >= 0 and self.enrollment >= self.size
@@ -96,6 +93,9 @@ class Course(models.Model):
     # instructors (:obj:`CharField`): full name of instructors
     # section_type (:obj:`CharField`):
     #     the section type, example 'L' is lecture, 'T' is tutorial, `P` is practical
+    # enrollment (:obj:`IntegerField`): the number of students registered so far
+    # waitlist (:obj:`IntegerField`): the number of students waitlisted so far
+    # is_full (:obj:`BooleanField`): whether the course is/was full
     # notes = models.TextField(default="", null=True)
     # info = models.TextField(default="", null=True)
     # exclusions = models.TextField(default="")
@@ -146,3 +146,4 @@ class Comment(models.Model):
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     comment = models.TextField(default="", null=True)
+    category = models.TextField(default="", null=True)

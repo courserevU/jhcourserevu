@@ -1,7 +1,7 @@
-# from django.conf.urls import url
-from django.urls import path
-from .views import UserListApiView
+from django.urls import path, re_path
+from .views import UserUpdate, UserDetail
 
 urlpatterns = [
-    path("", UserListApiView.as_view()),
+    path("", UserUpdate.as_view(), name="user_update"),
+    re_path("(?P<user_id>.+)/$", UserDetail.as_view(), name="courses_by_user"),
 ]

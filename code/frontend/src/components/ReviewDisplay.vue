@@ -6,25 +6,32 @@
       <h2
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
       >
-        Reviews for {{ course }}
+        Reviews for {{ JSON.parse(course).name }}
       </h2>
 
       <div
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div
-          v-for="review in filteredReviews"
-          :key="review.id"
+          v-for="review in reviews"
+          :key="reviews.indexOf(review)"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
           <div class="mt-2">
             <div class="relative">
-              <h3 class="text-md text-gray-700 dark:text-gray-300">
-                <a> Professor: {{ review.professor }} </a>
-              </h3>
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {{ review.review }}
-              </p>
+              <div v-for="comment in review" :key="comment.id">
+                <h3
+                  class="text-md text-gray-700 dark:text-gray-300"
+                  v-if="comment.category === 'Professor'"
+                >
+                  <span class="font-bold"> Professor: </span>
+                  <span>{{ comment.comment }}</span>
+                </h3>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" v-else>
+                  <span class="font-bold">{{ comment.category }}: </span>
+                  <span>{{ comment.comment }}</span>
+                </p>
+              </div>
               <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
                 <button class="mr-3">
@@ -34,7 +41,7 @@
                   />
                 </button>
                 <!-- Delete given review -->
-                <button class="">
+                <button @click="deleteReview(review[0].review)">
                   <XIcon class="h-5 w-5 text-red-600" />
                 </button>
               </div>
@@ -43,52 +50,19 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Search from './Search.vue';
-import Pagination from './Pagination.vue';
+import { defineComponent } from "vue";
+import Search from "./Search.vue";
+import Pagination from "./Pagination.vue";
 import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
 
-let reviews = [
-  {
-    id: 1,
-    professor: "Ali Madooei",
-    review: "Greatest teaching ever!",
-    page: 1,
-  },
-  {
-    id: 2,
-    professor: "Imaginary Professor",
-    review: "Entirely self-directed class - the professor never appeared!",
-    page: 1,
-  },
-  {
-    id: 3,
-    professor: "Mr. Anderson",
-    review: "We live in a simulation.",
-    page: 1,
-  },
-  {
-    id: 4,
-    professor: "Mr. Smith",
-    review: "*equip sunglasses*",
-    page: 1,
-  },
-  {
-    id: 5,
-    professor: "[REDACTED]",
-    review: "Alllll byyy MYYYYYSELLLLF!",
-    page: 2,
-  },
-
-  // More reviews... load from our db
-];
+import axios from "axios";
 
 let query = "";
 
@@ -97,36 +71,65 @@ export default defineComponent({
   data() {
     return {
       query,
-      reviews,
+      reviews: [],
       page: 1,
-      mod: false, // true if current user is moderator - will come from API
+      totalPages: 0,
+      mod: true, // true if current user is moderator - will come from API
     };
   },
   components: { Search, Pagination, AnnotationIcon, XIcon },
   props: {
-    course: String,
+    course: String, // passed as stringified Object, needs to be parsed
   },
   methods: {
     changePage(e: number) {
       this.page = e;
+
+      axios
+        .get(
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+            JSON.parse(this.course).id
+          }/?page=${this.page}`
+        )
+        .then((response) => {
+          const data = response.data;
+          this.reviews = data.results;
+        });
     },
-    goToWriteReview(course: any) {
-      this.$router.push({
-        path: "/write",
-        name: "write",
-        params: { course: course },
-      });
-    },
-    goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { course: course } });
+    deleteReview(id: number) {
+      axios
+        .delete(
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`
+        )
+        .then(() => {
+          // Reload page with updated review list
+          axios
+            .get(
+              `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+                JSON.parse(this.course).id
+              }/`
+            )
+            .then((response) => {
+              const data = response.data;
+              this.reviews = data.results;
+              this.totalPages = Math.ceil(data.count / 10);
+            });
+        });
     },
   },
-  computed: {
-    filteredReviews() {
-      return this.reviews.filter((review: any) => {
-        return (review.page === this.page);
+  mounted() {
+    // Retrieves reviews for the given course from the DB through the API, to display
+    axios
+      .get(
+        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+          JSON.parse(this.course).id
+        }/`
+      )
+      .then((response) => {
+        const data = response.data;
+        this.reviews = data.results;
+        this.totalPages = Math.ceil(data.count / 10);
       });
-    },
   },
 });
 </script>

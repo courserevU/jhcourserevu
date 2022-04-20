@@ -1,4 +1,6 @@
 from django.contrib import admin
+from .models import Course, Review, Comment
 
-# Register your models here.
-# TODO: give admin access to relevant models
+admin.site.register(Course)
+admin.site.register(Review)
+admin.site.register(Comment)

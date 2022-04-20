@@ -6,6 +6,7 @@ import PageNotFound from "@/views/PageNotFound.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import CourseView from "@/views/CourseView.vue";
+import MyCoursesView from "@/views/MyCoursesView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,12 +22,17 @@ const router = createRouter({
       component: CourseView,
     },
     {
-      path: "/write",
+      path: "/write/:course",
       name: "write",
       component: WriteView,
     },
     {
-      path: "/read",
+      path: "/my-courses",
+      name: "MyCourses",
+      component: MyCoursesView,
+    },
+    {
+      path: "/read/:course",
       name: "read",
       component: ReadView,
     },

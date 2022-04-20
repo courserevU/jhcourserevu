@@ -151,6 +151,8 @@ AUTH_PASSWORD_VALIDATORS = [
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = False
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -167,9 +169,6 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     }
 }
-
-# CLIENT_ID = os.environ.get("CLIENT_ID")
-# CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

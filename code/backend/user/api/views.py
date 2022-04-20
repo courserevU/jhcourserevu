@@ -9,6 +9,15 @@ from .serializers import UserSerializer, MyCoursesSerializer
 
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.pagination import PageNumberPagination
+# from rest_auth.registration.views import SocialLoginView
+
+# class GoogleLogin(SocialLoginView):
+#     adapter_class = GoogleOAuth2Adapter
+
+#     def post(self, request, *args, **kwargs):
+#         response = super(GoogleLogin, self).post(request, *args, **kwargs)
+#         token = Token.objects.get(key=response.data["key"])
+#         return Response({"token": token.key, "id": token.user_id})
 
 
 class UserUpdate(APIView):
@@ -72,7 +81,7 @@ class UserDetail(APIView):
             s.data[0]["courses"].remove(course_id)
             s.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        
+
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 

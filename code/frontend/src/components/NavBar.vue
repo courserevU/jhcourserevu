@@ -35,7 +35,7 @@
               ]"
               @click="goToCourses"
             >
-              <span>Courses</span>
+              <span>Find Courses</span>
             </PopoverButton>
           </Popover>
 
@@ -59,8 +59,9 @@
                   : 'text-gray-500 dark:text-gray-400',
                 'group bg-white dark:bg-gray-800 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-gray-200',
               ]"
+              @click="goToMyCourses"
             >
-              <span>More</span>
+              <span>My Courses</span>
             </PopoverButton>
             <transition
               enter-active-class="transition ease-out duration-200"
@@ -172,7 +173,7 @@
                       ]"
                       @click="goToCourses"
                     >
-                      <span>Courses</span>
+                      <span>Search Courses</span>
                     </PopoverButton>
                   </Popover>
                   <div class="my-4">
@@ -255,6 +256,9 @@ export default defineComponent({
   methods: {
     goToLogin() {
       this.$router.push("/login");
+    },
+    goToMyCourses() {
+      this.$router.push("/my-courses");
     },
     goToRegister() {
       this.$router.push("/register");

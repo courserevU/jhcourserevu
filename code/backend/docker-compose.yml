@@ -3,12 +3,6 @@ version: '3.10'
 services:
   db:
     image: postgres:14
-    env_file:
-        - jhcourserevu/.env
-    environment:
-        - POSTGRES_DB=postgres
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=""
     ports:
         - "5432:5432"
 
@@ -19,5 +13,6 @@ services:
         - .:/code
     ports:
         - "8000:8000"
+    restart: on-failure
     depends_on:
         - db

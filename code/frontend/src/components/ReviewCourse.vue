@@ -20,6 +20,14 @@
         Class: {{ JSON.parse(course).name }}
       </h3>
     </div>
+    <!-- Class Title -->
+    <div class="flex space-x-2 justify-left px-20">
+      <h3
+        class="text-2xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0"
+      >
+        Semester: {{ JSON.parse(course).semester }}
+      </h3>
+    </div>
     <!-- Semester and Professor Fields -->
     <div class="flex space-x-10 justify-left px-16">
       <!-- Professor -->
@@ -37,8 +45,6 @@
           v-model="prof"
         />
       </div>
-      <!-- Semester -->
-      <SelectMenu :options="semesters" />
     </div>
     <div class="py-5"></div>
 

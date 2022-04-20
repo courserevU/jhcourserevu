@@ -39,8 +39,8 @@
           </div>
           <div class="mt-2"> 
             <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
-            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken" @click="updateTakenStatus(course)">
-            <label for="checkbox">{{ "I have taken this course"}}</label>
+            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken"  @click="updateTakenStatus(course)">
+            <label for="checkbox" class="text-sm text-gray-700 dark:text-gray-300">{{ " I have taken this course"}}</label>
           </div>
 
           <div class="block inline-flex mt-4 mb-2">
@@ -160,13 +160,24 @@ export default defineComponent({
     },
     updateTakenStatus(course: any) {
 
-      //if becomes uncheked take out from user courses, otherwise 
-      if(taken.includes(course.name+course.meeting_section)){
-        console.log("remove)");
-      } else {
-        console.log("add");
-      }
+      //if becomes unchecked take out from user courses, otherwise 
+      // if(taken.includes(course.name+course.meeting_section)){
+      //   console.log("remove)");
+      // } else {
+      //   console.log("add");
+      // }
       //else if checked add to user course
+
+      // console.log(course.id);
+
+      axios.delete(`http://localhost:8000/user/api/1`, {
+        "course_id": course.id
+      })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          // this.courses = data.results;
+        })
     }
   },
 

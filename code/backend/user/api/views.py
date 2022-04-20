@@ -50,23 +50,30 @@ class UserDetail(APIView):
 
         return paginator.get_paginated_response(serializer.data)
 
-    # def delete(self, request, user_id, format=None):
-    #     """
-    #     Delete user's course by user's id
-    #     """
-    #     user_id = self.kwargs["user_id"]
-    #     course_id = self.kwargs["course_id"]
-    #     user_courses = MyCourses.objects.filter(user=user_id)
-    #     s = MyCoursesSerializer(user_courses, many=True)
-
-    #     if not s.data:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-
-    #     # TODO: no pagination, may remove
+        # TODO: no pagination, may remove
         # courses = Course.objects.filter(id__in=s.data[0]["courses"])
         # serializer = CourseSerializer(courses, many=True)
-
         # return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, user_id, format=None):
+        """
+        Delete a course in user's set of courses
+        """
+        user_id = self.kwargs["user_id"]
+        course_id = request.data.get("course_id")
+
+        user_courses = MyCourses.objects.filter(user=user_id)
+        s = MyCoursesSerializer(user_courses, many=True)
+
+        if not s.data:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if course_id in s.data[0]["courses"]:
+            s.data[0]["courses"].remove(course_id)
+            s.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 def test_sso_view(request):

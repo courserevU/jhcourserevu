@@ -11,4 +11,4 @@ urlpatterns = [
     path("search/name/", QueryByNameCourseList.as_view(), name="search_by_name"),
     path("search/course_num/", QueryByNumberCourseList.as_view(), name="search_by_number"),
     path("search/department/", QueryByDepartmentCourseList.as_view(), name="search_by_number"),
-    ]
+]

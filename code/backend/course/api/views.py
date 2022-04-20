@@ -141,6 +141,8 @@ class CommentList(APIView):
 
         comments_data = request.data.get("comments")
         for category, comment in comments_data.items():
+            if (not(comment and not comment.isspace())):
+                continue
 
             data = {
                 "review": review_serializer.data.get("id"),
@@ -159,13 +161,29 @@ class CommentList(APIView):
 
 
 class ReviewIdList(APIView):
-    def get(self, request, pk, format=None):
+    def get(self, request, course_id, format=None):
         """
-        Get review by id
+        Get review by course id
         """
-        review = Review.objects.get(pk=pk)
-        serializer = ReviewSerializer(review)
-        return Response(serializer.data)
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        reviews_to_display = []
+
+        course_id = self.kwargs["course_id"]
+        reviews = Review.objects.filter(course=course_id)
+
+        for review in reviews:
+          review_comments = []
+          comments = Comment.objects.filter(review=review.id)
+          for comment in comments:
+            serializer = CommentSerializer(comment)
+            review_comments.append(serializer.data)
+
+          reviews_to_display.append(review_comments)
+            
+        result_page = paginator.paginate_queryset(reviews_to_display, request)
+        return paginator.get_paginated_response(result_page)
 
     def put(self, request, pk, format=None):
         """
@@ -178,12 +196,20 @@ class ReviewIdList(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, course_id, format=None):
         """
         Delete review by id
+        NOTE: course_id is actually the review id in this case
         """
-        review = Review.objects.get(pk=pk)
+        review_id = self.kwargs["course_id"]
+
+        review = Review.objects.get(id=review_id)
         review.delete()
+
+        comments = Comment.objects.filter(review=review.id)
+        for comment in comments:
+          comment.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

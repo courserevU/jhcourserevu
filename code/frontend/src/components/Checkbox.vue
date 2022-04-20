@@ -1,10 +1,16 @@
 <template>
     <label>
-        <input type="checkbox" :value="inputValue" v-model="model" />
-        <span class="text-sm text-gray-700 dark:text-gray-300 font-bold">{{ " " + label }}</span>
+        <input  type="checkbox"  v-model="model" />
+        <span>{{ " " + label }}</span>
+        <!-- <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">{{ checked }}</label> -->
     </label>
 </template>
 
+<!-- TODO make it so the write review button only appears when the check box has been ticked,  -->
+          <!-- check from user if the user has previously ticked the box check box has been ticked -->
+          <!-- have a vraiable that keeps track of the check mark -->
+          <!-- only ifthe varibale is ture than check it -->
 <script>
 export default {
   name: "Checkbox",

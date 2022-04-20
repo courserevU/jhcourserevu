@@ -9,15 +9,21 @@ from .serializers import UserSerializer, MyCoursesSerializer
 
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.pagination import PageNumberPagination
-# from rest_auth.registration.views import SocialLoginView
 
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
+
+# from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+
+# if you want to use Authorization Code Grant, use this
 # class GoogleLogin(SocialLoginView):
 #     adapter_class = GoogleOAuth2Adapter
+#     callback_url = CALLBACK_URL_YOU_SET_ON_GOOGLE
+#     client_class = OAuth2Client
 
-#     def post(self, request, *args, **kwargs):
-#         response = super(GoogleLogin, self).post(request, *args, **kwargs)
-#         token = Token.objects.get(key=response.data["key"])
-#         return Response({"token": token.key, "id": token.user_id})
+# if you want to use Implicit Grant, use this
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
 
 
 class UserUpdate(APIView):

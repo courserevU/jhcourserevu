@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
     "user",
     "course",
     "django.contrib.sites",
@@ -65,6 +67,7 @@ INSTALLED_APPS = [
     # for django-allauth
     "allauth",
     "allauth.account",
+    'dj_rest_auth.registration',
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",  # for Google OAuth 2.0
 ]

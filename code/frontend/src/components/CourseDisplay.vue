@@ -112,7 +112,7 @@ export default defineComponent({
         }
       ],
       page: 1,
-      totalPages: Number,
+      totalPages: 5,
     }
   },
   components: { Search, SelectMenu, Pagination, Checkbox },

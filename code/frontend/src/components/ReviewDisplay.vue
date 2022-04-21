@@ -9,30 +9,10 @@
         Reviews for {{ JSON.parse(course).name }}
       </h2>
 
-      <!-- Search Bar for Reviews + Dropdown for more specific search -->
+      <br>
+      <!-- Search Dropdown to filter within reviews-->
       <div class ="flex flex-row space-x-3">
-        <Search @update-filter="updateFilter" />
-        <SelectMenu :options=filters @update-option="updateOption" />
-        <span
-          class="input-group-text items-center px-3 py-3 text-base font-normal text-gray-700 dark:text-gray-200 text-center whitespace-nowrap rounded"
-          id="basic-addon2"
-        >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fas"
-            data-icon="search"
-            class="w-4"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-          >
-            <path
-              fill="currentColor"
-              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-            />
-          </svg>
-        </span>
+        <SelectReviewMenu :options=filters @update-option="updateOption" />
       </div>
 
       <div
@@ -85,9 +65,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Search from "./Search.vue";
+import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
 import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
-
 import axios from "axios";
 
 let query = "";
@@ -102,12 +82,38 @@ export default defineComponent({
       mod: true, // true if current user is moderator - will come from API
       totalPages: 5,
       reviewCount: 1,
+      filters: [
+        {
+          id: 2,
+          name: 'Teaching Style',
+        },
+        {
+          id: 3,
+          name: 'Grading Style',
+        },
+        {
+          id: 4,
+          name: 'Teacher Feedback',
+        },
+        {
+          id: 5,
+          name: 'Workload',
+        },
+        {
+          id: 6,
+          name: 'Assignment Style',
+        },
+        {
+          id: 7,
+          name: 'Exam Style',
+        }
+      ],
     };
   },
   props: {
     course: String, // passed as stringified Object, needs to be parsed
   },
-  components: { Search, Pagination, AnnotationIcon, XIcon },
+  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios
@@ -169,6 +175,11 @@ export default defineComponent({
               });
           }
         });
+    },
+    updateOption(e: any) {
+      if(e === undefined) return;
+      this.option = e.id;
+      console.log("Update review option");
     },
   },
 });

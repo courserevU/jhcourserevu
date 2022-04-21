@@ -15,8 +15,10 @@ library.add(fas, far, fab);
 dom.watch();
 
 const app = createApp(App);
+const client_id = import.meta.env.VITE_CLIENT_ID;
+
 const gAuthOptions = {
-  clientId: "YOUR_CLIENT_ID",
+  clientId: client_id,
   scope: "email",
   prompt: "consent",
   fetch_basic_profile: false,

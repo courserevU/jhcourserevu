@@ -15,7 +15,7 @@ library.add(fas, far, fab);
 dom.watch();
 
 const app = createApp(App);
-const client_id = import.meta.env.VITE_CLIENT_ID;
+const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const gAuthOptions = {
   clientId: client_id,

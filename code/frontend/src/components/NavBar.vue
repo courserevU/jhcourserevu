@@ -69,7 +69,7 @@
           </button>
           <button
             class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900"
-            @click="handleClickSignIn" :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized">
+            @click="handleClickSignIn">
             Sign in
           </button>
         </div>
@@ -137,7 +137,7 @@
                 Existing user?
                 {{ " " }}
                 <button class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-600"
-                  @click="goToLogin">
+                  @click="handleClickSignIn" :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized">
                   Sign in
                 </button>
               </p>
@@ -161,6 +161,7 @@ import {
 import { MenuIcon, MoonIcon, SunIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 import { inject, toRefs } from "vue";
+import axios from "axios";
 
 // Toggle variable for turning dark mode on/off, theme persists between sessions
 let darkMode = localStorage.getItem("user-theme") === "true";
@@ -197,24 +198,38 @@ export default defineComponent({
         if (!googleUser) {
           return null;
         }
-        console.log("googleUser", googleUser);
-        this.user = googleUser.getBasicProfile().getEmail();
-        console.log("getId", this.user);
-        console.log("getBasicProfile", googleUser.getBasicProfile());
-        console.log("getAuthResponse", googleUser.getAuthResponse());
-        console.log(
-          "getAuthResponse",
-          this.$gAuth.instance.currentUser.get().getAuthResponse()
-        );
+        const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
+
+        axios.post(`http://localhost:8000/auth/convert-token`, {
+          "grant_type": "convert_token",
+          "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
+          "client_secret": import.meta.env.VITE_DJANGO_CLIENT_SECRET,
+          "backend": "google-oauth2",
+          "token": access_token
+        })
+          .then((response) => {
+            const data = response.data;
+            console.log(data);
+          })
+
+        // console.log("googleUser", googleUser);
+        // this.user = googleUser.getBasicProfile().getEmail();
+        // console.log("getId", this.user);
+        // console.log("getBasicProfile", googleUser.getBasicProfile());
+        // console.log("getAuthResponse", googleUser.getAuthResponse());
+        // console.log(
+        //   "getAuthResponse",
+        //   this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
+        // );
       } catch (error) {
         //on fail do something
         console.error(error);
         return null;
       }
     },
-    goToLogin() {
-      this.$router.push("/login");
-    },
+    // goToLogin() {
+    //   this.$router.push("/login");
+    // },
     goToMyCourses() {
       this.$router.push("/my-courses");
     },

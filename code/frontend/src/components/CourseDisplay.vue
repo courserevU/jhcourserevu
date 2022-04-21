@@ -35,7 +35,8 @@
       </div>
 
       <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1"
+        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
       >
         <div
           v-for="course in this.courses"
@@ -138,6 +139,8 @@ export default defineComponent({
         }
       ],
       page: 1,
+      totalPages: 5,
+      isTile: true,
     }
   },
   mounted() {
@@ -145,6 +148,7 @@ export default defineComponent({
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
+        this.totalPages = Math.ceil(data.count / 10);
       })
 
     // axios.get(`http://localhost:8000/course/api/`)

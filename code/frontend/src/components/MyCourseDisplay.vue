@@ -10,7 +10,8 @@
         <!-- <i class="fa-brands fa-github"></i> -->
       </h2>
       <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1"
+        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
       >
         <div
           v-for="course in filteredCourses"
@@ -96,6 +97,7 @@ export default defineComponent({
         }
       ],
       page: 1,
+      isTile: true,
     }
   },
   components: { Search, SelectMenu, Pagination, Checkbox },

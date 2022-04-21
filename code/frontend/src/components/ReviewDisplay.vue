@@ -16,7 +16,8 @@
       </div>
 
       <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1"
+        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
       >
         <div
           v-for="review in reviews"
@@ -84,6 +85,7 @@ export default defineComponent({
       reviews: [],
       page: 1,
       mod: true, // true if current user is moderator - will come from API
+      isTile: true,
       totalPages: 5,
       reviewCount: 1,
       option: 1,

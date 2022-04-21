@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from course.api.views import CourseList, CommentList, CourseNumberList, QueryByNameCourseList, QueryByNumberCourseList, QueryByDepartmentCourseList
+from course.api.views import CourseList, CommentList, CourseNumberList, QueryByNameCourseList, QueryByNumberCourseList, QueryByDepartmentCourseList, ReviewIdList
 
 urlpatterns = [
     path('api/', CourseList.as_view(), name='course_api'),

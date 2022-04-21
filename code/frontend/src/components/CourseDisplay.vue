@@ -156,7 +156,7 @@ export default defineComponent({
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
 
       if (field != undefined && this.query != "")
-        api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
       axios.get(api_link)

@@ -79,7 +79,7 @@ export default defineComponent({
 
       if (this.currentPage > 2 && this.currentPage < this.maxPage - 2) {
         this.firstPage = this.currentPage - 3;
-      } else if (this.currentPage > 1) {
+      } else if (this.currentPage > 1 && this.currentPage < this.maxPage - 2) {
         this.firstPage = this.currentPage - 2;
       }
 

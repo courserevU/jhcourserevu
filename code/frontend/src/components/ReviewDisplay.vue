@@ -9,6 +9,12 @@
         Reviews for {{ JSON.parse(course).name }}
       </h2>
 
+      <br />
+      <!-- Search Dropdown to filter within reviews-->
+      <div class="flex flex-row space-x-3">
+        <SelectReviewMenu :options="filters" @update-option="updateOption" />
+      </div>
+
       <div
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
@@ -50,7 +56,11 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" :maxPage="totalPages" :pageReplacement="page" />
+        <Pagination
+          @change-page="changePage"
+          :maxPage="totalPages"
+          :pageReplacement="page"
+        />
       </div>
     </div>
   </div>
@@ -59,9 +69,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Search from "./Search.vue";
+import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
 import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
-
 import axios from "axios";
 
 let query = "";
@@ -76,17 +86,46 @@ export default defineComponent({
       mod: true, // true if current user is moderator - will come from API
       totalPages: 5,
       reviewCount: 1,
+      option: 1,
+      filters: [
+        {
+          id: 2,
+          name: "Teaching Style",
+        },
+        {
+          id: 3,
+          name: "Grading Style",
+        },
+        {
+          id: 4,
+          name: "Teacher Feedback",
+        },
+        {
+          id: 5,
+          name: "Workload",
+        },
+        {
+          id: 6,
+          name: "Assignment Style",
+        },
+        {
+          id: 7,
+          name: "Exam Style",
+        },
+      ],
     };
   },
   props: {
     course: String, // passed as stringified Object, needs to be parsed
   },
-  components: { Search, Pagination, AnnotationIcon, XIcon },
+  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios
       .get(
-        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/`
+        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+          JSON.parse(this.course).id
+        }/`
       )
       .then((response) => {
         const data = response.data;
@@ -111,38 +150,31 @@ export default defineComponent({
     },
     deleteReview(id: number) {
       axios
-        .delete(`https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`)
+        .delete(
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`
+        )
         .then(() => {
-          // Reload page with updated review list (same page unless deletion reduces # of pages)          
+          // Reload page with updated review list (same page unless deletion reduces # of pages)
           if (this.page === this.totalPages && this.reviewCount % 10 === 1) {
             this.page -= 1;
-            axios
-              .get(
-                `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-                  JSON.parse(this.course).id
-                }/?page=${this.page}`
-              )
-              .then((response) => {
-                const data = response.data;
-                this.reviews = data.results;
-                this.reviewCount = data.count;
-                this.totalPages = Math.ceil(this.reviewCount / 10);
-              });
-          } else {
-            axios
-              .get(
-                `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-                  JSON.parse(this.course).id
-                }/?page=${this.page}`
-              )
-              .then((response) => {
-                const data = response.data;
-                this.reviews = data.results;
-                this.reviewCount = data.count;
-                this.totalPages = Math.ceil(this.reviewCount / 10);
-              });
           }
+          axios
+            .get(
+              `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+                JSON.parse(this.course).id
+              }/?page=${this.page}`
+            )
+            .then((response) => {
+              const data = response.data;
+              this.reviews = data.results;
+              this.reviewCount = data.count;
+              this.totalPages = Math.ceil(this.reviewCount / 10);
+            });
         });
+    },
+    updateOption(e: any) {
+      if (e === undefined) return;
+      this.option = e.id;
     },
   },
 });

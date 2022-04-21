@@ -67,7 +67,12 @@
               'h-5 w-5 group-hover:text-gray-500',
             ]" v-else aria-hidden="true" />
           </button>
-          <button
+          <button v-if="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900"
+            @click="handleClickSignOut">
+            Sign out
+          </button>
+          <button v-else
             class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900"
             @click="handleClickSignIn">
             Sign in
@@ -209,7 +214,9 @@ export default defineComponent({
         })
           .then((response) => {
             const data = response.data;
-            console.log(data);
+            // TODO: ideally, return user's name, id, etc.
+            // console.log(data);
+            // console.log(googleUser);
           })
 
         // console.log("googleUser", googleUser);
@@ -227,9 +234,15 @@ export default defineComponent({
         return null;
       }
     },
-    // goToLogin() {
-    //   this.$router.push("/login");
-    // },
+    async handleClickSignOut() {
+      try {
+        await this.$gAuth.signOut();
+        console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
+        this.user = "";
+      } catch (error) {
+        console.error(error);
+      }
+    },
     goToMyCourses() {
       this.$router.push("/my-courses");
     },

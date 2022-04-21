@@ -21,7 +21,8 @@ const gAuthOptions = {
   clientId: client_id,
   scope: "email",
   prompt: "consent",
-  fetch_basic_profile: false,
+  // TODO: set to false once we get data from backend
+  fetch_basic_profile: true,
 };
 
 app.component("font-awesome-icon", FontAwesomeIcon);

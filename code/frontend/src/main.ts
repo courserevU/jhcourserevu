@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-import GAuth from 'vue3-google-oauth2'
+import GAuth from "vue3-google-oauth2";
 
 import App from "./App.vue";
 import "./index.css";
@@ -15,11 +15,16 @@ library.add(fas, far, fab);
 dom.watch();
 
 const app = createApp(App);
-const gAuthOptions = { clientId: 'YOUR_CLIENT_ID', scope: 'email', prompt: 'consent', fetch_basic_profile: false }
+const gAuthOptions = {
+  clientId: "YOUR_CLIENT_ID",
+  scope: "email",
+  prompt: "consent",
+  fetch_basic_profile: false,
+};
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(createPinia());
 app.use(router);
-app.use(GAuth, gAuthOptions)
+app.use(GAuth, gAuthOptions);
 
 app.mount("#app");

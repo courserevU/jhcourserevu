@@ -93,7 +93,7 @@ import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
 
-
+let taken = [];
 let courses = [];
 
 let query = "";
@@ -111,6 +111,7 @@ export default defineComponent({
     return {
       query,
       option,
+      taken,
       courses,
       filters: [
         {
@@ -149,14 +150,10 @@ export default defineComponent({
       if(e === undefined) return;
 
       this.query = e;
-      console.log("this.option", this.option);
-      console.log("query = ", this.query);
 
       const field = optionsToField[this.option];
-      console.log("field", field);
       
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
-      // let api_link = `http://127.0.0.1:8000/course/api/`;
 
       if (field != undefined && this.query != "")
         api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
@@ -166,16 +163,25 @@ export default defineComponent({
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
+        this.totalPages = Math.ceil(data.count / 10);
       })
     },
     updateOption(e: any) {
       if(e === undefined) return;
 
       this.option = e.id;
-      console.log("updateOption")
-      console.log("query = ", this.query);
-
       this.updateFilter(this.query);
+    },
+    addCourse(course: any) {
+      axios.post(`http://localhost:8000/user/api/`, {
+        "user_id": 1,
+        "course_id": course.id
+      })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          // this.courses = data.results;
+        })
     },
     changePage(e: number) {
       this.page = e;
@@ -204,10 +210,9 @@ export default defineComponent({
     },
     updateTakenStatus(course: any) {
 
-      //if becomes unchecked take out from user courses, otherwise 
-      console.log(this.taken);
-      if(this.taken.includes(course.name+course.meeting_section)){
-        
+      //if becomes unchecked take out from user courses, otherwise
+      
+      if (this.taken.includes(course.name+course.meeting_section)) {
         console.log("add "+course.name+course.meeting_section);
       } else {
         console.log("delete "+course.name+course.meeting_section);

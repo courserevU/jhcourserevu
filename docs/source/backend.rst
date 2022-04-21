@@ -6,4 +6,5 @@ Backend Documentation
 
    modules/course
    modules/course_parser
+   modules/login_flow
    modules/user

@@ -23,7 +23,8 @@
     "mosha-vue-toastify": "^1.0.23",
     "pinia": "^2.0.11",
     "vue": "^3.2.29",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue3-google-oauth2": "^1.0.6"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.5.0",

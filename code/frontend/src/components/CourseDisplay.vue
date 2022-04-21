@@ -39,13 +39,13 @@
           </div>
           <div class="mt-2"> 
             <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
-            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken"  @click="updateTakenStatus(course)">
+            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken"  @change="updateTakenStatus(course)">
             <label for="checkbox" class="text-sm text-gray-700 dark:text-gray-300">{{ " I have taken this course"}}</label>
           </div>
 
           <div class="block inline-flex mt-4 mb-2">
             <button
-              v-if="taken.includes(course.name+course.meeting_section)"
+              v-if="this.taken.includes(course.name+course.meeting_section)"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToWriteReview(course)"
@@ -161,23 +161,25 @@ export default defineComponent({
     updateTakenStatus(course: any) {
 
       //if becomes unchecked take out from user courses, otherwise 
-      // if(taken.includes(course.name+course.meeting_section)){
-      //   console.log("remove)");
-      // } else {
-      //   console.log("add");
-      // }
-      //else if checked add to user course
+      console.log(this.taken);
+      if(this.taken.includes(course.name+course.meeting_section)){
+        
+        console.log("add "+course.name+course.meeting_section);
+      } else {
+        console.log("delete "+course.name+course.meeting_section);
+      }
+      // else if checked add to user course
 
-      // console.log(course.id);
+      
 
-      axios.delete(`http://localhost:8000/user/api/1`, {
-        "course_id": course.id
-      })
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          // this.courses = data.results;
-        })
+      // axios.delete(`http://localhost:8000/user/api/1`, {
+      //   "course_id": course.id
+      // })
+      //   .then((response) => {
+      //     const data = response.data;
+      //     console.log(data);
+      //     // this.courses = data.results;
+      //   })
     }
   },
 

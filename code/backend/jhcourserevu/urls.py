@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from user.api.views import GoogleLogin
+# from user.api.views import GoogleLogin
 
 urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
-    path("accounts/", include("allauth.urls")),
-    path("dj-rest-auth/", include("dj_rest_auth.urls")),
-    path("dj-rest-auth/google/", GoogleLogin.as_view(), name="google_login"),
+
+    # path("accounts/", include("allauth.urls")),
+    # path("dj-rest-auth/", include("dj_rest_auth.urls")),
+    # path("dj-rest-auth/google/", GoogleLogin.as_view(), name="google_login"),
     # path("api-auth/", include("rest_framework.urls")),
     # path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path("course/", include("course.urls"), name="course"),

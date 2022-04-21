@@ -45,7 +45,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 AUTHENTICATION_BACKENDS = [
     # "microsoft_auth.backends.MicrosoftAuthenticationBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    # "allauth.account.auth_backends.AuthenticationBackend",
+    # "django.contrib.auth.backends.ModelBackend",
+    "social_core.backends.google.GoogleOAuth2",
+    "drf_social_oauth2.backends.DjangoOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
@@ -59,11 +62,15 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
-    # "dj_rest_auth",
     "user",
     "course",
     "django.contrib.sites",
-    # for django-allauth
+    # for drf_social_oauth2
+    "oauth2_provider",
+    "social_django",
+    "drf_social_oauth2",
+    # TODO: remove?, for django-allauth
+    # "dj_rest_auth",
     # "allauth",
     # "allauth.account",
     # "dj_rest_auth.registration",
@@ -96,6 +103,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -141,11 +150,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 SITE_ID = 1
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "drf_social_oauth2.authentication.SocialAuthentication",
+    ),
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("CLIENT_ID")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("CLIENT_SECRET")
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
+
 # ACCOUNT_AUTHENTICATION_METHOD = "email"
 # ACCOUNT_USERNAME_REQUIRED = False
 # ACCOUNT_UNIQUE_EMAIL = True
 # ACCOUNT_EMAIL_REQUIRED = True
-
 # SOCIALACCOUNT_PROVIDERS = {
 #     "google": {
 #         "SCOPE": [
@@ -157,7 +180,6 @@ SITE_ID = 1
 #         },
 #     }
 # }
-
 # LOGIN_REDIRECT_URL = "/"
 # SOCIALACCOUNT_QUERY_EMAIL = True
 # ACCOUNT_LOGOUT_ON_GET = True

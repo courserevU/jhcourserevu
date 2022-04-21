@@ -139,10 +139,16 @@
           <div class="py-4 px-5 space-y-6">
             <div>
               <p class="text-center text-base font-medium text-gray-500 dark:text-gray-400">
-                Existing user?
-                {{ " " }}
-                <button class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-600"
-                  @click="handleClickSignIn" :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized">
+                <!-- Existing user?
+                {{ " " }} -->
+                <button v-if="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
+                  class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-600"
+                  @click="handleClickSignOut">
+                  Sign out
+                </button>
+                <button v-else
+                  class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-600"
+                  @click="handleClickSignIn">
                   Sign in
                 </button>
               </p>

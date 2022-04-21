@@ -89,7 +89,7 @@ ROOT_URLCONF = "jhcourserevu.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -152,12 +152,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # MICROSOFT_AUTH_LOGIN_TYPE = "ma"
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = "/"
+# LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
-SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET = True
+# SOCIALACCOUNT_QUERY_EMAIL = True
+# ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 
@@ -168,7 +168,7 @@ SOCIALACCOUNT_PROVIDERS = {
             "email",
         ],
         "AUTH_PARAMS": {
-            "access_type": "online",
+            "access_type": "offline",
         },
     }
 }

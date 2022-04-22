@@ -126,7 +126,7 @@ export default defineComponent({
 
       //this should be swapped out for whatever call gets a given user's courses with searching
       // http://localhost:8000/user/api/1/?page=${this.page}
-      axios.get(`http://localhost:8000/user/api/?page=${this.page}`,
+      axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/?page=${this.page}`,
       {
         "data": {
           "user_id": 1

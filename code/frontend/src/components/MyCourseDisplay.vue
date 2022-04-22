@@ -130,6 +130,9 @@ export default defineComponent({
         this.courses = data.results;
       })
     },
+    toggleLayout() {
+      this.isTile = !this.isTile;
+    },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
     },

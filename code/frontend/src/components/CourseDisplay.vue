@@ -201,7 +201,6 @@ export default defineComponent({
       this.page = e;
 
       // Gets correct page of courses via API page query
-
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
       // let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
 
@@ -216,6 +215,9 @@ export default defineComponent({
         this.courses = data.results;
       })
     },
+    toggleLayout() {
+      this.isTile = !this.isTile;
+    },
     goToWriteReview(course: any) {
       this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
     },
@@ -223,15 +225,12 @@ export default defineComponent({
       this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
     },
     updateTakenStatus(course: any) {
-
-      //if becomes unchecked take out from user courses, otherwise
-      
+      // If course info is in taken, it was added; otherwise it was removed
       if (this.taken.includes(course.name+course.meeting_section)) {
         console.log("add "+course.name+course.meeting_section);
       } else {
         console.log("delete "+course.name+course.meeting_section);
       }
-      // else if checked add to user course
 
       
 

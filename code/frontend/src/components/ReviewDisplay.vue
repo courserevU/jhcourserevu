@@ -150,6 +150,9 @@ export default defineComponent({
           this.reviews = data.results;
         });
     },
+    toggleLayout() {
+      this.isTile = !this.isTile;
+    },
     deleteReview(id: number) {
       axios
         .delete(

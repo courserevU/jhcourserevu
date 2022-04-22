@@ -102,7 +102,7 @@ export default defineComponent({
   mounted() {
     // http://localhost:8000/user/api/1
     // https://jhcourserevu-api-test.herokuapp.com/user/api/${user_id}
-    axios.get(`http://localhost:8000/user/api/`,
+    axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/`,
       {
         "data": {
           "user_id": 1

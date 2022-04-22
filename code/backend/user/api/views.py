@@ -39,13 +39,11 @@ class UserUpdate(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class UserDetail(APIView):
-    def get(self, request, user_id, format=None):
+    def get(self, request, format=None):
         """
         Get users' courses by user's id
         """
-        user_id = self.kwargs["user_id"]
+        user_id = request.data.get("user_id")
         user_courses = MyCourses.objects.filter(user=user_id)
         s = MyCoursesSerializer(user_courses, many=True)
 
@@ -65,11 +63,11 @@ class UserDetail(APIView):
         # serializer = CourseSerializer(courses, many=True)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def delete(self, request, user_id, format=None):
+    def delete(self, request, format=None):
         """
         Delete a course in user's set of courses
         """
-        user_id = self.kwargs["user_id"]
+        user_id = request.data.get("user_id")
         course_id = request.data.get("course_id")
 
         user_courses = MyCourses.objects.filter(user=user_id)
@@ -82,7 +80,7 @@ class UserDetail(APIView):
             s.data[0]["courses"].remove(course_id)
             s.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-
+        
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 

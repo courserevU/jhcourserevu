@@ -76,6 +76,14 @@ import axios from "axios";
 
 let query = "";
 
+const optionsToField = {
+  2 : "Teaching Style",
+  3 : "Grading Style",
+  4 : "Teacher Feedback",
+  5 : "Workload",
+  6 : "Assignment Style",
+  7 : "Exam Style",
+};
 export default defineComponent({
   name: "ReviewDisplay",
   data() {
@@ -121,11 +129,17 @@ export default defineComponent({
   components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
+    let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+          JSON.parse(this.course).id}/`;
+
+    const field = optionsToField[this.option];
+
+    if (field != undefined) 
+      api_link += field
+
     axios
       .get(
-        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-          JSON.parse(this.course).id
-        }/`
+        api_link
       )
       .then((response) => {
         const data = response.data;
@@ -175,6 +189,10 @@ export default defineComponent({
     updateOption(e: any) {
       if (e === undefined) return;
       this.option = e.id;
+
+      const field = optionsToField[this.option];
+
+      this.mounted();
     },
   },
 });

@@ -159,6 +159,29 @@ class CommentList(APIView):
 
         return Response(comments, status=status.HTTP_201_CREATED)
 
+class ReviewByCommentList(APIView):
+    def get(self, request, course_id, format=None):
+        """
+        Get Teach Style comments by course id
+        """
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        comments_to_display = []
+
+        course_id = self.kwargs["course_id"]
+        comment_label = self.kwargs["comment_label"]
+        reviews = Review.objects.filter(course=course_id)
+
+        for review in reviews:
+          comments = Comment.objects.filter(review=review.id)
+        
+          serializer = CommentSerializer(comments[comment_label])
+          comments_to_display.append(serializer.data)
+            
+        result_page = paginator.paginate_queryset(comments_to_display, request)
+        return paginator.get_paginated_response(result_page)
+
 
 class ReviewIdList(APIView):
     def get(self, request, course_id, format=None):

@@ -176,7 +176,11 @@ SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.associate_user",
     "social_core.pipeline.social_auth.load_extra_data",
     "social_core.pipeline.user.user_details",
+    "social_core.pipeline.social_auth.associate_user",
+    "user.utils.create_custom_user",
 )
+
+SOCIAL_AUTH_STORAGE = "social_django.models.DjangoStorage"
 
 # ACCOUNT_AUTHENTICATION_METHOD = "email"
 # ACCOUNT_USERNAME_REQUIRED = False

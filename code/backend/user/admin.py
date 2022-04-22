@@ -1,7 +1,10 @@
 from django.contrib import admin
-from .models import MyCourses, User
+from .models import CustomDjangoStorage, MyCourses, CustomUser
+#  CustomUserSocialAuth
 
-admin.site.register(User)
+admin.site.register(CustomUser)
+# admin.site.register(CustomUserSocialAuth)
+# admin.site.register(CustomDjangoStorage)
 admin.site.register(MyCourses)
 
 # TODO: subject to change, need to review

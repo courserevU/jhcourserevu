@@ -3,7 +3,8 @@ import { fileURLToPath, URL } from "url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-import EnvironmentPlugin from "vite-plugin-environment";
+// import EnvironmentPlugin from "vite-plugin-environment";
+// import path from "path";
 // import ImportMetaEnvPlugin from "@import-meta-env/unplugin";
 
 const viteEnv = {};
@@ -26,7 +27,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@": require("path").resolve(__dirname, "src"),
     },
   },
 });

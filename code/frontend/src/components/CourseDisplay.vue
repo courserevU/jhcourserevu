@@ -32,6 +32,28 @@
             />
           </svg>
         </span>
+        <button
+            class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+            @click="toggleLayout"
+          >
+            <ViewGridIcon
+              :class="[
+                open ? 'text-gray-600' : 'text-gray-400',
+                'h-5 w-5 group-hover:text-gray-500',
+              ]"
+              v-if="isTile"
+              aria-hidden="true"
+            />
+            <ViewListIcon
+              :class="[
+                open ? 'text-gray-600' : 'text-gray-400',
+                'h-5 w-5 group-hover:text-gray-500',
+              ]"
+              v-else
+              aria-hidden="true"
+            />
+          </button>
+        
       </div>
 
       <div
@@ -103,7 +125,7 @@ import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
-
+import {ViewGridIcon,ViewListIcon } from "@heroicons/vue/outline";
 let taken = [];
 let courses = [];
 
@@ -158,7 +180,7 @@ export default defineComponent({
     //     // console.log(JSON.parse(JSON.stringify(data.results)));
     //   })
   },
-  components: { Search, SelectMenu, Pagination, Checkbox, EyeIcon, PlusIcon },
+  components: { Search, SelectMenu, Pagination, Checkbox, EyeIcon, PlusIcon, ViewListIcon, ViewGridIcon },
   methods: {
     updateFilter(e: any) {
       if(e === undefined) return;

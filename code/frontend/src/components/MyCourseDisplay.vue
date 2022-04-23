@@ -113,7 +113,7 @@ export default defineComponent({
       axios
         .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
           data: {
-            user_email: this.user,
+            "user_email": this.user,
           },
         })
         .then((response) => {
@@ -140,7 +140,7 @@ export default defineComponent({
           `https://jhcourserevu-api-test.herokuapp.com/user/api/?page=${this.page}`,
           {
             data: {
-              user_id: 1,
+              "user_email": 1,
             },
           }
         )

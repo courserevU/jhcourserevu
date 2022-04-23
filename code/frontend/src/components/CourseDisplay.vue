@@ -195,9 +195,9 @@ export default defineComponent({
     },
     addCourse(course: any) {
       axios
-        .post(`http://localhost:8000/user/api/`, {
-          user_email: this.user,
-          course_id: course.id,
+        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          "user_email": this.user,
+          "course_id": course.id,
         })
         .then((response) => {
           const data = response.data;
@@ -215,7 +215,7 @@ export default defineComponent({
       const field = optionsToField[this.option];
 
       if (field != undefined && this.query != "")
-        api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
 
       axios.get(api_link).then((response) => {
         const data = response.data;
@@ -243,10 +243,10 @@ export default defineComponent({
       } else {
         console.log("delete " + course.name + course.meeting_section);
         axios
-          .delete(`http://localhost:8000/user/api/`, {
+          .delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
             data: {
-              user_email: this.user,
-              course_id: course.id,
+              "user_email": this.user,
+              "course_id": course.id,
             },
           })
           .then((response) => {

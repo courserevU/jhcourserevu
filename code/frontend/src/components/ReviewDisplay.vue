@@ -13,7 +13,32 @@
       <!-- Search Dropdown to filter within reviews-->
       <div class="flex flex-row space-x-3">
         <SelectReviewMenu :options="filters" @update-option="updateOption" />
+        <button
+          class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+          @click="toggleLayout"
+        >
+          <ViewGridIcon
+            :class="[
+              open ? 'text-gray-600' : 'text-gray-400',
+              'h-5 w-5 group-hover:text-gray-500',
+            ]"
+            v-if="isTile"
+            aria-hidden="true"
+          />
+          <ViewListIcon
+            :class="[
+              open ? 'text-gray-600' : 'text-gray-400',
+              'h-5 w-5 group-hover:text-gray-500',
+            ]"
+            v-else
+            aria-hidden="true"
+          />
+        </button> 
       </div>
+      
+      
+
+      
 
       <div
         class="mt-6 grid grid-cols-1"
@@ -72,7 +97,7 @@ import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
-import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
+import { AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 
 let query = "";
@@ -120,7 +145,7 @@ export default defineComponent({
   props: {
     course: String, // passed as stringified Object, needs to be parsed
   },
-  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon },
+  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon  },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     axios

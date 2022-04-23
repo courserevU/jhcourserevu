@@ -132,18 +132,18 @@ export default defineComponent({
   },
   components: { Search, SelectMenu, Pagination, Checkbox },
   mounted() {
-    // axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
-    //   .then((response) => {
-    //     const data = response.data;
-    //     this.courses = data.results;
-    //   })
-
-    axios.get(`http://localhost:8000/course/api/`)
+    axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
-        // console.log(JSON.parse(JSON.stringify(data.results)));
       })
+
+    // axios.get(`http://localhost:8000/course/api/`)
+    //   .then((response) => {
+    //     const data = response.data;
+    //     this.courses = data.results;
+    //     // console.log(JSON.parse(JSON.stringify(data.results)));
+    //   })
   },
   methods: {
     updateFilter(e: any) {
@@ -153,12 +153,12 @@ export default defineComponent({
 
       const field = optionsToField[this.option];
       
-      // let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
-      let api_link = `http://127.0.0.1:8000/course/api/`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
+      // let api_link = `http://127.0.0.1:8000/course/api/`;
 
       if (field != undefined && this.query != "")
-        // api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
-        api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
+        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
       axios.get(api_link)
@@ -190,14 +190,14 @@ export default defineComponent({
 
       // Gets correct page of courses via API page query
 
-      // let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
-      let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
+      // let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
 
       const field = optionsToField[this.option];
 
       if (field != undefined && this.query != "")
-        // api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
-        api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
       
       axios.get(api_link)
       .then((response) => {

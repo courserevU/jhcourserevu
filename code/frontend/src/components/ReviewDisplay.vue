@@ -24,6 +24,7 @@
       </div>
 
       <div 
+        v-if="option === 1"
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div 
@@ -63,7 +64,7 @@
           </div>
         </div>
       </div>
-<!-- 
+
       <div v-else
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
@@ -73,16 +74,14 @@
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
           <div class="mt-2">
-            <div class="relative"> -->
-              <!-- <div v-for="comment in review" :key="comment.id"> -->
-                <!-- <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" >
-                  <span>{{ comment.comment }}</span>
-                </p> -->
-              <!-- </div> -->
-            <!-- </div>
+            <div class="relative">
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" >
+                <span>{{ comment.comment }}</span>
+              </p>
+            </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <div>
         <Pagination

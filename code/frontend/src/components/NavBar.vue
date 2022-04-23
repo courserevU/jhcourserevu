@@ -210,8 +210,8 @@ export default defineComponent({
           return null;
         }
         const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
-
-        axios.post(`http://localhost:8000/auth/convert-token`, {
+        // http://localhost:8000/auth/convert-token
+        axios.post(`https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`, {
           "grant_type": "convert_token",
           "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
           "client_secret": import.meta.env.VITE_DJANGO_CLIENT_SECRET,

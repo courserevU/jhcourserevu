@@ -9,6 +9,27 @@
         <!-- <font-awesome-icon :icon="['fab', 'github']" /> -->
         <!-- <i class="fa-brands fa-github"></i> -->
       </h2>
+      <button
+        class="ml-4 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+        @click="toggleLayout"
+      >
+        <ViewGridIcon
+          :class="[
+            open ? 'text-gray-600' : 'text-gray-400',
+            'h-5 w-5 group-hover:text-gray-500',
+          ]"
+          v-if="isTile"
+          aria-hidden="true"
+        />
+        <ViewListIcon
+          :class="[
+            open ? 'text-gray-600' : 'text-gray-400',
+            'h-5 w-5 group-hover:text-gray-500',
+          ]"
+          v-else
+          aria-hidden="true"
+        />
+      </button>
       <div
         class="mt-6 grid grid-cols-1"
         :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
@@ -62,6 +83,7 @@ import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
+import {ViewGridIcon,ViewListIcon } from "@heroicons/vue/outline";
 
 
 let courses = [];
@@ -100,7 +122,7 @@ export default defineComponent({
       isTile: true,
     }
   },
-  components: { Search, SelectMenu, Pagination, Checkbox },
+  components: { Search, SelectMenu, Pagination, Checkbox, ViewGridIcon,ViewListIcon },
   mounted() {
     // http://localhost:8000/user/api/1
     // https://jhcourserevu-api-test.herokuapp.com/user/api/${user_id}

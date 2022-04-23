@@ -21,11 +21,34 @@
       <!-- Search Dropdown to filter within reviews-->
       <div class="flex flex-row space-x-3">
         <SelectReviewMenu :options="filters" @update-option="updateOption" />
+        <button
+          class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+          @click="toggleLayout"
+        >
+          <ViewGridIcon
+            :class="[
+              open ? 'text-gray-600' : 'text-gray-400',
+              'h-5 w-5 group-hover:text-gray-500',
+            ]"
+            v-if="isTile"
+            aria-hidden="true"
+          />
+          <ViewListIcon
+            :class="[
+              open ? 'text-gray-600' : 'text-gray-400',
+              'h-5 w-5 group-hover:text-gray-500',
+            ]"
+            v-else
+            aria-hidden="true"
+          />
+        </button> 
       </div>
-
-      <div 
+      
+      
+      <div
         v-if="option === 1 || option === 8"
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1"
+        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
       >
         <div 
           v-for="review in reviews"
@@ -99,7 +122,7 @@ import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
-import { AnnotationIcon, XIcon } from "@heroicons/vue/outline";
+import { AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 
 let query = "";
@@ -121,6 +144,7 @@ export default defineComponent({
       reviews: [],
       page: 1,
       mod: true, // true if current user is moderator - will come from API
+      isTile: true,
       totalPages: 5,
       reviewCount: 1,
       option: 1,
@@ -159,7 +183,7 @@ export default defineComponent({
   props: {
     course: String, // passed as stringified Object, needs to be parsed
   },
-  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon },
+  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon  },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}`
@@ -222,6 +246,9 @@ export default defineComponent({
           const data = response.data;
           this.reviews = data.results;
         });
+    },
+    toggleLayout() {
+      this.isTile = !this.isTile;
     },
     deleteReview(id: number) {
       axios

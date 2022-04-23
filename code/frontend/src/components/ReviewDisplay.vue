@@ -24,7 +24,7 @@
       </div>
 
       <div 
-        v-if="option === 1"
+        v-if="option === 1 || option === 8"
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
         <div 
@@ -111,6 +111,7 @@ const optionsToField = {
   5 : "Workload",
   6 : "Assignment Style",
   7 : "Exam Style",
+  8 : "Show all reviews"
 };
 export default defineComponent({
   name: "ReviewDisplay",
@@ -148,6 +149,10 @@ export default defineComponent({
           id: 7,
           name: "Exam Style",
         },
+        {
+          id: 8,
+          name: "Show all reviews",
+        },
       ],
     };
   },
@@ -184,10 +189,13 @@ export default defineComponent({
 
       let api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/`;
 
-      if (field != undefined) {
+      if (field != undefined && field != "Show all reviews") {
         api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/${field}`;      
       }
       
+      if (field === "Show all reviews")
+        api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
+
       axios
       .get(api_link)
       .then((response) => {

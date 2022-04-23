@@ -6,9 +6,16 @@
       <h2
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
       >
-        Reviews for {{ JSON.parse(course).name }}
+        {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
 
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Prerequisites: {{ JSON.parse(course).prerequisites }}</h3>
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Corequisites: {{ JSON.parse(course).corequisites }}</h3>
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Credits: {{ JSON.parse(course).num_credits }}</h3>
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Section: {{ JSON.parse(course).meeting_section }}</h3>
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Department: {{ JSON.parse(course).department }}</h3>
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Campus: {{ JSON.parse(course).campus }}</h3>
+      <h3 class="text-md text-gray-700 dark:text-gray-300">Writing Intensive: {{ JSON.parse(course).is_writing_intensive === "True" ? 'Yes' : 'No'}}</h3>
       <br />
       <!-- Search Dropdown to filter within reviews-->
       <div class="flex flex-row space-x-3">
@@ -133,6 +140,8 @@ export default defineComponent({
         this.reviewCount = data.count;
         this.totalPages = Math.ceil(this.reviewCount / 10);
       });
+      console.log(this.course);
+
   },
   methods: {
     changePage(e: number) {

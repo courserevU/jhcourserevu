@@ -1,4 +1,5 @@
 import datetime
+from unicodedata import category
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -159,6 +160,34 @@ class CommentList(APIView):
 
         return Response(comments, status=status.HTTP_201_CREATED)
 
+class ReviewByCommentList(APIView):
+    def get(self, request, course_id, comment_label, format=None):
+        """
+        Get Teach Style comments by course id
+        """
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+
+        comments_to_display = []
+
+        course_id = self.kwargs["course_id"]
+        comment_label = self.kwargs["comment_label"]
+        reviews = Review.objects.filter(course=course_id)
+        
+
+        for review in reviews:
+            comments = (review.comment_set.all())
+            
+            # print(comments)
+            for comment in comments:
+                if (comment.category == comment_label):
+                    print(comment.comment)
+                    serializer = CommentSerializer(comment)
+                    comments_to_display.append(serializer.data)
+            
+        # result_page = paginator.paginate_queryset(serializer.data, request)
+        result_page = paginator.paginate_queryset(comments_to_display, request)
+        return paginator.get_paginated_response(result_page)
 
 class ReviewIdList(APIView):
     def get(self, request, course_id, format=None):

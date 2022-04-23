@@ -173,16 +173,17 @@ class ReviewByCommentList(APIView):
         course_id = self.kwargs["course_id"]
         comment_label = self.kwargs["comment_label"]
         reviews = Review.objects.filter(course=course_id)
-        print(comment_label)
         
+
         for review in reviews:
-            comments = Comment.objects.filter(category=comment_label)
+            comments = (review.comment_set.all())
             
             # print(comments)
             for comment in comments:
-                print(comment.comment)
-                serializer = CommentSerializer(comment)
-                comments_to_display.append(serializer.data)
+                if (comment.category == comment_label):
+                    print(comment.comment)
+                    serializer = CommentSerializer(comment)
+                    comments_to_display.append(serializer.data)
             
         # result_page = paginator.paginate_queryset(serializer.data, request)
         result_page = paginator.paginate_queryset(comments_to_display, request)

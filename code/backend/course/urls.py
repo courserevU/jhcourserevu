@@ -1,8 +1,6 @@
 from django.urls import path, re_path
 from course.api.views import CourseList, CommentList, ReviewIdList, CourseNumberList, ReviewByCommentList, QueryByNameCourseList, QueryByNumberCourseList, QueryByDepartmentCourseList
 
-from . import views
-
 urlpatterns = [
     path('api/', CourseList.as_view(), name='course_api'),
     re_path('^api/(?P<course_num>.+)/$', CourseNumberList.as_view(), name='course_num_api'),

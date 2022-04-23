@@ -17,15 +17,17 @@
       <h3 class="text-md text-gray-700 dark:text-gray-300">Campus: {{ JSON.parse(course).campus }}</h3>
       <h3 class="text-md text-gray-700 dark:text-gray-300">Writing Intensive: {{ JSON.parse(course).is_writing_intensive === "True" ? 'Yes' : 'No'}}</h3>
       <br />
+
       <!-- Search Dropdown to filter within reviews-->
       <div class="flex flex-row space-x-3">
         <SelectReviewMenu :options="filters" @update-option="updateOption" />
       </div>
 
-      <div
+      <div 
+        v-if="option === 1 || option === 8"
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
-        <div
+        <div 
           v-for="review in reviews"
           :key="reviews.indexOf(review)"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
@@ -62,6 +64,25 @@
           </div>
         </div>
       </div>
+
+      <div v-else
+        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+      >
+        <div 
+          v-for="comment in reviews"
+          :key="reviews.indexOf(comment)"
+          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
+        >
+          <div class="mt-2">
+            <div class="relative">
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" >
+                <span>{{ comment.comment }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <Pagination
           @change-page="changePage"
@@ -83,6 +104,15 @@ import axios from "axios";
 
 let query = "";
 
+const optionsToField = {
+  2 : "Teaching Style",
+  3 : "Grading Style",
+  4 : "Teacher Feedback",
+  5 : "Workload",
+  6 : "Assignment Style",
+  7 : "Exam Style",
+  8 : "Show all reviews"
+};
 export default defineComponent({
   name: "ReviewDisplay",
   data() {
@@ -119,6 +149,10 @@ export default defineComponent({
           id: 7,
           name: "Exam Style",
         },
+        {
+          id: 8,
+          name: "Show all reviews",
+        },
       ],
     };
   },
@@ -128,27 +162,59 @@ export default defineComponent({
   components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
-    axios
-      .get(
-        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-          JSON.parse(this.course).id
-        }/`
-      )
+    let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}`
+    // let api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
+    
+    const field = optionsToField[this.option];
+    
+    if (field != undefined) 
+      api_link += field
+      axios
+        .get(api_link)
+        .then((response) => {
+          const data = response.data;
+          this.reviews = data.results;
+          this.reviewCount = data.count;
+          this.totalPages = Math.ceil(this.reviewCount / 10);
+        });
+        console.log(this.course);
+
+  },
+  methods: {
+    updateOption(e: any) {
+      if(e === undefined) return;
+
+      this.option = e.id;
+      const field = optionsToField[this.option];
+
+      // let api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${JSON.parse(this.course).id}/`;
+
+      if (field != undefined && field != "Show all reviews") {
+        // api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/${field}`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${JSON.parse(this.course).id}/${field}`;      
+      }
+      
+      if (field === "Show all reviews")
+        // api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/`;
+
+      axios
+      .get(api_link)
       .then((response) => {
         const data = response.data;
         this.reviews = data.results;
         this.reviewCount = data.count;
         this.totalPages = Math.ceil(this.reviewCount / 10);
       });
-      console.log(this.course);
-
-  },
-  methods: {
+      
+    },
     changePage(e: number) {
       this.page = e;
       axios
         .get(
           `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+          // `http://127.0.0.1:8000/course/review/api/${
             JSON.parse(this.course).id
           }/?page=${this.page}`
         )
@@ -161,6 +227,7 @@ export default defineComponent({
       axios
         .delete(
           `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`
+          // `http://127.0.0.1:8000/course/review/api/${id}/`
         )
         .then(() => {
           // Reload page with updated review list (same page unless deletion reduces # of pages)
@@ -170,6 +237,7 @@ export default defineComponent({
           axios
             .get(
               `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+              // `http://127.0.0.1:8000/course/review/api/${
                 JSON.parse(this.course).id
               }/?page=${this.page}`
             )
@@ -181,10 +249,12 @@ export default defineComponent({
             });
         });
     },
-    updateOption(e: any) {
-      if (e === undefined) return;
-      this.option = e.id;
-    },
+    // updateOption(e: any) {
+    //   if (e === undefined) return;
+    //   this.option = e.id;
+    //   const field = optionsToField[this.option];
+    //   this.mounted();
+    // },
   },
 });
 </script>

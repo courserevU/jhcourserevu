@@ -154,9 +154,11 @@ export default defineComponent({
       const field = optionsToField[this.option];
       
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
+      // let api_link = `http://127.0.0.1:8000/course/api/`;
 
       if (field != undefined && this.query != "")
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
+        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
       axios.get(api_link)
@@ -195,6 +197,7 @@ export default defineComponent({
 
       if (field != undefined && this.query != "")
         api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
       
       axios.get(api_link)
       .then((response) => {

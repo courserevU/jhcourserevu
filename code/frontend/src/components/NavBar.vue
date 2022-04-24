@@ -211,7 +211,8 @@ export default defineComponent({
         }
         const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
         // http://localhost:8000/auth/convert-token
-        axios.post(`https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`, {
+        // https://jhcourserevu-api-test.herokuapp.com/auth/convert-token
+        axios.post(`http://localhost:8000/auth/convert-token`, {
           "grant_type": "convert_token",
           "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
           "client_secret": import.meta.env.VITE_DJANGO_CLIENT_SECRET,
@@ -222,7 +223,7 @@ export default defineComponent({
             const data = response.data;
             // TODO: ideally, return user's name, id, etc.
             // console.log(data);
-            // console.log(googleUser);
+            console.log(googleUser.getBasicProfile().getEmail());
           })
 
         // console.log("googleUser", googleUser);

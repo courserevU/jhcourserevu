@@ -1,6 +1,6 @@
 from django.db import models
 from course.models import Course
-from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage
+from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage, UserSocialAuth
 
 
 class CustomUser(AbstractUserSocialAuth):
@@ -18,8 +18,8 @@ class CustomUser(AbstractUserSocialAuth):
     user = models.ForeignKey(
         USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE
     )
-    jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    jhed_email = models.EmailField(("email address"), unique=True)
+    # jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
+    email = models.EmailField(("email address"), unique=True, blank=True, null=True)
     class_year = models.CharField(max_length=50, blank=True, null=True, unique=True)
     preferred_name = models.CharField(max_length=30, blank=True, null=True, unique=True)
     is_admin = models.BooleanField(default=False)

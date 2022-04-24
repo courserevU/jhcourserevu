@@ -8,6 +8,7 @@ def create_custom_user(strategy, details, response, user, *args, **kwargs):
     """
     # backend_name = kwargs["backend"].name
     custom_user, _ = CustomUser.objects.get_or_create(user=user)
+    custom_user.email = user.email
     # social_user = user.social_auth.filter(provider=backend_name).first()
     # if backend_name == "google-oauth2":
     # update_user_google(custom_user, social_user)

@@ -229,7 +229,7 @@ export default defineComponent({
 
         // console.log("googleUser", googleUser);
         this.user = googleUser.getBasicProfile().getEmail();
-        // console.log(this.msg);
+        localStorage.setItem("email", JSON.stringify(this.user));
         // console.log("getId", this.user);
         // console.log("getBasicProfile", googleUser.getBasicProfile());
         // console.log("getAuthResponse", googleUser.getAuthResponse());
@@ -248,6 +248,7 @@ export default defineComponent({
         await this.$gAuth.signOut();
         console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
         this.user = "";
+        localStorage.setItem("email", JSON.stringify(this.user));
       } catch (error) {
         console.error(error);
       }

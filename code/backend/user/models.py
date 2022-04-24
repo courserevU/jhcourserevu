@@ -1,6 +1,11 @@
 from django.db import models
 from course.models import Course
-from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage, UserSocialAuth
+from social_django.models import (
+    AbstractUserSocialAuth,
+    USER_MODEL,
+    DjangoStorage,
+    UserSocialAuth,
+)
 
 
 class CustomUser(AbstractUserSocialAuth):

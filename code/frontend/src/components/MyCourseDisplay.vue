@@ -1,7 +1,8 @@
 <template>
   <div class="bg-white dark:bg-gray-800">
-    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
-
+    <div
+      class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8"
+    >
       <h2
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
       >
@@ -60,12 +61,16 @@
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToWriteReview(course)"
-            >Write Review</button>
+            >
+              Write Review
+            </button>
             <button
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
               @click="goToReadReviews(course)"
-            >Read Reviews</button>
+            >
+              Read Reviews
+            </button>
           </div>
         </div>
       </div>
@@ -77,14 +82,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Search from './Search.vue';
+import { defineComponent } from "vue";
+import Search from "./Search.vue";
 import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
 import {ViewGridIcon,ViewListIcon } from "@heroicons/vue/outline";
-
 
 let courses = [];
 
@@ -92,51 +96,55 @@ let query = "";
 let option = "";
 
 const optionsToField = {
-  2 : "name",
-  3 : "course_num",
-  4 : "department"
+  2: "name",
+  3: "course_num",
+  4: "department",
 };
 
 export default defineComponent({
   name: "MyCourseDisplay",
   data() {
     return {
+      user: "",
       query,
       option,
       courses,
       filters: [
         {
-            id: 2,
-            name: 'Course Name',
+          id: 2,
+          name: "Course Name",
         },
         {
-            id: 3,
-            name: 'Course Number',
+          id: 3,
+          name: "Course Number",
         },
         {
-            id: 4,
-            name: 'Department',
-        }
+          id: 4,
+          name: "Department",
+        },
       ],
       page: 1,
-      isTile: true,
-    }
+    };
   },
   components: { Search, SelectMenu, Pagination, Checkbox, ViewGridIcon,ViewListIcon },
   mounted() {
-    // http://localhost:8000/user/api/1
-    // https://jhcourserevu-api-test.herokuapp.com/user/api/${user_id}
-    axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/`,
-      {
-        "data": {
-          "user_id": 1
-        }
-      })
-      .then((response) => {
-        console.log(response);
-        const data = response.data;
-        this.courses = data.results;
-      })
+    if (localStorage.getItem("email")) {
+      this.user = JSON.parse(localStorage.getItem("email"));
+    }
+
+    if (this.user) {
+      axios
+        .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          data: {
+            "user_email": this.user,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          const data = response.data;
+          this.courses = data.results;
+        });
+    }
   },
   methods: {
     updateFilter(e: any) {
@@ -150,38 +158,46 @@ export default defineComponent({
 
       //this should be swapped out for whatever call gets a given user's courses with searching
       // http://localhost:8000/user/api/1/?page=${this.page}
-      axios.get(`https://jhcourserevu-api-test.herokuapp.com/user/api/?page=${this.page}`,
-      {
-        "data": {
-          "user_id": 1
-        }
-      })
-      .then((response) => {
-        const data = response.data;
-        this.courses = data.results;
-      })
+      axios
+        .get(
+          `https://jhcourserevu-api-test.herokuapp.com/user/api/?page=${this.page}`,
+          {
+            data: {
+              "user_email": 1,
+            },
+          }
+        )
+        .then((response) => {
+          const data = response.data;
+          this.courses = data.results;
+        });
     },
     toggleLayout() {
       this.isTile = !this.isTile;
     },
     goToWriteReview(course: any) {
-      this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
+      this.$router.push({
+        name: "write",
+        params: { course: JSON.stringify(course) },
+      });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
+      this.$router.push({
+        name: "read",
+        params: { course: JSON.stringify(course) },
+      });
     },
   },
-  
+
   computed: {
     filteredCourses() {
       const field = optionsToField[this.option];
-    
+
       if (field === undefined) return this.courses;
-      
-      return this.courses.filter(
-        course => {
-          return course[field].toLowerCase().includes(this.query.toLowerCase());
-        });
+
+      return this.courses.filter((course) => {
+        return course[field].toLowerCase().includes(this.query.toLowerCase());
+      });
     },
   },
 });

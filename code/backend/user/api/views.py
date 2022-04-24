@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from course.api.serializers import CourseSerializer
 from course.models import Course
-from user.models import MyCourses
+from user.models import MyCourses, CustomUser
 from django.contrib.auth.models import User
 from .serializers import CustomUserSerializer, MyCoursesSerializer, AuthUserSerializer
 from django.contrib.sites.shortcuts import get_current_site
@@ -58,7 +58,14 @@ class UserUpdate(APIView):
         Get users' courses by user's id
         """
         user_id = request.data.get("user_id")
-        user_courses = MyCourses.objects.filter(user=user_id)
+        # print(user_id)
+        # user = CustomUser.objects.filter(user_id=user_id).first()
+        # if user is None:
+        #     return Response(status=status.HTTP_404_NOT_FOUND)
+        # else:
+        #     serializer = CustomUserSerializer(user)
+        #     return Response(serializer.data)
+        user_courses = MyCourses.objects.filter(user_id=user_id)
         s = MyCoursesSerializer(user_courses, many=True)
 
         if not s.data:
@@ -84,7 +91,7 @@ class UserUpdate(APIView):
         user_id = request.data.get("user_id")
         course_id = request.data.get("course_id")
 
-        user_courses = MyCourses.objects.filter(user=user_id)
+        user_courses = MyCourses.objects.filter(user_id=user_id)
         s = MyCoursesSerializer(user_courses, many=True)
 
         if not s.data:

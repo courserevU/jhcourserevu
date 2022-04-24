@@ -184,6 +184,7 @@ export default defineComponent({
   name: "NavBar",
   props: {
     msg: String,
+    // user: String,
   },
   components: {
     Popover,
@@ -227,7 +228,8 @@ export default defineComponent({
           })
 
         // console.log("googleUser", googleUser);
-        // this.user = googleUser.getBasicProfile().getEmail();
+        this.user = googleUser.getBasicProfile().getEmail();
+        // console.log(this.msg);
         // console.log("getId", this.user);
         // console.log("getBasicProfile", googleUser.getBasicProfile());
         // console.log("getAuthResponse", googleUser.getAuthResponse());

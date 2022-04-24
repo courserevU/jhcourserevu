@@ -1,11 +1,7 @@
 <template>
   <div class="bg-white dark:bg-gray-800">
-    <div
-      class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8"
-    >
-      <h2
-        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
-      >
+    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4">
         Courses
       </h2>
 
@@ -15,57 +11,32 @@
         <SelectMenu :options="filters" @update-option="updateOption" />
         <span
           class="input-group-text items-center px-3 py-3 text-base font-normal text-gray-700 dark:text-gray-200 text-center whitespace-nowrap rounded"
-          id="basic-addon2"
-        >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fas"
-            data-icon="search"
-            class="w-4"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-          >
-            <path
-              fill="currentColor"
-              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-            />
+          id="basic-addon2">
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="w-4" role="img"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path fill="currentColor"
+              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
           </svg>
         </span>
         <button
-            class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
-            @click="toggleLayout"
-          >
-            <ViewGridIcon
-              :class="[
-                open ? 'text-gray-600' : 'text-gray-400',
-                'h-5 w-5 group-hover:text-gray-500',
-              ]"
-              v-if="isTile"
-              aria-hidden="true"
-            />
-            <ViewListIcon
-              :class="[
-                open ? 'text-gray-600' : 'text-gray-400',
-                'h-5 w-5 group-hover:text-gray-500',
-              ]"
-              v-else
-              aria-hidden="true"
-            />
-          </button>
-        
+          class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+          @click="toggleLayout">
+          <ViewGridIcon :class="[
+            open ? 'text-gray-600' : 'text-gray-400',
+            'h-5 w-5 group-hover:text-gray-500',
+          ]" v-if="isTile" aria-hidden="true" />
+          <ViewListIcon :class="[
+            open ? 'text-gray-600' : 'text-gray-400',
+            'h-5 w-5 group-hover:text-gray-500',
+          ]" v-else aria-hidden="true" />
+        </button>
+
       </div>
 
-      <div
-        class="mt-6 grid grid-cols-1"
-        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
-      >
-        <div
-          v-for="course in this.courses"
-          :key="course.id"
-          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
-        >
+      <div class="mt-6 grid grid-cols-1"
+        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']">
+        <div v-for="course in this.courses" :key="course.id"
+          class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded">
           <div class="mt-2 px-2 flex">
             <div class="justify-left">
               <h3 class="text-md font-bold text-gray-700 dark:text-gray-300">
@@ -84,33 +55,22 @@
           </div>
           <div class="mt-2">
             <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
-            <input
-              type="checkbox"
-              :id="course.course_num"
-              :value="course.name + course.meeting_section"
-              v-model="taken"
-              @change="updateTakenStatus(course)"
-            />
-            <label
-              for="checkbox"
-              class="text-sm text-gray-700 dark:text-gray-300"
-              >{{ " I have taken this course" }}</label
-            >
+            <input type="checkbox" :id="course.course_num" :value="course.name + course.meeting_section" v-model="taken"
+              @change="updateTakenStatus(course)" />
+            <label for="checkbox" class="text-sm text-gray-700 dark:text-gray-300">{{ " I have taken this course"
+            }}</label>
           </div>
           <div class="block inline-flex mt-4 mb-2">
-            <button
-              v-if="this.taken.includes(course.name + course.meeting_section)"
-              type="button"
+            <button v-if="this.taken.includes(course.name + course.meeting_section)" type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
-              @click="goToWriteReview(course)"
-            >
+              @click="goToWriteReview(course)">
+              <PlusIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
               Write Review
             </button>
-            <button
-              type="button"
+            <button type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
-              @click="goToReadReviews(course)"
-            >
+              @click="goToReadReviews(course)">
+              <EyeIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
               Read Reviews
             </button>
           </div>
@@ -125,12 +85,16 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import {
+  EyeIcon,
+  PlusIcon
+} from "@heroicons/vue/solid";
 import Search from "./Search.vue";
 import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
-import {ViewGridIcon,ViewListIcon } from "@heroicons/vue/outline";
+import { ViewGridIcon, ViewListIcon } from "@heroicons/vue/outline";
 let taken = [];
 let courses = [];
 
@@ -147,7 +111,7 @@ export default defineComponent({
   name: "CourseDisplay",
   data() {
     return {
-      user: "",
+      user_id: "",
       query,
       option,
       taken,
@@ -167,6 +131,8 @@ export default defineComponent({
         },
       ],
       page: 1,
+      totalPages: 5,
+      isTile: true,
     };
   },
   mounted() {
@@ -178,8 +144,8 @@ export default defineComponent({
         this.totalPages = Math.ceil(data.count / 10);
       });
 
-    if (localStorage.getItem("email")) {
-      this.user = JSON.parse(localStorage.getItem("email"));
+    if (localStorage.getItem("user_id")) {
+      this.user_id = JSON.parse(localStorage.getItem("user_id"));
     }
 
     // axios.get(`http://localhost:8000/course/api/`)
@@ -203,7 +169,7 @@ export default defineComponent({
 
       if (field != undefined && this.query != "")
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
-        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
+      // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
       axios.get(api_link).then((response) => {
@@ -218,11 +184,14 @@ export default defineComponent({
       this.option = e.id;
       this.updateFilter(this.query);
     },
-    addCourse(course: any) {
+    addCourse(course_id: any) {
+
+      console.log(this.user_id);
+      console.log(course_id);
       axios
         .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
-          "user_email": this.user,
-          "course_id": course.id,
+          "user_id": this.user_id,
+          "course_id": course_id,
         })
         .then((response) => {
           const data = response.data;

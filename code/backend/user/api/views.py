@@ -10,20 +10,33 @@ from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.pagination import PageNumberPagination
 
 
-# from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-# from dj_rest_auth.registration.views import SocialLoginView
-# from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-# class GoogleLogin(SocialLoginView):
-#     adapter_class = GoogleOAuth2Adapter
-#     callback_url = "http://localhost:8000/accounts/google/login/callback/"
-#     client_class = OAuth2Client
+class UserDetail(APIView):
+    def get(self, request, user_id, format=None):
+        """
+        Get users' courses by user's id
+        """
+        user_id = self.kwargs["user_id"]
+        print(user_id)
+        user_courses = MyCourses.objects.filter(user_id=user_id)
+        s = MyCoursesSerializer(user_courses, many=True)
+
+        if not s.data:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 10
+        courses = Course.objects.filter(id__in=s.data[0]["courses"])
+        result_page = paginator.paginate_queryset(courses, request)
+        serializer = CourseSerializer(result_page, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
 
 
 class UserByEmail(APIView):
-    def get(self, request, format=None):
-        email = request.data.get("email")
+    def get(self, request, user_email, format=None):
+        email = self.kwargs["user_email"]
         if email is not None:
-            user = User.objects.filter(email=email).first()
+            user = CustomUser.objects.filter(email=email).first()
             if user is not None:
                 return Response({"id": user.id}, status=status.HTTP_200_OK)
                 # serializer = AuthUserSerializer(user)
@@ -53,36 +66,35 @@ class UserUpdate(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, format=None):
-        """
-        Get users' courses by user's id
-        """
-        user_id = request.data.get("user_id")
-        # print(user_id)
-        # user = CustomUser.objects.filter(user_id=user_id).first()
-        # if user is None:
-        #     return Response(status=status.HTTP_404_NOT_FOUND)
-        # else:
-        #     serializer = CustomUserSerializer(user)
-        #     return Response(serializer.data)
-        user_courses = MyCourses.objects.filter(user_id=user_id)
-        s = MyCoursesSerializer(user_courses, many=True)
+    # def get(self, request, format=None):
+    #     """
+    #     Get users' courses by user's id
+    #     """
+    #     user_id = request.data.get("user_id")
+    #     # user = CustomUser.objects.filter(user_id=user_id).first()
+    #     # if user is None:
+    #     #     return Response(status=status.HTTP_404_NOT_FOUND)
+    #     # else:
+    #     #     serializer = CustomUserSerializer(user)
+    #     #     return Response(serializer.data)
+    #     user_courses = MyCourses.objects.filter(user_id=user_id)
+    #     s = MyCoursesSerializer(user_courses, many=True)
 
-        if not s.data:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+    #     if not s.data:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
 
-        paginator = PageNumberPagination()
-        paginator.page_size = 10
-        courses = Course.objects.filter(id__in=s.data[0]["courses"])
-        result_page = paginator.paginate_queryset(courses, request)
-        serializer = CourseSerializer(result_page, many=True)
+    #     paginator = PageNumberPagination()
+    #     paginator.page_size = 10
+    #     courses = Course.objects.filter(id__in=s.data[0]["courses"])
+    #     result_page = paginator.paginate_queryset(courses, request)
+    #     serializer = CourseSerializer(result_page, many=True)
 
-        return paginator.get_paginated_response(serializer.data)
+    #     return paginator.get_paginated_response(serializer.data)
 
-        # TODO: no pagination, may remove
-        # courses = Course.objects.filter(id__in=s.data[0]["courses"])
-        # serializer = CourseSerializer(courses, many=True)
-        # return Response(serializer.data, status=status.HTTP_200_OK)
+    #     # TODO: no pagination, may remove
+    #     # courses = Course.objects.filter(id__in=s.data[0]["courses"])
+    #     # serializer = CourseSerializer(courses, many=True)
+    #     # return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, format=None):
         """

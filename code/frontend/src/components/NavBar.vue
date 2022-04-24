@@ -213,7 +213,7 @@ export default defineComponent({
         const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
         // http://localhost:8000/auth/convert-token
         // https://jhcourserevu-api-test.herokuapp.com/auth/convert-token
-        axios.post(`http://localhost:8000/auth/convert-token`, {
+        axios.post(`https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`, {
           "grant_type": "convert_token",
           "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
           "client_secret": import.meta.env.VITE_DJANGO_CLIENT_SECRET,
@@ -228,8 +228,17 @@ export default defineComponent({
           })
 
         // console.log("googleUser", googleUser);
-        this.user = googleUser.getBasicProfile().getEmail();
-        localStorage.setItem("email", JSON.stringify(this.user));
+        const user_email = googleUser.getBasicProfile().getEmail();
+        // localStorage.setItem("email", JSON.stringify(this.user));
+
+        axios
+          .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/${user_email}`)
+          .then((response) => {
+            console.log(response);
+            const data = response.data;
+            this.user_id = data.id;
+            localStorage.setItem("user_id", JSON.stringify(this.user_id));
+          });
         // console.log("getId", this.user);
         // console.log("getBasicProfile", googleUser.getBasicProfile());
         // console.log("getAuthResponse", googleUser.getAuthResponse());
@@ -247,8 +256,8 @@ export default defineComponent({
       try {
         await this.$gAuth.signOut();
         console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
-        this.user = "";
-        localStorage.setItem("email", JSON.stringify(this.user));
+        this.user_id = "";
+        localStorage.setItem("user_id", JSON.stringify(this.user));
       } catch (error) {
         console.error(error);
       }

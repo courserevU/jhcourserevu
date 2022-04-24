@@ -9,9 +9,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.pagination import PageNumberPagination
 
 
-
-
-
 # from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 # from dj_rest_auth.registration.views import SocialLoginView
 # from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -80,13 +77,5 @@ class UserUpdate(APIView):
             s.data[0]["courses"].remove(course_id)
             s.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        
+
         return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-def test_sso_view(request):
-    current_site = get_current_site(request)
-    if current_site.domain == "login.microsoftonline.com":
-        pass
-    else:
-        pass

@@ -3,10 +3,8 @@ from .models import CustomUser
 
 def create_custom_user(strategy, details, response, user, *args, **kwargs):
     """
-    Part of the Python Social Auth pipeline which creates a student upon
-    signup. If student already exists, updates information from Facebook
-    or Google (depending on the backend).
-    Saves friends and other information to fill database.
+    Create a custom user associated with the social account.
+    Affiliated with authentication pipeline in settings.py
     """
     # backend_name = kwargs["backend"].name
     custom_user, _ = CustomUser.objects.get_or_create(user=user)

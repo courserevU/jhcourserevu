@@ -44,7 +44,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # )
 
 AUTHENTICATION_BACKENDS = [
-    # "microsoft_auth.backends.MicrosoftAuthenticationBackend",
     # "allauth.account.auth_backends.AuthenticationBackend",
     # "django.contrib.auth.backends.ModelBackend",
     "social_core.backends.google.GoogleOAuth2",
@@ -69,13 +68,6 @@ INSTALLED_APPS = [
     "oauth2_provider",
     "social_django",
     "drf_social_oauth2",
-    # TODO: remove?, for django-allauth
-    # "dj_rest_auth",
-    # "allauth",
-    # "allauth.account",
-    # "dj_rest_auth.registration",
-    # "allauth.socialaccount",
-    # "allauth.socialaccount.providers.google",  # for Google OAuth 2.0
 ]
 
 MIDDLEWARE = [
@@ -181,25 +173,6 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 SOCIAL_AUTH_STORAGE = "social_django.models.DjangoStorage"
-
-# ACCOUNT_AUTHENTICATION_METHOD = "email"
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_EMAIL_REQUIRED = True
-# SOCIALACCOUNT_PROVIDERS = {
-#     "google": {
-#         "SCOPE": [
-#             "profile",
-#             "email",
-#         ],
-#         "AUTH_PARAMS": {
-#             "access_type": "offline",
-#         },
-#     }
-# }
-# LOGIN_REDIRECT_URL = "/"
-# SOCIALACCOUNT_QUERY_EMAIL = True
-# ACCOUNT_LOGOUT_ON_GET = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

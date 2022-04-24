@@ -21,7 +21,9 @@ export default defineConfig({
     vue(),
     vueJsx(),
     // EnvironmentPlugin("all"),
-    // ImportMetaEnvPlugin.vite("all"),
+    ImportMetaEnvPlugin.vite({
+      example: ".env.example.public"
+    }),
   ],
   resolve: {
     alias: {

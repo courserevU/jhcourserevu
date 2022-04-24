@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from course.models import Course
 from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomDjangoStorage, MyCourses, CustomUser
+from .models import MyCourses, CustomUser
 #  CustomUserSocialAuth
 
 admin.site.register(CustomUser)

@@ -3,13 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from course.api.serializers import CourseSerializer
 from course.models import Course
-from user.models import User, MyCourses
-from .serializers import UserSerializer, MyCoursesSerializer
+from user.models import MyCourses, CustomUser
+from django.contrib.auth.models import User
+from .serializers import CustomUserSerializer, MyCoursesSerializer, AuthUserSerializer
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.pagination import PageNumberPagination
-
-
-
 
 
 # from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -19,6 +17,22 @@ from rest_framework.pagination import PageNumberPagination
 #     adapter_class = GoogleOAuth2Adapter
 #     callback_url = "http://localhost:8000/accounts/google/login/callback/"
 #     client_class = OAuth2Client
+
+
+class UserByEmail(APIView):
+    def get(self, request, format=None):
+        email = request.data.get("email")
+        if email is not None:
+            user = User.objects.filter(email=email).first()
+            if user is not None:
+                return Response({"id": user.id}, status=status.HTTP_200_OK)
+                # serializer = AuthUserSerializer(user)
+                # serializer = CustomUserSerializer(user)
+                # return Response(serializer.data)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserUpdate(APIView):
@@ -44,7 +58,14 @@ class UserUpdate(APIView):
         Get users' courses by user's id
         """
         user_id = request.data.get("user_id")
-        user_courses = MyCourses.objects.filter(user=user_id)
+        # print(user_id)
+        # user = CustomUser.objects.filter(user_id=user_id).first()
+        # if user is None:
+        #     return Response(status=status.HTTP_404_NOT_FOUND)
+        # else:
+        #     serializer = CustomUserSerializer(user)
+        #     return Response(serializer.data)
+        user_courses = MyCourses.objects.filter(user_id=user_id)
         s = MyCoursesSerializer(user_courses, many=True)
 
         if not s.data:
@@ -70,7 +91,7 @@ class UserUpdate(APIView):
         user_id = request.data.get("user_id")
         course_id = request.data.get("course_id")
 
-        user_courses = MyCourses.objects.filter(user=user_id)
+        user_courses = MyCourses.objects.filter(user_id=user_id)
         s = MyCoursesSerializer(user_courses, many=True)
 
         if not s.data:
@@ -80,13 +101,5 @@ class UserUpdate(APIView):
             s.data[0]["courses"].remove(course_id)
             s.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        
+
         return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-def test_sso_view(request):
-    current_site = get_current_site(request)
-    if current_site.domain == "login.microsoftonline.com":
-        pass
-    else:
-        pass

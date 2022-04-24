@@ -184,6 +184,7 @@ export default defineComponent({
   name: "NavBar",
   props: {
     msg: String,
+    // user: String,
   },
   components: {
     Popover,
@@ -210,7 +211,8 @@ export default defineComponent({
           return null;
         }
         const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
-
+        // http://localhost:8000/auth/convert-token
+        // https://jhcourserevu-api-test.herokuapp.com/auth/convert-token
         axios.post(`http://localhost:8000/auth/convert-token`, {
           "grant_type": "convert_token",
           "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
@@ -222,11 +224,12 @@ export default defineComponent({
             const data = response.data;
             // TODO: ideally, return user's name, id, etc.
             // console.log(data);
-            // console.log(googleUser);
+            console.log(googleUser.getBasicProfile().getEmail());
           })
 
         // console.log("googleUser", googleUser);
-        // this.user = googleUser.getBasicProfile().getEmail();
+        this.user = googleUser.getBasicProfile().getEmail();
+        localStorage.setItem("email", JSON.stringify(this.user));
         // console.log("getId", this.user);
         // console.log("getBasicProfile", googleUser.getBasicProfile());
         // console.log("getAuthResponse", googleUser.getAuthResponse());
@@ -245,6 +248,7 @@ export default defineComponent({
         await this.$gAuth.signOut();
         console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
         this.user = "";
+        localStorage.setItem("email", JSON.stringify(this.user));
       } catch (error) {
         console.error(error);
       }

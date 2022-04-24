@@ -33,19 +33,42 @@
             />
           </svg>
         </span>
+        <button
+            class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+            @click="toggleLayout"
+          >
+            <ViewGridIcon
+              :class="[
+                open ? 'text-gray-600' : 'text-gray-400',
+                'h-5 w-5 group-hover:text-gray-500',
+              ]"
+              v-if="isTile"
+              aria-hidden="true"
+            />
+            <ViewListIcon
+              :class="[
+                open ? 'text-gray-600' : 'text-gray-400',
+                'h-5 w-5 group-hover:text-gray-500',
+              ]"
+              v-else
+              aria-hidden="true"
+            />
+          </button>
+        
       </div>
 
       <div
-        class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="mt-6 grid grid-cols-1"
+        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
       >
         <div
           v-for="course in this.courses"
           :key="course.id"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
-          <div class="mt-2 flex">
+          <div class="mt-2 px-2 flex">
             <div class="justify-left">
-              <h3 class="text-sm text-gray-700 dark:text-gray-300">
+              <h3 class="text-md font-bold text-gray-700 dark:text-gray-300">
                 <a>
                   <span aria-hidden="true" class="inset-0" />
                   {{ course.name }} ({{ course.meeting_section }})
@@ -78,14 +101,14 @@
             <button
               v-if="this.taken.includes(course.name + course.meeting_section)"
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
             >
               Write Review
             </button>
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToReadReviews(course)"
             >
               Read Reviews
@@ -107,7 +130,7 @@ import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
-
+import {ViewGridIcon,ViewListIcon } from "@heroicons/vue/outline";
 let taken = [];
 let courses = [];
 
@@ -146,7 +169,6 @@ export default defineComponent({
       page: 1,
     };
   },
-  components: { Search, SelectMenu, Pagination, Checkbox },
   mounted() {
     axios
       .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
@@ -167,6 +189,7 @@ export default defineComponent({
     //     // console.log(JSON.parse(JSON.stringify(data.results)));
     //   })
   },
+  components: { Search, SelectMenu, Pagination, Checkbox, EyeIcon, PlusIcon, ViewListIcon, ViewGridIcon },
   methods: {
     updateFilter(e: any) {
       if (e === undefined) return;
@@ -176,9 +199,11 @@ export default defineComponent({
       const field = optionsToField[this.option];
 
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
+      // let api_link = `http://127.0.0.1:8000/course/api/`;
 
       if (field != undefined && this.query != "")
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
+        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
       axios.get(api_link).then((response) => {
@@ -208,7 +233,6 @@ export default defineComponent({
       this.page = e;
 
       // Gets correct page of courses via API page query
-
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
       // let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
 
@@ -221,6 +245,9 @@ export default defineComponent({
         const data = response.data;
         this.courses = data.results;
       });
+    },
+    toggleLayout() {
+      this.isTile = !this.isTile;
     },
     goToWriteReview(course: any) {
       this.$router.push({

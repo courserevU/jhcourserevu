@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import User
+from .models import MyCourses, User
 
 admin.site.register(User)
+admin.site.register(MyCourses)
 
 # TODO: subject to change, need to review
 # from django.contrib import admin

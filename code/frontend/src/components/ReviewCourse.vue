@@ -20,6 +20,14 @@
         Class: {{ JSON.parse(course).name }}
       </h3>
     </div>
+    <!-- Class Title -->
+    <div class="flex space-x-2 justify-left px-20">
+      <h3
+        class="text-2xl font-medium leading-tight text-gray-800 dark:text-gray-200 mb-3 mt-0"
+      >
+        Semester: {{ JSON.parse(course).semester }}
+      </h3>
+    </div>
     <!-- Semester and Professor Fields -->
     <div class="flex space-x-10 justify-left px-16">
       <!-- Professor -->
@@ -37,8 +45,6 @@
           v-model="prof"
         />
       </div>
-      <!-- Semester -->
-      <SelectMenu :options="semesters" />
     </div>
     <div class="py-5"></div>
 
@@ -77,6 +83,7 @@
           placeholder="Review"
 
           v-model="teachStyle"
+          
         ></textarea>
       </div>
     </div>
@@ -180,7 +187,7 @@
       <div class="p-4 ...">
         <button
           type="submit"
-          class="w-full px-6 py-2.5 bg-blue-600 dark:bg-blue-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 dark:hover:bg-blue-900 hover:shadow-lg focus:bg-blue-700 dark:focus:bg-blue-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          class="w-full px-6 py-2.5 bg-blue-600 dark:bg-blue-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 dark:hover:bg-blue-900 hover:shadow-lg focus:bg-blue-700 dark:focus:bg-blue-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg peer-required:disable transition duration-150 ease-in-out"
           @click="submitReview"
         >
           Send
@@ -194,6 +201,10 @@
 import { defineComponent } from "vue";
 import SelectMenu from "./SelectMenu.vue";
 import axios from "axios";
+import 'mosha-vue-toastify/dist/style.css';
+import { createToast } from 'mosha-vue-toastify';
+
+
 
 
 export default defineComponent({
@@ -232,27 +243,62 @@ export default defineComponent({
   },
   methods: {
     submitReview() {
-      axios.post(
-        // `http://127.0.0.1:8000/course/review/api/${JSON.parse(course).id}`,
-        `https://jhcourserevu-api-test.herokuapp.com/course/review/api/`,
-        {
-          "comments": {
-            "Professor": this.prof,
-            "Teaching Style": this.teachStyle,
-            "Grading Style": this.gradeStyle,
-            "Teacher Feedback": this.teachFeedback,
-            "Workload": this.workload,
-            "Assignment Style": this.assignment,
-            "Exam Style": this.exam,
-          },
-          "course_id" : JSON.parse(this.course).id,
-        })
-          .then(function (response) {
-            console.log(response);
+      
+      if (this.prof == "" || this.teachStyle  == ""|| this.gradeStyle == ""||
+        this.teachFeedback == ""|| this.workload == ""|| this.assignment == ""|| this.exam == "") {
+        createToast('Please Fill Out All Fields',
+            {
+            type: 'warning',
+            transition: 'zoom',
+            position: 'bottom-center',
+            showIcon: true,
+            });
+      } else {
+        axios.post(
+          // `http://127.0.0.1:8000/course/review/api/${JSON.parse(course).id}`,
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(course).id}`,
+          {
+            "comments": {
+              "Professor": this.prof,
+              "Teaching Style": this.teachStyle,
+              "Grading Style": this.gradeStyle,
+              "Teacher Feedback": this.teachFeedback,
+              "Workload": this.workload,
+              "Assignment Style": this.assignment,
+              "Exam Style": this.exam,
+            },
+            "course_id" : JSON.parse(this.course).id,
           })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .then(function (response) {
+              console.log(response);
+              createToast('Review Successfully Sent',
+              {
+              type: 'success',
+              transition: 'zoom',
+              position: 'bottom-center',
+              showIcon: true,
+              });
+              // console.log(this);
+              // this.teachStyle  = "";
+              // this.gradeStyle = "";
+              // this.teachFeedback = "";
+              // this.workload = "";
+              // this.assignment = "";
+              // this.exam = "";
+            })
+            .catch(function (error) {
+              console.log(error);
+              createToast('Review Could Not be Sent',
+                {
+                type: 'danger',
+                transition: 'zoom',
+                position: 'bottom-center',
+                showIcon: true,
+                });
+              
+              });
+      }
+      
     },
   },
 });

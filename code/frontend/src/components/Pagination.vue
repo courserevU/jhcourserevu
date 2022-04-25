@@ -11,49 +11,13 @@
           <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
         </button>
       </li>
-      <li>
+      <li v-for="index in pagesAtATime" :key="index">
         <button
-          :disabled="isSelected(1)"
+          :disabled="isSelected(index + firstPage)"
           class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
-          @click="goToPage(1)"
+          @click="goToPage(index + firstPage)"
         >
-          1
-        </button>
-      </li>
-      <li>
-        <button
-          :disabled="isSelected(2)"
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
-          @click="goToPage(2)"
-        >
-          2
-        </button>
-      </li>
-      <li>
-        <button
-          :disabled="isSelected(3)"
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
-          @click="goToPage(3)"
-        >
-          3
-        </button>
-      </li>
-      <li>
-        <button
-          :disabled="isSelected(4)"
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
-          @click="goToPage(4)"
-        >
-          4
-        </button>
-      </li>
-      <li>
-        <button
-          :disabled="isSelected(5)"
-          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 disabled:bg-gray-100 disabled:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:disabled:bg-gray-700 dark:disabled:text-white cursor-pointer"
-          @click="goToPage(5)"
-        >
-          5
+          {{ index + firstPage }}
         </button>
       </li>
       <li>
@@ -73,35 +37,59 @@
 import { defineComponent } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
-const maxPage = 5; //temporary
-
 export default defineComponent({
   name: "Pagination",
   data() {
     return {
-      page: 1,
+      currentPage: 1,
+      firstPage: 0,
     };
+  },
+  props: {
+    maxPage: Number,
+    pageReplacement: Number,
+  },
+  computed: {
+    pagesAtATime() {
+      return (this.maxPage < 5) ? this.maxPage : 5;
+    }
   },
   components: { ChevronLeftIcon, ChevronRightIcon },
   methods: {
     nextPage() {
-      if (this.page < maxPage) {
-        this.page += 1;
-        this.$emit('change-page', this.page);
+      if (this.currentPage < this.maxPage) {
+        this.currentPage += 1;
+        if (this.firstPage < this.maxPage - 5 && this.currentPage > 3) {
+          this.firstPage += 1;
+        }
+        this.$emit("change-page", this.currentPage);
       }
     },
     prevPage() {
-      if (this.page > 1) {
-        this.page -= 1;
-        this.$emit('change-page', this.page);
+      if (this.currentPage > 1) {
+        this.currentPage -= 1;
+        if (this.firstPage > 0 && this.currentPage > 2) {
+          this.firstPage -= 1;
+        }
+        this.$emit("change-page", this.currentPage);
       }
     },
     goToPage(e: number) {
-      this.page = e;
-      this.$emit('change-page', this.page);
+      this.currentPage = e;
+
+      if (this.currentPage > 2 && this.currentPage < this.maxPage - 2) {
+        this.firstPage = this.currentPage - 3;
+      } else if (this.currentPage > 1 && this.currentPage < this.maxPage - 2) {
+        this.firstPage = this.currentPage - 2;
+      }
+
+      this.$emit("change-page", this.currentPage);
     },
     isSelected(index: number) {
-      if (this.page === index) {
+      if (this.pageReplacement) {
+        this.currentPage = this.pageReplacement; // in case of review deletion
+      }
+      if (this.currentPage === index) {
         return true;
       }
       return false;

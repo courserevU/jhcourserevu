@@ -33,7 +33,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # TODO: this should be False when put into production
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = ["https://jhcourserevu-api-test.herokuapp.com"]
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -54,7 +56,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "user",
     "course",
+    "django.contrib.sites",
+    "microsoft_auth",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -81,6 +87,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "microsoft_auth.context_processors.microsoft",
             ],
         },
     },
@@ -98,6 +105,8 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASSWORD"),
+        # Set DB_HOST = "localhost" if using Python Virtual Environment
+        # Set DB_HOST = "db" if using Docker
         "HOST": os.environ.get("DB_HOST"),
         "PORT": "5432",
     }
@@ -121,6 +130,20 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    "microsoft_auth.backends.MicrosoftAuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend"
+]
+
+# Documentation: https://django-microsoft-auth.readthedocs.io/en/latest/usage.html
+# CHANGE ENTIRE SECTION BELOW with info from Azure AD app
+# https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade
+# values you got from step 2 from your Microsoft app
+MICROSOFT_AUTH_CLIENT_ID = os.environ.get("MICROSOFT_AUTH_CLIENT_ID")
+MICROSOFT_AUTH_CLIENT_SECRET = os.environ.get("MICROSOFT_AUTH_CLIENT_SECRET")
+MICROSOFT_AUTH_TENANT_ID = os.environ.get("MICROSOFT_AUTH_TENANT_ID")
+MICROSOFT_AUTH_LOGIN_TYPE = 'ma'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

@@ -1,7 +1,6 @@
-# from django.conf.urls import url
-from django.urls import path
-from .views import UserList
+from django.urls import path, re_path
+from .views import UserUpdate
 
 urlpatterns = [
-    path("", UserList.as_view()),
+    path("", UserUpdate.as_view(), name="user_update"),
 ]

@@ -1,7 +1,8 @@
 Deployment
 ############
 
-
+We opted to use Netlify for Frontend deployment.
+And Heroku for Backend deployment.
 
 VueJS Frontend - Netlify
 **************************

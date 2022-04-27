@@ -77,7 +77,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
@@ -137,7 +137,7 @@ export default defineComponent({
   },
   mounted() {
     axios
-      .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+      .get(`http://127.0.0.1:8000/course/api/`)
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
@@ -164,11 +164,11 @@ export default defineComponent({
 
       const field = optionsToField[this.option];
 
-      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
+      let api_link = `http://127.0.0.1:8000/course/api/`;
       // let api_link = `http://127.0.0.1:8000/course/api/`;
 
       if (field != undefined && this.query != "")
-        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
+        api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
       // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
@@ -189,7 +189,7 @@ export default defineComponent({
       console.log(this.user_id);
       console.log(course_id);
       axios
-        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+        .post(`http://127.0.0.1:8000/user/api/`, {
           "user_id": this.user_id,
           "course_id": course_id,
         })
@@ -202,13 +202,13 @@ export default defineComponent({
       this.page = e;
 
       // Gets correct page of courses via API page query
-      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
-      // let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
+      // let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
+      let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
 
       const field = optionsToField[this.option];
 
       if (field != undefined && this.query != "")
-        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
 
       axios.get(api_link).then((response) => {
         const data = response.data;
@@ -232,16 +232,16 @@ export default defineComponent({
     },
     updateTakenStatus(course: any) {
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
-
-      if (this.taken.includes(course.name + course.meeting_section)) {
+      
+      if (JSON.stringify(this.taken).includes(course.name + course.meeting_section)) {
         console.log("add " + course.name + course.meeting_section);
         this.addCourse(course.id);
       } else {
         console.log("delete " + course.name + course.meeting_section);
         axios
-          .delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          .delete(`http://127.0.0.1:8000/user/api/`, {
             data: {
-              "user_email": this.user,
+              "user_id": this.user_id,
               "course_id": course.id,
             },
           })

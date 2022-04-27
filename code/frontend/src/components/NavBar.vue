@@ -199,7 +199,7 @@ export default defineComponent({
   },
   data() {
     return {
-      user: '',
+      user_id: '',
       darkMode,
     };
   },
@@ -213,7 +213,7 @@ export default defineComponent({
         const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
         // http://localhost:8000/auth/convert-token
         // https://jhcourserevu-api-test.herokuapp.com/auth/convert-token
-        axios.post(`https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`, {
+        axios.post(`http://127.0.0.1:8000/auth/convert-token`, {
           "grant_type": "convert_token",
           "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
           "client_secret": import.meta.env.VITE_DJANGO_CLIENT_SECRET,
@@ -232,7 +232,7 @@ export default defineComponent({
         // localStorage.setItem("email", JSON.stringify(this.user));
 
         axios
-          .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/${user_email}`)
+          .get(`http://127.0.0.1:8000/user/api/${user_email}`)
           .then((response) => {
             console.log(response);
             const data = response.data;

@@ -220,34 +220,23 @@ export default defineComponent({
           "backend": "google-oauth2",
           "token": access_token
         })
-          .then((response) => {
-            const data = response.data;
-            // TODO: ideally, return user's name, id, etc.
-            // console.log(data);
-            console.log(googleUser.getBasicProfile().getEmail());
-          })
 
-        // console.log("googleUser", googleUser);
         const user_email = googleUser.getBasicProfile().getEmail();
-        // localStorage.setItem("email", JSON.stringify(this.user));
 
         axios
           .get(`http://127.0.0.1:8000/user/api/${user_email}`)
           .then((response) => {
-            console.log(response);
             const data = response.data;
             this.user_id = data.id;
             localStorage.setItem("user_id", JSON.stringify(this.user_id));
+            window.dispatchEvent(new CustomEvent('localstorage-changed', {
+              detail: {
+                user: localStorage.getItem("user_id")
+              }
+            }));
           });
-        // console.log("getId", this.user);
-        // console.log("getBasicProfile", googleUser.getBasicProfile());
-        // console.log("getAuthResponse", googleUser.getAuthResponse());
-        // console.log(
-        //   "getAuthResponse",
-        //   this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
-        // );
       } catch (error) {
-        //on fail do something
+        //on fail print error
         console.error(error);
         return null;
       }
@@ -255,9 +244,13 @@ export default defineComponent({
     async handleClickSignOut() {
       try {
         await this.$gAuth.signOut();
-        console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
         this.user_id = "";
-        localStorage.setItem("user_id", JSON.stringify(this.user));
+        localStorage.setItem("user_id", JSON.stringify(this.user_id));
+        window.dispatchEvent(new CustomEvent('localstorage-changed', {
+          detail: {
+            user: localStorage.getItem("user_id")
+          }
+        }));
       } catch (error) {
         console.error(error);
       }

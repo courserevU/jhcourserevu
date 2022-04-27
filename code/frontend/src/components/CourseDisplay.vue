@@ -144,16 +144,13 @@ export default defineComponent({
         this.totalPages = Math.ceil(data.count / 10);
       });
 
+    window.addEventListener('localstorage-changed', (event) => {
+      this.user_id = JSON.parse(event.detail.user);
+    });
+
     if (localStorage.getItem("user_id")) {
       this.user_id = JSON.parse(localStorage.getItem("user_id"));
     }
-
-    // axios.get(`http://localhost:8000/course/api/`)
-    //   .then((response) => {
-    //     const data = response.data;
-    //     this.courses = data.results;
-    //     // console.log(JSON.parse(JSON.stringify(data.results)));
-    //   })
   },
   components: { Search, SelectMenu, Pagination, Checkbox, EyeIcon, PlusIcon, ViewListIcon, ViewGridIcon },
   methods: {
@@ -165,11 +162,11 @@ export default defineComponent({
       const field = optionsToField[this.option];
 
       let api_link = `http://127.0.0.1:8000/course/api/`;
-      // let api_link = `http://127.0.0.1:8000/course/api/`;
+      // let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
 
       if (field != undefined && this.query != "")
         api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
-      // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
+      // api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
       axios.get(api_link).then((response) => {
@@ -185,9 +182,6 @@ export default defineComponent({
       this.updateFilter(this.query);
     },
     addCourse(course_id: any) {
-
-      console.log(this.user_id);
-      console.log(course_id);
       axios
         .post(`http://127.0.0.1:8000/user/api/`, {
           "user_id": this.user_id,
@@ -195,7 +189,6 @@ export default defineComponent({
         })
         .then((response) => {
           const data = response.data;
-          console.log(data);
         });
     },
     changePage(e: number) {
@@ -234,20 +227,14 @@ export default defineComponent({
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
       
       if (JSON.stringify(this.taken).includes(course.name + course.meeting_section)) {
-        console.log("add " + course.name + course.meeting_section);
         this.addCourse(course.id);
       } else {
-        console.log("delete " + course.name + course.meeting_section);
         axios
           .delete(`http://127.0.0.1:8000/user/api/`, {
             data: {
               "user_id": this.user_id,
               "course_id": course.id,
             },
-          })
-          .then((response) => {
-            const data = response.data;
-            console.log(data);
           });
       }
     },

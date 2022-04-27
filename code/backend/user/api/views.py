@@ -40,7 +40,7 @@ class UserByEmail(APIView):
         if email is not None:
             user = CustomUser.objects.filter(email=email).first()
             if user is not None:
-                return Response({"id": user.user}, status=status.HTTP_200_OK)
+                return Response({"id": user.id}, status=status.HTTP_200_OK)
                 # serializer = AuthUserSerializer(user)
                 # serializer = CustomUserSerializer(user)
                 # return Response(serializer.data)

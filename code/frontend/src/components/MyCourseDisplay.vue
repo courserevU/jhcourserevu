@@ -108,6 +108,22 @@ export default defineComponent({
   },
   components: { Search, SelectMenu, Pagination, Checkbox, ViewGridIcon, ViewListIcon },
   mounted() {
+    window.addEventListener('localstorage-changed', (event) => {
+      this.user_id = JSON.parse(event.detail.user);
+      if (this.user_id) {
+        axios
+          .get(`http://127.0.0.1:8000/user/api/id/${this.user_id}`)
+          .then((response) => {
+            const data = response.data;
+            this.courses = data.results;
+            this.totalPages = Math.ceil(data.count / 10);
+          });
+      } else {
+        this.courses = [];
+        this.totalPages = 0;
+      }
+    });
+
     if (localStorage.getItem("user_id")) {
       this.user_id = JSON.parse(localStorage.getItem("user_id"));
     }
@@ -116,7 +132,6 @@ export default defineComponent({
       axios
         .get(`http://127.0.0.1:8000/user/api/id/${this.user_id}`)
         .then((response) => {
-          console.log(response);
           const data = response.data;
           this.courses = data.results;
           this.totalPages = Math.ceil(data.count / 10);

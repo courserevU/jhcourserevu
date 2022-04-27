@@ -1,9 +1,11 @@
 from django.db import models
 from course.models import Course
-from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage
+from django.contrib.auth.models import User
+
+# from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage
 
 
-class CustomUser(AbstractUserSocialAuth):
+class CustomUser(models.Model):
     """
     Represents any user with required JHED email. This is necessary to log into
     the main website and access
@@ -15,9 +17,8 @@ class CustomUser(AbstractUserSocialAuth):
         is_admin (:obj:`BooleanField`): indicates whether user is a moderator or visiting user
     """
 
-    user = models.ForeignKey(
-        USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE)
     # jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(("email address"), unique=True, blank=True, null=True)
     class_year = models.CharField(max_length=50, blank=True, null=True, unique=True)
@@ -31,8 +32,8 @@ class CustomUser(AbstractUserSocialAuth):
 #     )
 
 
-class CustomDjangoStorage(DjangoStorage):
-    user = CustomUser
+# class CustomDjangoStorage(DjangoStorage):
+#     user = CustomUser
 
 
 class MyCourses(models.Model):

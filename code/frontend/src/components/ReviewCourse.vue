@@ -255,8 +255,8 @@ export default defineComponent({
             });
       } else {
         axios.post(
-          // `http://127.0.0.1:8000/course/review/api/${JSON.parse(course).id}`,
-          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(course).id}`,
+          // `http://127.0.0.1:8000/course/review/api/`,
+          `https://jhcourserevu-api-test.herokuapp.com/course/review/api/`,
           {
             "comments": {
               "Professor": this.prof,

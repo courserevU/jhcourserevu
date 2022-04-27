@@ -112,7 +112,7 @@ export default defineComponent({
       this.user_id = JSON.parse(event.detail.user);
       if (this.user_id) {
         axios
-          .get(`http://127.0.0.1:8000/user/api/id/${this.user_id}`)
+          .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}`)
           .then((response) => {
             const data = response.data;
             this.courses = data.results;
@@ -130,7 +130,7 @@ export default defineComponent({
 
     if (this.user_id) {
       axios
-        .get(`http://127.0.0.1:8000/user/api/id/${this.user_id}`)
+        .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}`)
         .then((response) => {
           const data = response.data;
           this.courses = data.results;
@@ -151,7 +151,7 @@ export default defineComponent({
       //this should be swapped out for whatever call gets a given user's courses with searching
       // http://localhost:8000/user/api/1/?page=${this.page}
       axios
-        .get(`http://127.0.0.1:8000/user/api/id/${this.user_id}/?page=${this.page}`)
+        .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}/?page=${this.page}`)
         .then((response) => {
           const data = response.data;
           this.courses = data.results;

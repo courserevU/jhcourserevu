@@ -137,7 +137,7 @@ export default defineComponent({
   },
   mounted() {
     axios
-      .get(`http://127.0.0.1:8000/course/api/`)
+      .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
@@ -161,11 +161,11 @@ export default defineComponent({
 
       const field = optionsToField[this.option];
 
-      let api_link = `http://127.0.0.1:8000/course/api/`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
       // let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
 
       if (field != undefined && this.query != "")
-        api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
       // api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
 
       // Gets correct page of courses via API page query
@@ -183,7 +183,7 @@ export default defineComponent({
     },
     addCourse(course_id: any) {
       axios
-        .post(`http://127.0.0.1:8000/user/api/`, {
+        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
           "user_id": this.user_id,
           "course_id": course_id,
         })
@@ -195,13 +195,13 @@ export default defineComponent({
       this.page = e;
 
       // Gets correct page of courses via API page query
-      // let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
-      let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
+      // let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
 
       const field = optionsToField[this.option];
 
       if (field != undefined && this.query != "")
-        api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
 
       axios.get(api_link).then((response) => {
         const data = response.data;
@@ -230,7 +230,7 @@ export default defineComponent({
         this.addCourse(course.id);
       } else {
         axios
-          .delete(`http://127.0.0.1:8000/user/api/`, {
+          .delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
             data: {
               "user_id": this.user_id,
               "course_id": course.id,

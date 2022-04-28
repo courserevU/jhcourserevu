@@ -70,14 +70,7 @@
                   <span>{{ comment.comment }}</span>
                 </p>
               </div>
-              <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
-                <button class="mr-3">
-                  <!-- Send warning message to user who wrote given review -->
-                  <AnnotationIcon
-                    class="h-5 w-5 text-black dark:text-gray-200"
-                  />
-                </button>
                 <!-- Delete given review -->
                 <button @click="deleteReview(review[0].review)">
                   <XIcon class="h-5 w-5 text-red-600" />
@@ -122,7 +115,7 @@ import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
-import { AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon } from "@heroicons/vue/outline";
+import { XIcon, ViewListIcon, ViewGridIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 
 let query = "";
@@ -183,7 +176,7 @@ export default defineComponent({
   props: {
     course: String, // passed as stringified Object, needs to be parsed
   },
-  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon  },
+  components: { Search, Pagination, SelectReviewMenu, XIcon, ViewListIcon, ViewGridIcon  },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
     let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}`
@@ -276,12 +269,6 @@ export default defineComponent({
             });
         });
     },
-    // updateOption(e: any) {
-    //   if (e === undefined) return;
-    //   this.option = e.id;
-    //   const field = optionsToField[this.option];
-    //   this.mounted();
-    // },
   },
 });
 </script>

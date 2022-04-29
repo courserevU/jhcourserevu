@@ -16,10 +16,10 @@ export default defineComponent({
   data() {
     return {
       course: String,
-    }
+    };
   },
   created() {
-    this.course = this.$route.params.course
+    this.course = this.$route.params.course;
   },
   components: { NavBar, Footer, ReviewCourse },
 });

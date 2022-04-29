@@ -88,11 +88,11 @@ export default {
     CheckIcon,
     SelectorIcon,
   },
-  props: ['options'],
+  props: ["options"],
   data() {
     return {
-      selected: ""
+      selected: "",
     };
-  }
-}
+  },
+};
 </script>

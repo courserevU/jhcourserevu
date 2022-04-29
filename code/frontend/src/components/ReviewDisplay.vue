@@ -88,14 +88,7 @@
                   <span>{{ comment.comment }}</span>
                 </p>
               </div>
-              <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
-                <button class="mr-3">
-                  <!-- Send warning message to user who wrote given review -->
-                  <AnnotationIcon
-                    class="h-5 w-5 text-black dark:text-gray-200"
-                  />
-                </button>
                 <!-- Delete given review -->
                 <button @click="deleteReview(review[0].review)">
                   <XIcon class="h-5 w-5 text-red-600" />
@@ -142,7 +135,6 @@ import Search from "./Search.vue";
 import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
 import {
-  AnnotationIcon,
   XIcon,
   ViewListIcon,
   ViewGridIcon,
@@ -211,7 +203,6 @@ export default defineComponent({
     Search,
     Pagination,
     SelectReviewMenu,
-    AnnotationIcon,
     XIcon,
     ViewListIcon,
     ViewGridIcon,
@@ -309,12 +300,6 @@ export default defineComponent({
             });
         });
     },
-    // updateOption(e: any) {
-    //   if (e === undefined) return;
-    //   this.option = e.id;
-    //   const field = optionsToField[this.option];
-    //   this.mounted();
-    // },
   },
 });
 </script>

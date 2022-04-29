@@ -12,8 +12,8 @@
         >
           <a>
             <span class="sr-only">Logo</span>
-            <p class="text-gray-900 dark:text-gray-200">Logo</p>
-            <!-- Replace with our logo img when ready: <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" /> -->
+            <!-- <p class="text-gray-900 dark:text-gray-200">Logo</p> -->
+            <img class="w-auto h-12" src="../assets/logo.png" alt="" />
           </a>
         </div>
         <div class="-mr-2 -my-2 md:hidden">

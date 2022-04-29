@@ -3,7 +3,10 @@ from django.core.management.base import BaseCommand, CommandError
 
 import requests
 import json
-
+import os
+import environ  # to store env vars
+env = environ.Env()
+environ.Env.read_env()
 
 class Command(BaseCommand):
     help = "Adds a user to django"
@@ -50,7 +53,7 @@ class Command(BaseCommand):
                 + options["school"].replace(" ", "%20")
                 + "/"
                 + options["term"].replace(" ", "%20"),
-                params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
+                params={"key": os.environ.get("JHU_SIS_API_TOKEN")},
             ).text
         )
 
@@ -63,7 +66,7 @@ class Command(BaseCommand):
                     + course["SectionName"]
                     + "/"
                     + options["term"].replace(" ", "%20"),
-                    params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
+                    params={"key": os.environ.get("JHU_SIS_API_TOKEN")},
                 ).text
             )[0]
 

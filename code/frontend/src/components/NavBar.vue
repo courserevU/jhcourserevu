@@ -102,8 +102,16 @@
             />
           </button>
           <button
+            v-if="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
             class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900"
-            @click="goToLogin"
+            @click="handleClickSignOut"
+          >
+            Sign out
+          </button>
+          <button
+            v-else
+            class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900"
+            @click="handleClickSignIn"
           >
             Sign in
           </button>
@@ -200,11 +208,19 @@
               <p
                 class="text-center text-base font-medium text-gray-500 dark:text-gray-400"
               >
-                Existing user?
-                {{ " " }}
+                <!-- Existing user?
+                {{ " " }} -->
                 <button
+                  v-if="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized"
                   class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-600"
-                  @click="goToLogin"
+                  @click="handleClickSignOut"
+                >
+                  Sign out
+                </button>
+                <button
+                  v-else
+                  class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-600"
+                  @click="handleClickSignIn"
                 >
                   Sign in
                 </button>
@@ -217,7 +233,6 @@
   </Popover>
 </template>
 
-
 <script lang="ts">
 import { defineComponent } from "vue";
 import {
@@ -228,6 +243,8 @@ import {
 } from "@headlessui/vue";
 import { MenuIcon, MoonIcon, SunIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
+import { inject, toRefs } from "vue";
+import axios from "axios";
 
 // Toggle variable for turning dark mode on/off, theme persists between sessions
 let darkMode = localStorage.getItem("user-theme") === "true";
@@ -237,6 +254,10 @@ if (darkMode) {
 
 export default defineComponent({
   name: "NavBar",
+  props: {
+    msg: String,
+    // user: String,
+  },
   components: {
     Popover,
     PopoverButton,
@@ -250,12 +271,72 @@ export default defineComponent({
   },
   data() {
     return {
+      user_id: "",
       darkMode,
     };
   },
   methods: {
-    goToLogin() {
-      this.$router.push("/login");
+    async handleClickSignIn() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+        const access_token = this.$gAuth.instance.currentUser
+          .get()
+          .getAuthResponse().access_token;
+        // http://localhost:8000/auth/convert-token
+        // https://jhcourserevu-api-test.herokuapp.com/auth/convert-token
+        axios.post(
+          `https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`,
+          {
+            grant_type: "convert_token",
+            client_id: import.meta.env.VITE_DJANGO_CLIENT_ID,
+            client_secret: import.meta.env.VITE_DJANGO_CLIENT_SECRET,
+            backend: "google-oauth2",
+            token: access_token,
+          }
+        );
+
+        const user_email = googleUser.getBasicProfile().getEmail();
+
+        axios
+          .get(
+            `https://jhcourserevu-api-test.herokuapp.com/user/api/${user_email}`
+          )
+          .then((response) => {
+            const data = response.data;
+            this.user_id = data.id;
+            localStorage.setItem("user_id", JSON.stringify(this.user_id));
+            window.dispatchEvent(
+              new CustomEvent("localstorage-changed", {
+                detail: {
+                  user: localStorage.getItem("user_id"),
+                },
+              })
+            );
+          });
+      } catch (error) {
+        //on fail print error
+        console.error(error);
+        return null;
+      }
+    },
+    async handleClickSignOut() {
+      try {
+        await this.$gAuth.signOut();
+        this.user_id = "";
+        localStorage.setItem("user_id", JSON.stringify(this.user_id));
+        window.dispatchEvent(
+          new CustomEvent("localstorage-changed", {
+            detail: {
+              user: localStorage.getItem("user_id"),
+            },
+          })
+        );
+      } catch (error) {
+        console.error(error);
+      }
     },
     goToMyCourses() {
       this.$router.push("/my-courses");
@@ -283,9 +364,16 @@ export default defineComponent({
       localStorage.setItem("user-theme", JSON.stringify(this.darkMode));
     },
   },
-  setup() {
+  setup(props) {
+    const { isSignIn } = toRefs(props);
+    const Vue3GoogleOauth = inject("Vue3GoogleOauth");
+
+    const handleClickLogin = () => {};
     return {
       repoUrl: "https://github.com/cs421sp22-homework/project-team-08-random",
+      Vue3GoogleOauth,
+      handleClickLogin,
+      isSignIn,
     };
   },
   mounted() {

@@ -1,10 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
 from course.models import Course
-from django.contrib.sites.models import Site
+from django.contrib.auth.models import User
+
+# from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage
 
 
-class User(models.Model):
+class CustomUser(models.Model):
     """
     Represents any user with required JHED email. This is necessary to log into
     the main website and access
@@ -16,12 +17,23 @@ class User(models.Model):
         is_admin (:obj:`BooleanField`): indicates whether user is a moderator or visiting user
     """
 
-    user = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
-    jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    jhed_email = models.EmailField(("email address"), unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE)
+    # jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
+    email = models.EmailField(("email address"), unique=True, blank=True, null=True)
     class_year = models.CharField(max_length=50, blank=True, null=True, unique=True)
     preferred_name = models.CharField(max_length=30, blank=True, null=True, unique=True)
-    is_admin = models.BooleanField(null=False)
+    is_admin = models.BooleanField(default=False)
+
+
+# class CustomUserSocialAuth(AbstractUserSocialAuth):
+#     user = models.ForeignKey(
+#         USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE
+#     )
+
+
+# class CustomDjangoStorage(DjangoStorage):
+#     user = CustomUser
 
 
 class MyCourses(models.Model):
@@ -32,7 +44,7 @@ class MyCourses(models.Model):
     courses(:obj:`ForeignKey`): courses that the user is enrolled in
     """
 
-    user = models.ForeignKey(User, on_delete=models.deletion.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.deletion.CASCADE)
     courses = models.ManyToManyField(Course)
 
     def get_courses(self):

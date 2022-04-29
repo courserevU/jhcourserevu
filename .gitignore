@@ -4,3 +4,4 @@
 .gradle/*
 node_modules/*
 docs/build
+.env

@@ -4,12 +4,12 @@
       class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8"
     >
       <h2
-        class="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
+        class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200"
       >
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
       <h3
-        class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+        class="text-2xl font-bold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
       >
         Semester: {{ JSON.parse(course).semester }}
       </h3>

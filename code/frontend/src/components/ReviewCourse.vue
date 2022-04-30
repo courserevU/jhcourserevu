@@ -5,7 +5,7 @@
     <div class="flex space-x-2 justify-center">
       <div>
         <h1
-          class="text-5xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+          class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
         >
           Course Review
         </h1>
@@ -15,7 +15,7 @@
     <!-- Class Title -->
     <div class="flex space-x-2 justify-left px-20">
       <h3
-        class="text-3xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+        class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
       >
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h3>
@@ -24,7 +24,7 @@
     <div class="flex space-x-2 justify-left px-20">
         <div>
           <h3
-            class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+            class="text-2xl font-bold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
           >
             Semester: {{ JSON.parse(course).semester }}
           </h3>

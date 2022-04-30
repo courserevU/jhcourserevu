@@ -7,8 +7,8 @@
         <div class="flex justify-start lg:w-0 lg:flex-1 cursor-pointer" @click="goToHome">
           <a>
             <span class="sr-only">Logo</span>
-            <p class="text-gray-900 dark:text-gray-200">Logo</p>
-            <!-- Replace with our logo img when ready: <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="" /> -->
+            <!-- <p class="text-gray-900 dark:text-gray-200">Logo</p> -->
+            <img class="w-auto h-12" src="../assets/logo.png" alt="" />
           </a>
         </div>
         <div class="-mr-2 -my-2 md:hidden">
@@ -160,7 +160,6 @@
   </Popover>
 </template>
 
-
 <script lang="ts">
 import { defineComponent } from "vue";
 import {
@@ -199,7 +198,7 @@ export default defineComponent({
   },
   data() {
     return {
-      user: '',
+      user_id: "",
       darkMode,
     };
   },
@@ -210,44 +209,44 @@ export default defineComponent({
         if (!googleUser) {
           return null;
         }
-        const access_token = this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
+        const access_token = this.$gAuth.instance.currentUser
+          .get()
+          .getAuthResponse().access_token;
         // http://localhost:8000/auth/convert-token
         // https://jhcourserevu-api-test.herokuapp.com/auth/convert-token
-        axios.post(`https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`, {
-          "grant_type": "convert_token",
-          "client_id": import.meta.env.VITE_DJANGO_CLIENT_ID,
-          "client_secret": import.meta.env.VITE_DJANGO_CLIENT_SECRET,
-          "backend": "google-oauth2",
-          "token": access_token
-        })
-          .then((response) => {
-            const data = response.data;
-            // TODO: ideally, return user's name, id, etc.
-            // console.log(data);
-            console.log(googleUser.getBasicProfile().getEmail());
-          })
+        axios.post(
+          `https://jhcourserevu-api-test.herokuapp.com/auth/convert-token`,
+          {
+            grant_type: "convert_token",
+            client_id: import.meta.env.VITE_DJANGO_CLIENT_ID,
+            client_secret: import.meta.env.VITE_DJANGO_CLIENT_SECRET,
+            backend: "google-oauth2",
+            token: access_token,
+          }
+        ).then(() =>
+          axios
+            .get(
+              `https://jhcourserevu-api-test.herokuapp.com/user/api/${user_email}`
+            )
+            .then((response) => {
+              const data = response.data;
+              this.user_id = data.id;
+              localStorage.setItem("user_id", JSON.stringify(this.user_id));
+              window.dispatchEvent(
+                new CustomEvent("localstorage-changed", {
+                  detail: {
+                    user: localStorage.getItem("user_id"),
+                  },
+                })
+              );
+            })
+        )
 
-        // console.log("googleUser", googleUser);
         const user_email = googleUser.getBasicProfile().getEmail();
-        // localStorage.setItem("email", JSON.stringify(this.user));
 
-        axios
-          .get(`https://jhcourserevu-api-test.herokuapp.com/user/api/${user_email}`)
-          .then((response) => {
-            console.log(response);
-            const data = response.data;
-            this.user_id = data.id;
-            localStorage.setItem("user_id", JSON.stringify(this.user_id));
-          });
-        // console.log("getId", this.user);
-        // console.log("getBasicProfile", googleUser.getBasicProfile());
-        // console.log("getAuthResponse", googleUser.getAuthResponse());
-        // console.log(
-        //   "getAuthResponse",
-        //   this.$gAuth.instance.currentUser.get().getAuthResponse().access_token
-        // );
+
       } catch (error) {
-        //on fail do something
+        //on fail print error
         console.error(error);
         return null;
       }
@@ -255,9 +254,15 @@ export default defineComponent({
     async handleClickSignOut() {
       try {
         await this.$gAuth.signOut();
-        console.log("isAuthorized", this.Vue3GoogleOauth.isAuthorized);
         this.user_id = "";
-        localStorage.setItem("user_id", JSON.stringify(this.user));
+        localStorage.setItem("user_id", JSON.stringify(this.user_id));
+        window.dispatchEvent(
+          new CustomEvent("localstorage-changed", {
+            detail: {
+              user: localStorage.getItem("user_id"),
+            },
+          })
+        );
       } catch (error) {
         console.error(error);
       }

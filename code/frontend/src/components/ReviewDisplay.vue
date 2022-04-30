@@ -8,14 +8,79 @@
       >
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
+      <h3
+        class="text-2xl font-bold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+      >
+        Semester: {{ JSON.parse(course).semester }}
+      </h3>
+    <br />
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Section: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).meeting_section }}
+        </h3>
+      </div>
 
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Prerequisites: {{ JSON.parse(course).prerequisites }}</h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Corequisites: {{ JSON.parse(course).corequisites }}</h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Credits: {{ JSON.parse(course).num_credits }}</h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Section: {{ JSON.parse(course).meeting_section }}</h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Department: {{ JSON.parse(course).department }}</h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Campus: {{ JSON.parse(course).campus }}</h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">Writing Intensive: {{ JSON.parse(course).is_writing_intensive === "True" ? 'Yes' : 'No'}}</h3>
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Credits:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).num_credits }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+           Department: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).department }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Campus:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).campus }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Prerequisites: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+        {{ JSON.parse(course).prerequisites }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Corequisites:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+        {{ JSON.parse(course).corequisites }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Writing Intensive:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+        {{ JSON.parse(course).is_writing_intensive === "True" ? "Yes" : "No" }}
+        </h3>
+      </div>
+      
+      
+      
+      
+      
       <br />
 
       <!-- Search Dropdown to filter within reviews-->
@@ -41,16 +106,19 @@
             v-else
             aria-hidden="true"
           />
-        </button> 
+        </button>
       </div>
-      
-      
+
       <div
         v-if="option === 1 || option === 8"
         class="mt-6 grid grid-cols-1"
-        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
+        :class="[
+          isTile
+            ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'
+            : '',
+        ]"
       >
-        <div 
+        <div
           v-for="review in reviews"
           :key="reviews.indexOf(review)"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
@@ -70,14 +138,7 @@
                   <span>{{ comment.comment }}</span>
                 </p>
               </div>
-              <!-- Below buttons only appear if user is moderator (not implemented) -->
               <div class="mt-4 relative float-right" v-if="mod">
-                <button class="mr-3">
-                  <!-- Send warning message to user who wrote given review -->
-                  <AnnotationIcon
-                    class="h-5 w-5 text-black dark:text-gray-200"
-                  />
-                </button>
                 <!-- Delete given review -->
                 <button @click="deleteReview(review[0].review)">
                   <XIcon class="h-5 w-5 text-red-600" />
@@ -88,17 +149,18 @@
         </div>
       </div>
 
-      <div v-else
+      <div
+        v-else
         class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
       >
-        <div 
+        <div
           v-for="comment in reviews"
           :key="reviews.indexOf(comment)"
           class="group relative py-2 px-3 shadow-md dark:ring-gray-400 dark:ring-1 dark:rounded"
         >
           <div class="mt-2">
             <div class="relative">
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400" >
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 <span>{{ comment.comment }}</span>
               </p>
             </div>
@@ -122,19 +184,23 @@ import { defineComponent } from "vue";
 import Search from "./Search.vue";
 import SelectReviewMenu from "./SelectReviewMenu.vue";
 import Pagination from "./Pagination.vue";
-import { AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon } from "@heroicons/vue/outline";
+import {
+  XIcon,
+  ViewListIcon,
+  ViewGridIcon,
+} from "@heroicons/vue/outline";
 import axios from "axios";
 
 let query = "";
 
 const optionsToField = {
-  2 : "Teaching Style",
-  3 : "Grading Style",
-  4 : "Teacher Feedback",
-  5 : "Workload",
-  6 : "Assignment Style",
-  7 : "Exam Style",
-  8 : "Show all reviews"
+  2: "Teaching Style",
+  3: "Grading Style",
+  4: "Teacher Feedback",
+  5: "Workload",
+  6: "Assignment Style",
+  7: "Exam Style",
+  8: "Show all reviews",
 };
 export default defineComponent({
   name: "ReviewDisplay",
@@ -183,62 +249,70 @@ export default defineComponent({
   props: {
     course: String, // passed as stringified Object, needs to be parsed
   },
-  components: { Search, Pagination, SelectReviewMenu, AnnotationIcon, XIcon, ViewListIcon, ViewGridIcon  },
+  components: {
+    Search,
+    Pagination,
+    SelectReviewMenu,
+    XIcon,
+    ViewListIcon,
+    ViewGridIcon,
+  },
   mounted() {
     // Retrieves reviews for the given course from the DB through the API, to display
-    let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}`
+    let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+      JSON.parse(this.course).id
+    }`;
     // let api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
-    
-    const field = optionsToField[this.option];
-    
-    if (field != undefined) 
-      api_link += field
-      axios
-        .get(api_link)
-        .then((response) => {
-          const data = response.data;
-          this.reviews = data.results;
-          this.reviewCount = data.count;
-          this.totalPages = Math.ceil(this.reviewCount / 10);
-        });
-        console.log(this.course);
 
+    const field = optionsToField[this.option];
+
+    if (field != undefined) api_link += field;
+    axios.get(api_link).then((response) => {
+      const data = response.data;
+      this.reviews = data.results;
+      this.reviewCount = data.count;
+      this.totalPages = Math.ceil(this.reviewCount / 10);
+    });
+    console.log(this.course);
   },
   methods: {
     updateOption(e: any) {
-      if(e === undefined) return;
+      if (e === undefined) return;
 
       this.option = e.id;
       const field = optionsToField[this.option];
 
       // let api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/`;
-      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${JSON.parse(this.course).id}/`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${
+        JSON.parse(this.course).id
+      }/`;
 
       if (field != undefined && field != "Show all reviews") {
         // api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/${field}`;
-        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${JSON.parse(this.course).id}/${field}`;      
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${
+          JSON.parse(this.course).id
+        }/${field}`;
       }
-      
+
       if (field === "Show all reviews")
         // api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
-        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${JSON.parse(this.course).id}/`;
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
+          JSON.parse(this.course).id
+        }/`;
 
-      axios
-      .get(api_link)
-      .then((response) => {
+      axios.get(api_link).then((response) => {
         const data = response.data;
         this.reviews = data.results;
         this.reviewCount = data.count;
         this.totalPages = Math.ceil(this.reviewCount / 10);
       });
-      
     },
     changePage(e: number) {
       this.page = e;
       axios
         .get(
           `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-          // `http://127.0.0.1:8000/course/review/api/${
+            // `http://127.0.0.1:8000/course/review/api/${
             JSON.parse(this.course).id
           }/?page=${this.page}`
         )
@@ -264,7 +338,7 @@ export default defineComponent({
           axios
             .get(
               `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-              // `http://127.0.0.1:8000/course/review/api/${
+                // `http://127.0.0.1:8000/course/review/api/${
                 JSON.parse(this.course).id
               }/?page=${this.page}`
             )
@@ -276,12 +350,6 @@ export default defineComponent({
             });
         });
     },
-    // updateOption(e: any) {
-    //   if (e === undefined) return;
-    //   this.option = e.id;
-    //   const field = optionsToField[this.option];
-    //   this.mounted();
-    // },
   },
 });
 </script>

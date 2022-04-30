@@ -22,7 +22,7 @@ export default defineConfig({
     vueJsx(),
     // EnvironmentPlugin("all"),
     ImportMetaEnvPlugin.vite({
-      example: ".env.example.public"
+      example: ".env.example.public",
     }),
   ],
   resolve: {

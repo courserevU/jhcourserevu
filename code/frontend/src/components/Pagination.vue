@@ -51,8 +51,8 @@ export default defineComponent({
   },
   computed: {
     pagesAtATime() {
-      return (this.maxPage < 5) ? this.maxPage : 5;
-    }
+      return this.maxPage < 5 ? this.maxPage : 5;
+    },
   },
   components: { ChevronLeftIcon, ChevronRightIcon },
   methods: {

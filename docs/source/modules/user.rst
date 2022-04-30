@@ -8,9 +8,9 @@ JHED ID and email to sign up or login.
 API Endpoints
 **************
 
-.. http:post:: /user/api/signup
+.. http:post:: /user/api/
     
-    Generate new user
+   Generate new user
 
    **Example request**:
 

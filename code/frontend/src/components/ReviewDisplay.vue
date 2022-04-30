@@ -9,7 +9,7 @@
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
       
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Section: 
         </h3>
@@ -18,7 +18,7 @@
         </h3>
       </div>
 
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Credits:
         </h3>
@@ -27,7 +27,7 @@
         </h3>
       </div>
 
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
            Department: 
         </h3>
@@ -36,7 +36,7 @@
         </h3>
       </div>
 
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Campus:
         </h3>
@@ -45,7 +45,7 @@
         </h3>
       </div>
 
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Prerequisites: 
         </h3>
@@ -54,7 +54,7 @@
         </h3>
       </div>
 
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Corequisites:
         </h3>
@@ -63,7 +63,7 @@
         </h3>
       </div>
 
-      <div class = "mb-3 mt-0 px-4">
+      <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Writing Intensive:
         </h3>

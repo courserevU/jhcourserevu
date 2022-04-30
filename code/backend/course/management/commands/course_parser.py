@@ -40,7 +40,8 @@ class Command(BaseCommand):
             raise CommandError("Invalid school name provided: {}".format(options["school"]))
 
         # check valid term
-        terms = ["Fall 2022", "Summer 2022", "Spring 2022"]
+        # TODO: this could be more forgiving, allow for more terms
+        terms = ["Fall 2022", "Summer 2022", "Spring 2022", "Fall 2021", "Spring 2021", "Summer 2021", "Fall 2020", "Summer 2020", "Spring 2020"]
 
         if options["term"] not in terms:
             raise CommandError("Invalid term provided: {}".format(options["term"]))

@@ -28,13 +28,16 @@ API Endpoints
       Content-Type: application/json
 
       {
-        "course_id": 1,
-        "comments": [
-          "Great class", 
-          "Great professor", 
-          "Lots of work",
-          "Exams were challenging"
-        ]
+        "comments": {
+          "Professor": "Dr. Ali Madooei",
+          "Teaching Style": "FUN",
+          "Grading Style": "CHILL",
+          "Teacher Feedback": "NICE JOB",
+          "Workload": "LIGHT",
+          "Assignment Style": "projects",
+          "Exam Style": "stylized"
+        },
+        "course_id": 1
       }
 
    **Example response**:

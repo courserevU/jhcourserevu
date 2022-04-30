@@ -86,16 +86,16 @@ API Endpoints
    :statuscode 404: user not found
 
 Models
-~~~~~~
+**************
 .. automodule:: user.models
     :members:
 
 Views
-~~~~~
+**************
 .. automodule:: user.views
     :members:
 
 Serializers
-~~~~~~~~~~~
+**************
 .. automodule:: user.api.serializers
     :members:

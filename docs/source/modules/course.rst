@@ -271,17 +271,17 @@ API Endpoints
    :statuscode 404: invalid semester or year
 
 Models
-~~~~~~
+**************
 .. automodule:: course.models
     :members:
 
 Views
-~~~~~
+**************
 .. automodule:: course.views
     :members:
 
 Serializers
-~~~~~~~~~~~
+**************
 .. automodule:: course.api.serializers
     :members:
 

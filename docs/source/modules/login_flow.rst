@@ -2,14 +2,25 @@ Login Flow
 ############
 
 This is multi-step process. The most accurate depiction of
-the login flow can best depicted by the following graphic.
-TODO: add graphic here
-https://github.com/guruahn/vue3-google-oauth2...
+the login flow can best depicted by the following graphic:
+
+.. image:: ../../files/vue3_login-flow.png
+    :width: 600
+    :alt: Login Flow Diagram
+
+Credit: `vue3-google-oauth2 <https://github.com/guruahn/vue3-google-oauth2>`_
 
 OAuth2 for Frontend (vue3-google-oauth2)
 *****************************************
-TODO: add info here
+
+To get the Google Login Prompt and parse the information from the user, 
+this app uses `vue3-google-oauth2 <https://github.com/guruahn/vue3-google-oauth2>`_.
 
 OAuth2 for Backend (drf-rest-oauth2)
 *************************************
-TODO: add info here
+
+To create a `CustomUser` in the Postgres Database, the frontend makes a
+call to the backend's Restful API. The app uses
+`drf-rest-oauth2 <https://github.com/wagnerdelima/drf-social-oauth2>`_ to
+obtain a User Access Token and gather the user's information and store it
+accordingly.

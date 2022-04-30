@@ -30,9 +30,9 @@
             </PopoverButton>
           </Popover>
 
-          <a :href="repoUrl" target="_blank"
+          <a href="https://cs421sp22-homework.github.io/project-team-08-random/" target="_blank"
             class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">Docs</a>
-          <a href="#"
+          <a :href="repoUrl"
             class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">About</a>
 
           <Popover class="relative" v-slot="{ open }">
@@ -125,11 +125,11 @@
                     </PopoverButton>
                   </Popover>
                   <div class="my-4">
-                    <a :href="repoUrl" target="_blank"
+                    <a href="https://cs421sp22-homework.github.io/project-team-08-random/" target="_blank"
                       class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">Docs</a>
                   </div>
                   <div>
-                    <a href="#"
+                    <a :href="repoUrl"
                       class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">About</a>
                   </div>
                 </div>

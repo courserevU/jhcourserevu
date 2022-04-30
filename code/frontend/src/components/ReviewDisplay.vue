@@ -8,10 +8,15 @@
       >
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
-
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Prerequisites: {{ JSON.parse(course).prerequisites }}
-      </h3>
+      <div class = "mb-3 mt-0 px-4">
+        <h3 class="text-1xl font-medium leading-tight text-gray-900 dark:text-gray-200">
+          Prerequisites: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+        {{ JSON.parse(course).prerequisites }}
+        </h3>
+      </div>
+      
       <h3 class="text-md text-gray-700 dark:text-gray-300">
         Corequisites: {{ JSON.parse(course).corequisites }}
       </h3>

@@ -44,8 +44,8 @@ jobs:
       - name: Deploy Site
         uses: nwtgck/actions-netlify@v1.2
         with:
-          publish-dir: './code/frontend/dist'
-          production-branch: master
+          publish-dir: "./code/frontend/dist"
+          production-branch: main
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: false
           enable-commit-comment: true
@@ -53,4 +53,7 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_STAGE_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+          VITE_DJANGO_CLIENT_ID: ${{ secrets.VITE_DJANGO_CLIENT_ID }}
+          VITE_DJANGO_CLIENT_SECRET: ${{ secrets.VITE_DJANGO_CLIENT_ID }}
         timeout-minutes: 1

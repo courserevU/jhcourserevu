@@ -1,7 +1,8 @@
 <template>
   <div class="bg-white dark:bg-gray-800">
-    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
-
+    <div
+      class="max-w-2xl mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8"
+    >
       <h2
         class="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-200 mb-4"
       >
@@ -9,9 +10,9 @@
       </h2>
 
       <!-- Search Bar + Dropdown for more specific search -->
-      <div class ="flex flex-row space-x-3">
+      <div class="flex flex-row space-x-3">
         <Search @update-filter="updateFilter" />
-        <SelectMenu :options=filters @update-option="updateOption" />
+        <SelectMenu :options="filters" @update-option="updateOption" />
         <span
           class="input-group-text items-center px-3 py-3 text-base font-normal text-gray-700 dark:text-gray-200 text-center whitespace-nowrap rounded"
           id="basic-addon2"
@@ -33,32 +34,35 @@
           </svg>
         </span>
         <button
-            class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
-            @click="toggleLayout"
-          >
-            <ViewGridIcon
-              :class="[
-                open ? 'text-gray-600' : 'text-gray-400',
-                'h-5 w-5 group-hover:text-gray-500',
-              ]"
-              v-if="isTile"
-              aria-hidden="true"
-            />
-            <ViewListIcon
-              :class="[
-                open ? 'text-gray-600' : 'text-gray-400',
-                'h-5 w-5 group-hover:text-gray-500',
-              ]"
-              v-else
-              aria-hidden="true"
-            />
-          </button>
-        
+          class="ml-8 whitespace-nowrap h-11 items-center justify-center px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gray-200 hover:bg-slate-900 dark:bg-slate-900 dark:hover:bg-gray-100"
+          @click="toggleLayout"
+        >
+          <ViewGridIcon
+            :class="[
+              open ? 'text-gray-600' : 'text-gray-400',
+              'h-5 w-5 group-hover:text-gray-500',
+            ]"
+            v-if="isTile"
+            aria-hidden="true"
+          />
+          <ViewListIcon
+            :class="[
+              open ? 'text-gray-600' : 'text-gray-400',
+              'h-5 w-5 group-hover:text-gray-500',
+            ]"
+            v-else
+            aria-hidden="true"
+          />
+        </button>
       </div>
 
       <div
         class="mt-6 grid grid-cols-1"
-        :class="[isTile ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8' : '']"
+        :class="[
+          isTile
+            ? 'gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'
+            : '',
+        ]"
       >
         <div
           v-for="course in this.courses"
@@ -81,14 +85,24 @@
               </p>
             </div>
           </div>
-          <div class="mt-2"> 
+          <div class="mt-2">
             <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
-            <input type="checkbox" :id="course.course_num" :value="course.name+course.meeting_section" v-model="taken"  @change="updateTakenStatus(course)">
-            <label for="checkbox" class="text-sm text-gray-700 dark:text-gray-300">{{ " I have taken this course"}}</label>
+            <input
+              type="checkbox"
+              :id="course.course_num"
+              :value="course.name + course.meeting_section"
+              v-model="taken"
+              @change="updateTakenStatus(course)"
+            />
+            <label
+              for="checkbox"
+              class="text-sm text-gray-700 dark:text-gray-300"
+              >{{ " I have taken this course" }}</label
+            >
           </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
-              v-if="this.taken.includes(course.name+course.meeting_section)"
+              v-if="this.taken.includes(course.name + course.meeting_section)"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
@@ -108,7 +122,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" />
       </div>
     </div>
   </div>
@@ -116,16 +130,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {
-  EyeIcon,
-  PlusIcon
-} from "@heroicons/vue/solid";
+import { EyeIcon, PlusIcon } from "@heroicons/vue/solid";
 import Search from "./Search.vue";
 import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
-import {ViewGridIcon,ViewListIcon } from "@heroicons/vue/outline";
+import { ViewGridIcon, ViewListIcon } from "@heroicons/vue/outline";
 let taken = [];
 let courses = [];
 
@@ -133,141 +144,161 @@ let query = "";
 let option = "";
 
 const optionsToField = {
-  2 : "name",
-  3 : "course_num",
-  4 : "department"
+  2: "name",
+  3: "course_num",
+  4: "department",
 };
 
 export default defineComponent({
   name: "CourseDisplay",
   data() {
     return {
+      user_id: "",
       query,
       option,
       taken,
       courses,
       filters: [
         {
-            id: 2,
-            name: 'Course Name',
+          id: 2,
+          name: "Course Name",
         },
         {
-            id: 3,
-            name: 'Course Number',
+          id: 3,
+          name: "Course Number",
         },
         {
-            id: 4,
-            name: 'Department',
-        }
+          id: 4,
+          name: "Department",
+        },
       ],
       page: 1,
       totalPages: 5,
       isTile: true,
-    }
+    };
   },
   mounted() {
-    axios.get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+    axios
+      .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
       .then((response) => {
         const data = response.data;
         this.courses = data.results;
         this.totalPages = Math.ceil(data.count / 10);
-      })
+      });
 
-    // axios.get(`http://localhost:8000/course/api/`)
-    //   .then((response) => {
-    //     const data = response.data;
-    //     this.courses = data.results;
-    //     // console.log(JSON.parse(JSON.stringify(data.results)));
-    //   })
+    window.addEventListener("localstorage-changed", (event) => {
+      this.user_id = JSON.parse(event.detail.user);
+    });
+
+    if (localStorage.getItem("user_id")) {
+      this.user_id = JSON.parse(localStorage.getItem("user_id"));
+    }
   },
-  components: { Search, SelectMenu, Pagination, Checkbox, EyeIcon, PlusIcon, ViewListIcon, ViewGridIcon },
+  components: {
+    Search,
+    SelectMenu,
+    Pagination,
+    Checkbox,
+    EyeIcon,
+    PlusIcon,
+    ViewListIcon,
+    ViewGridIcon,
+  },
   methods: {
     updateFilter(e: any) {
-      if(e === undefined) return;
+      if (e === undefined) return;
 
       this.query = e;
 
       const field = optionsToField[this.option];
-      
-      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
-      // let api_link = `http://127.0.0.1:8000/course/api/`;
 
-      if (field != undefined && this.query != "")
+      // let api_link = `http://localhost:8000/course/api/`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
+
+      if (field != undefined && this.query != "") {
+        // api_link = `http://localhost:8000/course/search/${field}/?q=${this.query}`;
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
-        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}`;
+      }
 
       // Gets correct page of courses via API page query
-      axios.get(api_link)
-      .then((response) => {
+      axios.get(api_link).then((response) => {
         const data = response.data;
         this.courses = data.results;
         this.totalPages = Math.ceil(data.count / 10);
-      })
+      });
     },
     updateOption(e: any) {
-      if(e === undefined) return;
+      if (e === undefined) return;
 
       this.option = e.id;
       this.updateFilter(this.query);
     },
-    addCourse(course: any) {
-      axios.post(`http://localhost:8000/user/api/`, {
-        "user_id": 1,
-        "course_id": course.id
-      })
+    addCourse(course_id: any) {
+      // http://localhost:8000/user/api/
+      // https://jhcourserevu-api-test.herokuapp.com/user/api/
+      axios
+        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          user_id: this.user_id,
+          course_id: course_id,
+        })
         .then((response) => {
           const data = response.data;
-          console.log(data);
-          // this.courses = data.results;
-        })
+        });
     },
     changePage(e: number) {
       this.page = e;
 
       // Gets correct page of courses via API page query
+      // let api_link = `http://localhost:8000/course/api/?page=${this.page}`;
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
-      // let api_link = `http://127.0.0.1:8000/course/api/?page=${this.page}`;
 
       const field = optionsToField[this.option];
 
-      if (field != undefined && this.query != "")
-        api_link = `http://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
-        // api_link = `http://127.0.0.1:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
-      
-      axios.get(api_link)
-      .then((response) => {
+      if (field != undefined && this.query != "") {
+        api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+        // api_link = `http://localhost:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
+      }
+
+      axios.get(api_link).then((response) => {
         const data = response.data;
         this.courses = data.results;
-      })
+      });
     },
     toggleLayout() {
       this.isTile = !this.isTile;
     },
     goToWriteReview(course: any) {
-      this.$router.push({ name: "write", params: { "course": JSON.stringify(course) } });
+      this.$router.push({
+        name: "write",
+        params: { course: JSON.stringify(course) },
+      });
     },
     goToReadReviews(course: any) {
-      this.$router.push({ name: "read", params: { "course": JSON.stringify(course) } });
+      this.$router.push({
+        name: "read",
+        params: { course: JSON.stringify(course) },
+      });
     },
     updateTakenStatus(course: any) {
-      // If course info is in taken, it was added; otherwise it was removed
-      if (this.taken.includes(course.name+course.meeting_section)) {
-        console.log("add "+course.name+course.meeting_section);
+      //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
+
+      if (
+        JSON.stringify(this.taken).includes(
+          course.name + course.meeting_section
+        )
+      ) {
+        this.addCourse(course.id);
       } else {
-        console.log("delete "+course.name+course.meeting_section);
+        // http://localhost:8000/user/api/
+        // https://jhcourserevu-api-test.herokuapp.com/user/api/
+        axios.delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          data: {
+            user_id: this.user_id,
+            course_id: course.id,
+          },
+        });
       }
-
-      
-
-      // axios.delete(`http://localhost:8000/user/api/1`, {
-      //   "course_id": course.id
-      // })
-      //   .then((response) => {
-      //     const data = response.data;
-      //     console.log(data);
-      //     // this.courses = data.results;
-      //   })
-    }
+    },
   },
 });
 </script>

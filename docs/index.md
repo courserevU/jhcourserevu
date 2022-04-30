@@ -4,16 +4,19 @@ JHcourserevU is an application to rate, review, and view reviews for the courses
 
 ## User Manual
 
-- The user will enter the site at the landing page, where its functionality and purpose is introduced
-- There is a button on that landing page that, if clicked, will take the user to the list of courses they can review. There is also a button on the navigation bar at the top that will take the user to the course display page.
+- Sign in takes the user to a Google login pop-up
+- The user will enter the site at the landing page, where its functionality and purpose is introduced.
+- There is a button on that landing page that, if clicked, will take the user to the list of courses they can review. There is also a button on the navigation bar at the top that will take the user to that same course display page. There are links to our GitHub page and docs, and there is a button to take the user to the list of courses they have marked as taken (if not logged in then there are no courses displayed there.)
 - The dark mode button on the navigation bar (sun/moon icon) can be clicked to switch between light and dark themes for the site as a whole. This preference is saved in local storage so it persists between sessions.
-- There is a search bar for the user to search courses on this course list page. They can search by course name or course number.
-- The course display has a pagination selector underneath the list of courses to split up the courses into manageable tile displays.
-- From the course list page, for each course tile, you can click a button to write a review or click a button to read reviews for that particular course - each of these buttons will take you to a different page for that purpose.
-- The review list page will display all reviews for a course, with a pagination selector underneath to split up the reviews into manageable tile displays.
-- In order to write a review, you will be prompted to enter the name of the professor, pick a semester from a dropdown menu, and answer a series of guided questions about the course. When done, the user can click the submit button to post their review.
+- There is a search bar for the user to search courses on this course list page. They can search by course name, course number, or department.
+- The course display has a pagination selector underneath the list of courses to split up the courses into manageable tile displays of 10 at a time.
+- If the user prefers to view the items in vertical list format rather than tile format, there is a toggle button near the search bar.
+- From the course list page, for each course tile, you can click a button to write a review or click a button to read reviews for that particular course - each of these buttons will take you to a different page for that purpose. The "Write Review" button is only visible if that courses has been marked "taken" by checking the checkbox on the course tile/list item that says "I have taken this course."
+- When the above checkbox is checked, the course will also appear on the My Courses page. If the user wants to remove the course from this "taken" list, they can uncheck the checkbox and the course will no longer appear on the My Courses page.
+- The review list page will display all reviews for a course, with a pagination selector underneath to split up the reviews into manageable tile displays of 10 at a time.
+- There is a dropdown menu where the user can opt to only display a certain comment category (like exam style or workload.)
+- In order to write a review, you will be prompted to enter the name of the professor and answer a series of guided questions about the course. When done, the user can click the submit button to post their review. A toast notification will tell the user if their review was submitted successfully (green), or if there was an error or not all fields are completed (yellow).
 - At any point, if the user wants to return to the landing page, they can click the logo to take them back there.
-- The sign-in and sign-up buttons on the navigation bar take the user to login and registration pages respectively, where the user can enter an email and password and then click the button underneath to submit their account information.
 
 ## API Reference
 
@@ -30,7 +33,7 @@ have completed, and thus, are able to review.
 **WARNING**: Some HTTP responses were shortened for simplicity. Please read the
 expected page limit if pagination applies to a given endpoint.
 
-### POST /course/review/api/(int: course_id)
+### POST (/course/review/api/(int: course_id)()
 
 Generate review for a specific course.
 
@@ -43,13 +46,16 @@ Accept: application/json, text/javascript
 Content-Type: application/json
 
 {
-  "course_id": 1,
-  "comments": [
-    "Great class",
-    "Great professor",
-    "Lots of work",
-    "Exams were challenging"
-  ]
+  "comments": {
+    "Professor": "Dr. Ali Madooei",
+    "Teaching Style": "FUN",
+    "Grading Style": "CHILL",
+    "Teacher Feedback": "NICE JOB",
+    "Workload": "LIGHT",
+    "Assignment Style": "projects",
+    "Exam Style": "stylized"
+  },
+  "course_id": 1
 }
 ```
 
@@ -76,8 +82,6 @@ Content-Type: application/json
   - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
     _Accept_ header
 
-  - [Authorization](https://tools.ietf.org/html/rfc7235#section-4.2) – optional OAuth token to authenticate
-
 - **Response Headers**
 
   - [Content-Type](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) – this depends on _Accept_
@@ -89,7 +93,7 @@ Content-Type: application/json
 
   - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – course not found
 
-### GET /course/review/api/(int: course_id)
+### GET (/course/review/api/(int: course_id)()
 
 Obtain all reviews for a given course.
 
@@ -134,7 +138,7 @@ Content-Type: application/json
 
 - **Query Parameters**
 
-  - **limit** – limit number. default is 15
+  - **limit** – limit number, default is 10
 
   - **sort** – sort by `semester` or `year`
 
@@ -142,8 +146,6 @@ Content-Type: application/json
 
   - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
     _Accept_ header
-
-  - [Authorization](https://tools.ietf.org/html/rfc7235#section-4.2) – optional OAuth token to authenticate
 
 - **Response Headers**
 
@@ -156,7 +158,7 @@ Content-Type: application/json
 
   - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – course or review not found
 
-### GET /course/api
+### GET (/course/api()
 
 Obtain all courses with optional query parameters for
 semester and year. Pagination is set by default in
@@ -230,7 +232,7 @@ Content-Type: application/json
 
   - **year** – any year greater than or equal to 2020
 
-  - **limit** – limit number. default is 15
+  - **limit** – limit number, default is 10
 
   - **sort** – sort by `semester` or `year`
 
@@ -238,8 +240,6 @@ Content-Type: application/json
 
   - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
     _Accept_ header
-
-  - [Authorization](https://tools.ietf.org/html/rfc7235#section-4.2) – optional OAuth token to authenticate
 
 - **Response Headers**
 
@@ -252,7 +252,7 @@ Content-Type: application/json
 
   - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – invalid semester or year
 
-### GET /course/api/(int: course_num)
+### GET (/course/api/(int: course_num)()
 
 Get all courses with the given course_num with
 optional query parameters for semester and year.
@@ -318,7 +318,7 @@ Content-Type: application/json
 
   - **year** – any year greater than or equal to 2020
 
-  - **limit** – limit number. default is 15
+  - **limit** – limit number, default is 10
 
   - **sort** – sort by `semester` or `year`
 
@@ -326,8 +326,6 @@ Content-Type: application/json
 
   - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
     _Accept_ header
-
-  - [Authorization](https://tools.ietf.org/html/rfc7235#section-4.2) – optional OAuth token to authenticate
 
 - **Response Headers**
 
@@ -339,6 +337,287 @@ Content-Type: application/json
   - [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) – no error
 
   - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – invalid semester or year
+
+# User App
+
+The user app is allows users to sign up and log in. Every user is
+view anonymously to the general public. Every user has an associated
+Google Account.
+
+## API Endpoints
+
+### POST (/auth/convert-token()
+
+Create new user using Google OAuth2.0 credentials.
+Utilized by [drf-rest-oauth2](https://github.com/wagnerdelima/drf-social-oauth2).
+
+**Example request**:
+
+```http
+GET /auth/convert-token HTTP/1.1
+Host: https://jhcourserevu-api-test.herokuapp.com
+Accept: application/json, text/javascript
+
+{
+   grant_type: "convert_token",
+   client_id: DJANGO_CLIENT_ID,
+   client_secret: DJANGO_CLIENT_SECRET,
+   backend: "google-oauth2",
+   token: access_token,
+}
+```
+
+**Example response**:
+
+```http
+HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: text/javascript
+
+{
+   "access_token" : alphanumeric
+}
+```
+
+- **Request Headers**
+
+  - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
+    _Accept_ header
+
+- **Response Headers**
+
+  - [Content-Type](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) – this depends on _Accept_
+    header of request
+
+- **Status Codes**
+
+  - [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) – no error
+
+  - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – unable to validate credentials
+
+### GET (/user/api/(int: user_email)()
+
+> Get a user_id by email.
+
+**Example request**:
+
+```http
+GET /user/api/random123@test.email HTTP/1.1
+Host: https://jhcourserevu-api.herokuapp.com
+Accept: application/json, text/javascript
+```
+
+**Example response**:
+
+```http
+HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: text/javascript
+
+{
+   "id": 1,
+}
+```
+
+- **Query Parameters**
+
+  - **id** – user id
+
+- **Request Headers**
+
+  - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
+    _Accept_ header
+
+- **Response Headers**
+
+  - [Content-Type](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) – this depends on _Accept_
+    header of request
+
+- **Status Codes**
+
+  - [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) – no error
+
+  - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – user not found
+
+### GET (/user/api/id/(int: user_id)()
+
+> Get a user’s courses by user_id.
+
+**Example request**:
+
+```http
+GET /user/api/id/0 HTTP/1.1
+Host: https://jhcourserevu-api.herokuapp.com
+Accept: application/json, text/javascript
+```
+
+**Example response**:
+
+```http
+HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: text/javascript
+
+{
+   "count": 2,
+   "next": null,
+   "previous": null,
+   "results": [
+      {
+            "id": 1,
+            "name": "Gateway Computing: JAVA",
+            "description": "This course introduces fundamental programming concepts and techniques, and is intended for all who plan to develop computational artifacts or intelligently deploy computational tools in their studies and careers. Topics covered include the design and implementation of algorithms using variables, control structures, arrays, functions, files, testing, debugging, and structured program design. Elements of object-oriented programming. algorithmic efficiency and data visualization are also introduced. Students deploy programming to develop working solutions that address problems in engineering, science and other areas of contemporary interest that vary from section to section. Course homework involves significant programming. Attendance and participation in class sessions are expected.",
+            "course_num": "EN.500.112",
+            "num_credits": "3.00",
+            "department": "EN General Engineering",
+            "level": "Lower Level Undergraduate",
+            "prerequisites": "Students may not have earned credit in courses:  EN.500.113 OR EN.500.114 OR EN.510.202 OR EN.530.112 OR EN.580.200 OR EN.601.107 OR EN.500.132 OR EN.500.133 OR EN.500.134.",
+            "corequisites": "",
+            "school": "Whiting School of Engineering",
+            "campus": "Homewood Campus",
+            "is_writing_intensive": "False",
+            "meeting_section": "01",
+            "size": 19,
+            "instructors": "Staff",
+            "semester": "Spring 2022"
+      },
+      {
+            "id": 2,
+            "name": "Gateway Computing: JAVA",
+            "description": "This course introduces fundamental programming concepts and techniques, and is intended for all who plan to develop computational artifacts or intelligently deploy computational tools in their studies and careers. Topics covered include the design and implementation of algorithms using variables, control structures, arrays, functions, files, testing, debugging, and structured program design. Elements of object-oriented programming. algorithmic efficiency and data visualization are also introduced. Students deploy programming to develop working solutions that address problems in engineering, science and other areas of contemporary interest that vary from section to section. Course homework involves significant programming. Attendance and participation in class sessions are expected.",
+            "course_num": "EN.500.112",
+            "num_credits": "3.00",
+            "department": "EN General Engineering",
+            "level": "Lower Level Undergraduate",
+            "prerequisites": "Students may not have earned credit in courses:  EN.500.113 OR EN.500.114 OR EN.510.202 OR EN.530.112 OR EN.580.200 OR EN.601.107 OR EN.500.132 OR EN.500.133 OR EN.500.134.",
+            "corequisites": "",
+            "school": "Whiting School of Engineering",
+            "campus": "Homewood Campus",
+            "is_writing_intensive": "False",
+            "meeting_section": "02",
+            "size": 19,
+            "instructors": "Darvish Darab, Mohammad Ali",
+            "semester": "Spring 2022"
+      }
+   ]
+}
+```
+
+- **Query Parameters**
+
+  - **limit** – limit number, default is 10
+
+  - **count** – number of courses for user
+
+- **Request Headers**
+
+  - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
+    _Accept_ header
+
+- **Response Headers**
+
+  - [Content-Type](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) – this depends on _Accept_
+    header of request
+
+- **Status Codes**
+
+  - [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) – no error
+
+  - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – user not found
+
+### POST (/user/api/()
+
+Add course to user’s set of “my courses”
+
+**Example request**:
+
+```http
+GET /user/api/ HTTP/1.1
+Host: https://jhcourserevu-api.herokuapp.com
+Accept: application/json, text/javascript
+
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "course_id": 1,
+}
+```
+
+**Example response**:
+
+```http
+HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: text/javascript
+
+{
+   "id": 11,
+   "user": 5,
+   "courses": [
+      1
+   ]
+}
+```
+
+- **Request Headers**
+
+  - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
+    _Accept_ header
+
+- **Response Headers**
+
+  - [Content-Type](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) – this depends on _Accept_
+    header of request
+
+- **Status Codes**
+
+  - [200 OK](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1) – no error
+
+  - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – unable to validate credentials
+
+### DELETE (/user/api/()
+
+Remove course to user’s set of “my courses”
+
+**Example request**:
+
+```http
+GET /user/api/ HTTP/1.1
+Host: https://jhcourserevu-api.herokuapp.com
+Accept: application/json, text/javascript
+
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "course_id": 1,
+}
+```
+
+**Example response**:
+
+```http
+HTTP/1.1 204 OK
+Vary: Accept
+Content-Type: text/javascript
+```
+
+- **Request Headers**
+
+  - [Accept](https://tools.ietf.org/html/rfc7231#section-5.3.2) – the response content type depends on
+    _Accept_ header
+
+- **Response Headers**
+
+  - [Content-Type](https://tools.ietf.org/html/rfc7231#section-3.1.1.5) – this depends on _Accept_
+    header of request
+
+- **Status Codes**
+
+  - [204 No Content](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5) – no content/error
+
+  - [404 Not Found](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5) – unable to validate credentials
 
 ## About Us!
 

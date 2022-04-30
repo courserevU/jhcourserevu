@@ -3,7 +3,10 @@ from django.core.management.base import BaseCommand, CommandError
 
 import requests
 import json
-
+import os
+import environ  # to store env vars
+env = environ.Env()
+environ.Env.read_env()
 
 class Command(BaseCommand):
     help = "Adds a user to django"
@@ -37,7 +40,8 @@ class Command(BaseCommand):
             raise CommandError("Invalid school name provided: {}".format(options["school"]))
 
         # check valid term
-        terms = ["Fall 2022", "Summer 2022", "Spring 2022"]
+        # TODO: this could be more forgiving, allow for more terms
+        terms = ["Fall 2022", "Summer 2022", "Spring 2022", "Fall 2021", "Spring 2021", "Summer 2021", "Fall 2020", "Summer 2020", "Spring 2020"]
 
         if options["term"] not in terms:
             raise CommandError("Invalid term provided: {}".format(options["term"]))
@@ -50,7 +54,7 @@ class Command(BaseCommand):
                 + options["school"].replace(" ", "%20")
                 + "/"
                 + options["term"].replace(" ", "%20"),
-                params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
+                params={"key": os.environ.get("JHU_SIS_API_TOKEN")},
             ).text
         )
 
@@ -63,7 +67,7 @@ class Command(BaseCommand):
                     + course["SectionName"]
                     + "/"
                     + options["term"].replace(" ", "%20"),
-                    params={"key": "rZW4VwAUE1WTYZfSZyldykJLOXUC59fr"},
+                    params={"key": os.environ.get("JHU_SIS_API_TOKEN")},
                 ).text
             )[0]
 

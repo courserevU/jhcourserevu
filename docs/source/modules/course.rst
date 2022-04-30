@@ -28,13 +28,16 @@ API Endpoints
       Content-Type: application/json
 
       {
-        "course_id": 1,
-        "comments": [
-          "Great class", 
-          "Great professor", 
-          "Lots of work",
-          "Exams were challenging"
-        ]
+        "comments": {
+          "Professor": "Dr. Ali Madooei",
+          "Teaching Style": "FUN",
+          "Grading Style": "CHILL",
+          "Teacher Feedback": "NICE JOB",
+          "Workload": "LIGHT",
+          "Assignment Style": "projects",
+          "Exam Style": "stylized"
+        },
+        "course_id": 1
       }
 
    **Example response**:
@@ -57,7 +60,6 @@ API Endpoints
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
@@ -106,12 +108,11 @@ API Endpoints
         }
       ]
 
-   :query limit: limit number. default is 15
+   :query limit: limit number, default is 10
    :query sort: sort by ``semester`` or ``year``
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
@@ -186,12 +187,11 @@ API Endpoints
    :query page: any integer value within range of total number of pages
    :query semester: ``spring``, ``summer``, ``fall``
    :query year: any year greater than or equal to 2020
-   :query limit: limit number. default is 15
+   :query limit: limit number, default is 10
    :query sort: sort by ``semester`` or ``year``
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
@@ -259,29 +259,28 @@ API Endpoints
 
    :query semester: ``spring``, ``summer``, ``fall``
    :query year: any year greater than or equal to 2020
-   :query limit: limit number. default is 15
+   :query limit: limit number, default is 10
    :query sort: sort by ``semester`` or ``year``
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
    :statuscode 404: invalid semester or year
 
 Models
-~~~~~~
+**************
 .. automodule:: course.models
     :members:
 
 Views
-~~~~~
+**************
 .. automodule:: course.views
     :members:
 
 Serializers
-~~~~~~~~~~~
+**************
 .. automodule:: course.api.serializers
     :members:
 

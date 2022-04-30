@@ -1,7 +1,7 @@
 <template>
   <div>
     <main
-      class="h-screen flex items-center px-6 lg:px-32 bg-blue-600 dark:bg-blue-900 text-white relative"
+      class="h-screen flex items-center px-6 lg:px-32 bg-gradient-to-b from-white via-blue-600  to-blue-800 dark:from-gray-800 dark:via-blue-700 dark:to-blue-500 text-white relative"
     >
       <section class="w-full md:w-9/12 xl:w-8/12">
         <h1 class="text-3xl lg:text-5xl font-extrabold text-white-500">

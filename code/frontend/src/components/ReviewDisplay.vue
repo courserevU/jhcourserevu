@@ -8,29 +8,79 @@
       >
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
+      <h3
+        class="text-2xl font-bold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+      >
+        Semester: {{ JSON.parse(course).semester }}
+      </h3>
+    <br />
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Section: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).meeting_section }}
+        </h3>
+      </div>
 
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Prerequisites: {{ JSON.parse(course).prerequisites }}
-      </h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Corequisites: {{ JSON.parse(course).corequisites }}
-      </h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Credits: {{ JSON.parse(course).num_credits }}
-      </h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Section: {{ JSON.parse(course).meeting_section }}
-      </h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Department: {{ JSON.parse(course).department }}
-      </h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Campus: {{ JSON.parse(course).campus }}
-      </h3>
-      <h3 class="text-md text-gray-700 dark:text-gray-300">
-        Writing Intensive:
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Credits:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).num_credits }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+           Department: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).department }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Campus:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+          {{ JSON.parse(course).campus }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Prerequisites: 
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+        {{ JSON.parse(course).prerequisites }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Corequisites:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
+        {{ JSON.parse(course).corequisites }}
+        </h3>
+      </div>
+
+      <div class = "mb-3 mt-0">
+        <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
+          Writing Intensive:
+        </h3>
+        <h3 class="text-1xl font-normal tracking-tight text-gray-900 dark:text-gray-200">
         {{ JSON.parse(course).is_writing_intensive === "True" ? "Yes" : "No" }}
-      </h3>
+        </h3>
+      </div>
+      
+      
+      
+      
+      
       <br />
 
       <!-- Search Dropdown to filter within reviews-->

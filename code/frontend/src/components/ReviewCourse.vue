@@ -11,7 +11,7 @@
         </h1>
       </div>
     </div>
-    <div class="py-5"></div>
+    <div class="py-3"></div>
     <!-- Class Title -->
     <div class="flex space-x-2 justify-left px-20">
       <h3

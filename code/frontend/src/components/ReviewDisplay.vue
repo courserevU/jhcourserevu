@@ -8,20 +8,11 @@
       >
         {{ JSON.parse(course).name }} ({{ JSON.parse(course).course_num }})
       </h2>
-      <div class="flex space-x-2 justify-left px-20">
-        <div>
-          <h3
-            class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
-          >
-            Semester: {{ JSON.parse(course).semester }}
-          </h3>
-          <h3
-            class="text-2xl font-medium leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
-          >
-            {{ JSON.parse(course).semester }}
-          </h3>
-         </div> 
-    </div>
+      <h3
+        class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
+      >
+        Semester: {{ JSON.parse(course).semester }}
+      </h3>
     <br />
       <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">

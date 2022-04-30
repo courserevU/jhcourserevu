@@ -28,11 +28,6 @@
           >
             Semester: {{ JSON.parse(course).semester }}
           </h3>
-          <h3
-            class="text-2xl font-medium leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
-          >
-            {{ JSON.parse(course).semester }}
-          </h3>
          </div> 
     </div>
     <!-- Semester and Professor Fields -->

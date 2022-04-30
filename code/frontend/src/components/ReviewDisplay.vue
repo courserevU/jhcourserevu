@@ -22,7 +22,7 @@
           </h3>
          </div> 
     </div>
-    <br \>
+    <br />
       <div class = "mb-3 mt-0">
         <h3 class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200">
           Section: 

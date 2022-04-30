@@ -68,9 +68,8 @@ class UserUpdate(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # NOTE: Commented out code below was not necessary but may still be useful if we want to combine
+        # NOTE: Commented out code below was unnecessary but may still be useful to combine
         #       all of a user's courses into one object (not having multiple MyCourses for one user)
-
         # No existing MyCourses for this user
         # if user_courses is None:
         #     data = {
@@ -109,14 +108,3 @@ class UserUpdate(APIView):
 
         MyCourses.objects.filter(Q(user=user_id) & Q(courses=course_id)).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-        # s = MyCoursesSerializer(user_courses, many=True)
-
-        if not s.data:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        return Response(status=status.HTTP_404_NOT_FOUND)

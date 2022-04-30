@@ -57,7 +57,6 @@ API Endpoints
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
@@ -106,12 +105,11 @@ API Endpoints
         }
       ]
 
-   :query limit: limit number. default is 15
+   :query limit: limit number, default is 10
    :query sort: sort by ``semester`` or ``year``
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
@@ -186,12 +184,11 @@ API Endpoints
    :query page: any integer value within range of total number of pages
    :query semester: ``spring``, ``summer``, ``fall``
    :query year: any year greater than or equal to 2020
-   :query limit: limit number. default is 15
+   :query limit: limit number, default is 10
    :query sort: sort by ``semester`` or ``year``
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error
@@ -259,12 +256,11 @@ API Endpoints
 
    :query semester: ``spring``, ``summer``, ``fall``
    :query year: any year greater than or equal to 2020
-   :query limit: limit number. default is 15
+   :query limit: limit number, default is 10
    :query sort: sort by ``semester`` or ``year``
 
    :reqheader Accept: the response content type depends on
                       :mailheader:`Accept` header
-   :reqheader Authorization: optional OAuth token to authenticate
    :resheader Content-Type: this depends on :mailheader:`Accept`
                             header of request
    :statuscode 200: no error

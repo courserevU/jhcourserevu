@@ -283,7 +283,7 @@ export default defineComponent({
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
 
       if (
-        JSON.stringify(this.taken).includes(
+        (this.taken).includes(
           course
         )
       ) {

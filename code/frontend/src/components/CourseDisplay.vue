@@ -283,10 +283,11 @@ export default defineComponent({
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
 
       if (
-        (this.taken).includes(
+        this.taken.includes(
           course
-        )
+          )
       ) {
+        console.log("hi")
         this.addCourse(course.id);
       } else {
         // http://localhost:8000/user/api/

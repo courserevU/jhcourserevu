@@ -86,8 +86,8 @@
             </div>
           </div>
           <div class="mt-2">
-            <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
             <input
+              v-show = "this.user_id"
               type="checkbox"
               :id="course.course_num"
               :value="course"
@@ -95,6 +95,7 @@
               @change="updateTakenStatus(course)"
             />
             <label
+              v-show = "this.user_id"
               for="checkbox"
               class="text-sm text-gray-700 dark:text-gray-300"
               >{{ " I have taken this course" }}</label
@@ -102,7 +103,7 @@
           </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
-              v-if="this.taken.includes(course)"
+              v-if="(this.taken).includes(course)"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
@@ -178,6 +179,44 @@ export default defineComponent({
     };
   },
   mounted() {
+
+    window.addEventListener("localstorage-changed", (event) => {
+      this.user_id = JSON.parse(event.detail.user);
+      if (this.user_id) {
+        // http://localhost:8000/user/api/id/${this.user_id}
+        // https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}
+        axios
+          .get(
+            `https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}`
+          )
+          .then((response) => {
+            const data = response.data;
+            this.taken = data.results;
+          });
+      } else {
+        this.taken = [];
+      }
+    });
+
+    if (localStorage.getItem("user_id")) {
+      this.user_id = JSON.parse(localStorage.getItem("user_id"));
+    }
+
+    if (this.user_id) {
+      // https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}
+      // http://localhost:8000/user/api/id/${this.user_id}
+      axios
+        .get(
+          `https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}`
+        )
+        .then((response) => {
+          const data = response.data;
+          this.taken = data.results;
+          console.log(this.taken);
+        });
+        console.log("hi");
+        console.log(this.taken);
+    }
     axios
       .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
       .then((response) => {
@@ -185,14 +224,7 @@ export default defineComponent({
         this.courses = data.results;
         this.totalPages = Math.ceil(data.count / 10);
       });
-
-    window.addEventListener("localstorage-changed", (event) => {
-      this.user_id = JSON.parse(event.detail.user);
-    });
-
-    if (localStorage.getItem("user_id")) {
-      this.user_id = JSON.parse(localStorage.getItem("user_id"));
-    }
+    console.log(this.taken);
   },
   components: {
     Search,
@@ -281,13 +313,8 @@ export default defineComponent({
     },
     updateTakenStatus(course: any) {
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
-
-      if (
-        this.taken.includes(
-          course
-          )
-      ) {
-        console.log("hi")
+      if ((this.taken).includes(course)) {
+        console.log("adding");
         this.addCourse(course.id);
       } else {
         // http://localhost:8000/user/api/

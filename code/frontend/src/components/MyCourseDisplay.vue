@@ -63,16 +63,20 @@
           <div class="block inline-flex mt-4 mb-2">
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
             >
+              <PlusIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
+
               Write Review
             </button>
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToReadReviews(course)"
             >
+              <EyeIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
+
               Read Reviews
             </button>
           </div>
@@ -92,7 +96,7 @@ import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
-import { ViewGridIcon, ViewListIcon } from "@heroicons/vue/outline";
+import { ViewGridIcon, ViewListIcon, EyeIcon, PlusIcon } from "@heroicons/vue/outline";
 
 let courses = [];
 
@@ -137,6 +141,8 @@ export default defineComponent({
     SelectMenu,
     Pagination,
     Checkbox,
+    EyeIcon,
+    PlusIcon,
     ViewGridIcon,
     ViewListIcon,
   },

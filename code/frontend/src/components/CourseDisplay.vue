@@ -90,7 +90,7 @@
             <input
               type="checkbox"
               :id="course.course_num"
-              :value="course.name + course.meeting_section"
+              :value="course"
               v-model="taken"
               @change="updateTakenStatus(course)"
             />
@@ -102,7 +102,7 @@
           </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
-              v-if="this.taken.includes(course.name + course.meeting_section)"
+              v-if="this.taken.includes(course)"
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToWriteReview(course)"
@@ -284,7 +284,7 @@ export default defineComponent({
 
       if (
         JSON.stringify(this.taken).includes(
-          course.name + course.meeting_section
+          course
         )
       ) {
         this.addCourse(course.id);

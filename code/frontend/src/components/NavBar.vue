@@ -129,7 +129,7 @@
                       class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">Docs</a>
                   </div>
                   <div>
-                    <a :href="repoUrl"
+                    <a :href="repoUrl" target="_blank"
                       class="text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">About</a>
                   </div>
                 </div>

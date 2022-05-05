@@ -119,7 +119,7 @@
         <h3
           class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
         >
-          Workload/Time Comitmment:
+          Workload/Time Commitmment:
         </h3>
         <textarea
           required

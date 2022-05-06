@@ -51,6 +51,9 @@ export default defineComponent({
   },
   computed: {
     pagesAtATime() {
+      if (this.pageReplacement === 1) {
+        this.firstPage = 0;
+      }
       return this.maxPage < 5 ? this.maxPage : 5;
     },
   },
@@ -86,9 +89,8 @@ export default defineComponent({
       this.$emit("change-page", this.currentPage);
     },
     isSelected(index: number) {
-      if (this.pageReplacement) {
-        this.currentPage = this.pageReplacement; // in case of review deletion
-      }
+      this.currentPage = this.pageReplacement; // in case of review deletion
+      
       if (this.currentPage === index) {
         return true;
       }

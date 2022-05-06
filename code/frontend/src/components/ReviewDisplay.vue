@@ -262,7 +262,6 @@ export default defineComponent({
     let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
       JSON.parse(this.course).id
     }`;
-    // let api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
 
     const field = optionsToField[this.option];
 
@@ -273,7 +272,6 @@ export default defineComponent({
       this.reviewCount = data.count;
       this.totalPages = Math.ceil(this.reviewCount / 10);
     });
-    console.log(this.course);
   },
   methods: {
     updateOption(e: any) {
@@ -282,23 +280,21 @@ export default defineComponent({
       this.option = e.id;
       const field = optionsToField[this.option];
 
-      // let api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/`;
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${
         JSON.parse(this.course).id
       }/`;
 
       if (field != undefined && field != "Show all reviews") {
-        // api_link = `http://127.0.0.1:8000/course/review/${JSON.parse(this.course).id}/${field}`;
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/${
           JSON.parse(this.course).id
         }/${field}`;
       }
 
-      if (field === "Show all reviews")
-        // api_link = `http://127.0.0.1:8000/course/review/api/${JSON.parse(this.course).id}/`;
+      if (field === "Show all reviews") {
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
           JSON.parse(this.course).id
         }/`;
+      }
 
       axios.get(api_link).then((response) => {
         const data = response.data;
@@ -312,7 +308,6 @@ export default defineComponent({
       axios
         .get(
           `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-            // `http://127.0.0.1:8000/course/review/api/${
             JSON.parse(this.course).id
           }/?page=${this.page}`
         )
@@ -328,7 +323,6 @@ export default defineComponent({
       axios
         .delete(
           `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${id}/`
-          // `http://127.0.0.1:8000/course/review/api/${id}/`
         )
         .then(() => {
           // Reload page with updated review list (same page unless deletion reduces # of pages)
@@ -338,7 +332,6 @@ export default defineComponent({
           axios
             .get(
               `https://jhcourserevu-api-test.herokuapp.com/course/review/api/${
-                // `http://127.0.0.1:8000/course/review/api/${
                 JSON.parse(this.course).id
               }/?page=${this.page}`
             )

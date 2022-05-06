@@ -86,7 +86,6 @@
             </div>
           </div>
           <div class="mt-2">
-            <!-- <Checkbox label="I have taken this course" inputValue="course.course_num" v-model="taken" @click="updateTakenStatus(course)"/> -->
             <input
               type="checkbox"
               :id="course.course_num"
@@ -122,7 +121,7 @@
         </div>
       </div>
       <div>
-        <Pagination @change-page="changePage" :maxPage="totalPages" />
+        <Pagination @change-page="changePage" :maxPage="totalPages" :pageReplacement="page" />
       </div>
     </div>
   </div>
@@ -212,11 +211,10 @@ export default defineComponent({
 
       const field = optionsToField[this.option];
 
-      // let api_link = `http://localhost:8000/course/api/`;
-      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/`;
+      let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
 
       if (field != undefined && this.query != "") {
-        // api_link = `http://localhost:8000/course/search/${field}/?q=${this.query}`;
+        this.page = 1;
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}`;
       }
 
@@ -234,8 +232,6 @@ export default defineComponent({
       this.updateFilter(this.query);
     },
     addCourse(course_id: any) {
-      // http://localhost:8000/user/api/
-      // https://jhcourserevu-api-test.herokuapp.com/user/api/
       axios
         .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
           user_id: this.user_id,
@@ -249,14 +245,12 @@ export default defineComponent({
       this.page = e;
 
       // Gets correct page of courses via API page query
-      // let api_link = `http://localhost:8000/course/api/?page=${this.page}`;
       let api_link = `https://jhcourserevu-api-test.herokuapp.com/course/api/?page=${this.page}`;
 
       const field = optionsToField[this.option];
 
       if (field != undefined && this.query != "") {
         api_link = `https://jhcourserevu-api-test.herokuapp.com/course/search/${field}/?q=${this.query}&&page=${this.page}`;
-        // api_link = `http://localhost:8000/course/search/${field}/?q=${this.query}&&page=${this.page}`;
       }
 
       axios.get(api_link).then((response) => {
@@ -281,7 +275,6 @@ export default defineComponent({
     },
     updateTakenStatus(course: any) {
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
-
       if (
         JSON.stringify(this.taken).includes(
           course.name + course.meeting_section
@@ -289,8 +282,6 @@ export default defineComponent({
       ) {
         this.addCourse(course.id);
       } else {
-        // http://localhost:8000/user/api/
-        // https://jhcourserevu-api-test.herokuapp.com/user/api/
         axios.delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
           data: {
             user_id: this.user_id,

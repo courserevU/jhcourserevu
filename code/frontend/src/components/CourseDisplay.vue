@@ -87,13 +87,15 @@
           </div>
           <div class="mt-2">
             <input
+              v-show = "this.user_id"
               type="checkbox"
               :id="course.course_num"
-              :value="course.name + course.meeting_section"
+              :value="course"
               v-model="taken"
               @change="updateTakenStatus(course)"
             />
             <label
+              v-show = "this.user_id"
               for="checkbox"
               class="text-sm text-gray-700 dark:text-gray-300"
               >{{ " I have taken this course" }}</label
@@ -101,21 +103,21 @@
           </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
-              v-if="this.taken.includes(course.name + course.meeting_section)"
-              type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
-              @click="goToWriteReview(course)"
-            >
-              <PlusIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
-              Write Review
-            </button>
-            <button
               type="button"
               class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
               @click="goToReadReviews(course)"
             >
               <EyeIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
               Read Reviews
+            </button>
+            <button
+              v-if="haveTakenCourse(course)"
+              type="button"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
+              @click="goToWriteReview(course)"
+            >
+              <PlusIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
+              Write Review
             </button>
           </div>
         </div>
@@ -177,21 +179,58 @@ export default defineComponent({
     };
   },
   mounted() {
-    axios
-      .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
-      .then((response) => {
-        const data = response.data;
-        this.courses = data.results;
-        this.totalPages = Math.ceil(data.count / 10);
-      });
-
     window.addEventListener("localstorage-changed", (event) => {
       this.user_id = JSON.parse(event.detail.user);
+      if (this.user_id) {
+        // http://localhost:8000/user/api/id/${this.user_id}
+        // https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}
+        axios
+          .get(
+            `https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}`
+          )
+          .then((response) => {
+            const data = response.data;
+            this.taken = data.results;
+          });
+      } else {
+        this.taken = [];
+      }
     });
 
     if (localStorage.getItem("user_id")) {
       this.user_id = JSON.parse(localStorage.getItem("user_id"));
     }
+
+    if (this.user_id) {
+      // https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}
+      // http://localhost:8000/user/api/id/${this.user_id}
+      axios
+        .get(
+          `https://jhcourserevu-api-test.herokuapp.com/user/api/id/${this.user_id}`
+        )
+        .then((response) => {
+          const data = response.data;
+          this.taken = data.results;
+          axios
+            .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+            .then((response) => {
+              const data = response.data;
+              this.courses = data.results;
+              this.totalPages = Math.ceil(data.count / 10);
+            });
+        });
+    } else {
+      axios
+        .get(`https://jhcourserevu-api-test.herokuapp.com/course/api/`)
+        .then((response) => {
+          const data = response.data;
+          this.courses = data.results;
+          this.totalPages = Math.ceil(data.count / 10);
+        });
+    }
+
+    
+    
   },
   components: {
     Search,
@@ -231,16 +270,6 @@ export default defineComponent({
       this.option = e.id;
       this.updateFilter(this.query);
     },
-    addCourse(course_id: any) {
-      axios
-        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
-          user_id: this.user_id,
-          course_id: course_id,
-        })
-        .then((response) => {
-          const data = response.data;
-        });
-    },
     changePage(e: number) {
       this.page = e;
 
@@ -273,13 +302,28 @@ export default defineComponent({
         params: { course: JSON.stringify(course) },
       });
     },
+    addCourse(course_id: any) {
+      // http://localhost:8000/user/api/
+      // https://jhcourserevu-api-test.herokuapp.com/user/api/
+      axios
+        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          user_id: this.user_id,
+          course_id: course_id,
+        })
+        .then((response) => {
+          const data = response.data;
+        });
+    },
+    haveTakenCourse(course: any) {
+      return this.taken.some(courseTaken=> {
+        if(courseTaken.id == course.id){ return true};
+        return false;
+      });
+    },
     updateTakenStatus(course: any) {
       //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
-      if (
-        JSON.stringify(this.taken).includes(
-          course.name + course.meeting_section
-        )
-      ) {
+      if (this.haveTakenCourse(course)) {
+        console.log("adding");
         this.addCourse(course.id);
       } else {
         axios.delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {

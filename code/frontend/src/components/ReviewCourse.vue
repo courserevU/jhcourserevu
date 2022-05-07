@@ -98,7 +98,7 @@
         </h3>
         <textarea
           required
-          class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
+          class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
@@ -119,7 +119,7 @@
         <h3
           class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
         >
-          Workload/Time Comitmment:
+          Workload/Time Commitmment:
         </h3>
         <textarea
           required

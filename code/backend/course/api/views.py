@@ -1,5 +1,3 @@
-import datetime
-from unicodedata import category
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -8,41 +6,21 @@ from rest_framework import status, generics
 from course.models import Course, Review, Comment
 from .serializers import CourseSerializer, ReviewSerializer, CommentSerializer
 
-from django.http import Http404, HttpResponse
-import json
-from django.forms import model_to_dict
-from django.core.paginator import Paginator
+from django.http import Http404
 from rest_framework.pagination import PageNumberPagination
-
-# from rest_framework import permissions
-# from django.shortcuts import render
 
 
 class CourseList(APIView):
     def get(self, request, *args, **kwargs):
-        # courses = Course.objects.all()
-        # courses_per_page = 50
-        # paginator = Paginator(courses, courses_per_page)
-        # page_number = request.GET.get("page")
-        # page_obj = paginator.get_page(page_number)
-        # courses_list = []
-
-        # for course in courses:
-        #     course_dict = model_to_dict(course)
-        #     courses_list.append(course_dict)
-
-        # json_data = {"courses": courses_list}
-        # return HttpResponse(json.dumps(json_data), content_type="application/json")
-        # return render(request, 'all_courses.html', {'page_obj': page_obj})
-
         paginator = PageNumberPagination()
         paginator.page_size = 10
         courses = Course.objects.all()
         result_page = paginator.paginate_queryset(courses, request)
-        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        serializer = CourseSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-class QueryByNameCourseList(APIView) :
+
+class QueryByNameCourseList(APIView):
     def get(self, request, *args, **kwargs):
         paginator = PageNumberPagination()
         paginator.page_size = 10
@@ -51,10 +29,11 @@ class QueryByNameCourseList(APIView) :
         courses = Course.objects.filter(name__icontains=query)
 
         result_page = paginator.paginate_queryset(courses, request)
-        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        serializer = CourseSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-class QueryByNumberCourseList(APIView) :
+
+class QueryByNumberCourseList(APIView):
     def get(self, request, *args, **kwargs):
         paginator = PageNumberPagination()
         paginator.page_size = 10
@@ -63,10 +42,11 @@ class QueryByNumberCourseList(APIView) :
         courses = Course.objects.filter(course_num__icontains=query)
 
         result_page = paginator.paginate_queryset(courses, request)
-        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        serializer = CourseSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-class QueryByDepartmentCourseList(APIView) :
+
+class QueryByDepartmentCourseList(APIView):
     def get(self, request, *args, **kwargs):
         paginator = PageNumberPagination()
         paginator.page_size = 10
@@ -75,8 +55,9 @@ class QueryByDepartmentCourseList(APIView) :
         courses = Course.objects.filter(department__icontains=query)
 
         result_page = paginator.paginate_queryset(courses, request)
-        serializer = CourseSerializer(result_page, many=True)  # MAIN CHANGE IS HERE
+        serializer = CourseSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
+
 
 class CourseNumberList(generics.ListAPIView):
     """
@@ -96,20 +77,6 @@ class CourseNumberList(generics.ListAPIView):
 
     def get_serializer_class(self):
         return CourseSerializer
-
-    # def get_object(self, course_num):
-    #     try:
-    #         return Course.objects.get(course_num=course_num)[0]
-    #     except Course.DoesNotExist:
-    #         raise Http404
-
-    # def get(self, request, course_num, format=None):
-    #     """
-    #     Get course by course number
-    #     """
-    #     c_n = self.get_object(course_num)
-    #     serializer = CourseSerializer(c_n)
-    #     return Response(serializer.data)
 
 
 class CommentList(APIView):
@@ -142,7 +109,7 @@ class CommentList(APIView):
 
         comments_data = request.data.get("comments")
         for category, comment in comments_data.items():
-            if (not(comment and not comment.isspace())):
+            if not (comment and not comment.isspace()):
                 continue
 
             data = {
@@ -160,6 +127,7 @@ class CommentList(APIView):
 
         return Response(comments, status=status.HTTP_201_CREATED)
 
+
 class ReviewByCommentList(APIView):
     def get(self, request, course_id, comment_label, format=None):
         """
@@ -173,21 +141,19 @@ class ReviewByCommentList(APIView):
         course_id = self.kwargs["course_id"]
         comment_label = self.kwargs["comment_label"]
         reviews = Review.objects.filter(course=course_id)
-        
 
         for review in reviews:
-            comments = (review.comment_set.all())
-            
-            # print(comments)
+            comments = review.comment_set.all()
+
             for comment in comments:
-                if (comment.category == comment_label):
+                if comment.category == comment_label:
                     print(comment.comment)
                     serializer = CommentSerializer(comment)
                     comments_to_display.append(serializer.data)
-            
-        # result_page = paginator.paginate_queryset(serializer.data, request)
+
         result_page = paginator.paginate_queryset(comments_to_display, request)
         return paginator.get_paginated_response(result_page)
+
 
 class ReviewIdList(APIView):
     def get(self, request, course_id, format=None):
@@ -203,14 +169,14 @@ class ReviewIdList(APIView):
         reviews = Review.objects.filter(course=course_id)
 
         for review in reviews:
-          review_comments = []
-          comments = Comment.objects.filter(review=review.id)
-          for comment in comments:
-            serializer = CommentSerializer(comment)
-            review_comments.append(serializer.data)
+            review_comments = []
+            comments = Comment.objects.filter(review=review.id)
+            for comment in comments:
+                serializer = CommentSerializer(comment)
+                review_comments.append(serializer.data)
 
-          reviews_to_display.append(review_comments)
-            
+            reviews_to_display.append(review_comments)
+
         result_page = paginator.paginate_queryset(reviews_to_display, request)
         return paginator.get_paginated_response(result_page)
 
@@ -237,16 +203,6 @@ class ReviewIdList(APIView):
 
         comments = Comment.objects.filter(review=review.id)
         for comment in comments:
-          comment.delete()
+            comment.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# def get_reviews_by_course(request, course):
-#     reviews = Review.objects.get(course=course)
-#     review_list = []
-#     for review in reviews:
-#         review_dict = model_to_dict(review)
-#         review_list.append(review_dict)
-#     json_data = {"reviews": review_list}
-#     return HttpResponse(json.dumps(json_data), content_type="application/json")

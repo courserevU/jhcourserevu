@@ -241,6 +241,7 @@ export default defineComponent({
           showIcon: true,
         });
       } else {
+        let router = this.$router;
         axios
           .post(
             // `http://127.0.0.1:8000/course/review/api/`,
@@ -266,13 +267,7 @@ export default defineComponent({
               position: "bottom-center",
               showIcon: true,
             });
-            // console.log(this);
-            // this.teachStyle  = "";
-            // this.gradeStyle = "";
-            // this.teachFeedback = "";
-            // this.workload = "";
-            // this.assignment = "";
-            // this.exam = "";
+            router.push("/my-courses");
           })
           .catch(function (error) {
             console.log(error);

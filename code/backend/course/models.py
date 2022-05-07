@@ -1,25 +1,6 @@
 from django.db import models
 
 
-# class Semester(models.Model):
-#     """
-#     Represents a semester which is composed of a name (e.g. Spring, Fall)
-#     and a year (e.g. 2022).
-#     Attributes:
-#         name (:obj:`CharField`): the name (e.g. Spring, Fall)
-#         year (:obj:`CharField`): the year (e.g. 2022, 2023)
-#     """
-
-#     name = models.CharField(max_length=50)
-#     year = models.CharField(max_length=4)
-
-#     def __unicode__(self):
-#         return "{} {}".format(self.name, self.year)
-
-#     def __str__(self):
-#         return "{} {}".format(self.name, self.year)
-
-
 class Course(models.Model):
     """
     Represents a university course containing all relevant information, including
@@ -43,7 +24,7 @@ class Course(models.Model):
             (e.g. 001, L01, LAB2)
         size (:obj:`IntegerField`): the capacity of the course (the enrollment cap)
         instructors (:obj:`CharField`): comma separated list of instructors
-        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section    
+        semester (:obj:`ForeignKey` to :obj:`Semester`): the semester for the section
     """
 
     # course details
@@ -85,7 +66,7 @@ class Course(models.Model):
             self.semester,
         )
 
-    # TODO: REMOVED FOR NOW
+    # TODO: can be added for additional features
     # notes (:obj:`TextField`, optional): notes regarding registration
     # info (:obj:`TextField`, optional): additional information about course
     # exclusions (:obj:`TextField`, optional): any reasons student may be unable to register for this course
@@ -119,7 +100,7 @@ class Review(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     time_updated = models.DateTimeField(auto_now_add=True, auto_now=False, blank=True)
 
-    # TODO: REMOVED FOR NOW
+    # TODO: can be added for additional features
     # comments = models.CharField(max_length=350, default="")
     # work = models.CharField(max_length=350, default="")
     # workload = models.CharField(max_length=350, default="")

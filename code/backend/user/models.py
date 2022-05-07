@@ -2,8 +2,6 @@ from django.db import models
 from course.models import Course
 from django.contrib.auth.models import User
 
-# from social_django.models import AbstractUserSocialAuth, USER_MODEL, DjangoStorage
-
 
 class CustomUser(models.Model):
     """
@@ -18,22 +16,11 @@ class CustomUser(models.Model):
     """
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # user = models.ForeignKey(USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE)
     # jhed_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(("email address"), unique=True, blank=True, null=True)
     class_year = models.CharField(max_length=50, blank=True, null=True, unique=True)
     preferred_name = models.CharField(max_length=30, blank=True, null=True, unique=True)
     is_admin = models.BooleanField(default=False)
-
-
-# class CustomUserSocialAuth(AbstractUserSocialAuth):
-#     user = models.ForeignKey(
-#         USER_MODEL, related_name="custom_social_auth", on_delete=models.CASCADE
-#     )
-
-
-# class CustomDjangoStorage(DjangoStorage):
-#     user = CustomUser
 
 
 class MyCourses(models.Model):

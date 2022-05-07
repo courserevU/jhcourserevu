@@ -44,8 +44,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # )
 
 AUTHENTICATION_BACKENDS = [
-    # "allauth.account.auth_backends.AuthenticationBackend",
-    # "django.contrib.auth.backends.ModelBackend",
     "social_core.backends.google.GoogleOAuth2",
     "drf_social_oauth2.backends.DjangoOAuth2",
     "django.contrib.auth.backends.ModelBackend",

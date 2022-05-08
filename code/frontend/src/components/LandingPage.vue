@@ -22,7 +22,7 @@
           class="w-1/2 px-10 py-2.5 justify-center bg-gray-200 dark:bg-gray-700 text-black dark:text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-200 dark:hover:bg-blue-100 hover:shadow-lg focus:bg-blue-300 dark:focus:bg-blue-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
           @click="goToCourseSeach"
         >
-          Seach for Courses!
+          Search for Courses!
         </button>
       </section>
 

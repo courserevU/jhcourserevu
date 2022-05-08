@@ -98,7 +98,7 @@
         </h3>
         <textarea
           required
-          class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
+          class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none"
           id="exampleFormControlTextarea13"
           rows="3"
           placeholder="Review"
@@ -119,7 +119,7 @@
         <h3
           class="text-1xl font-extrabold leading-tight text-gray-900 dark:text-gray-200 mb-3 mt-0"
         >
-          Workload/Time Comitmment:
+          Workload/Time Commitmment:
         </h3>
         <textarea
           required
@@ -241,6 +241,7 @@ export default defineComponent({
           showIcon: true,
         });
       } else {
+        let router = this.$router;
         axios
           .post(
             // `http://127.0.0.1:8000/course/review/api/`,
@@ -266,13 +267,7 @@ export default defineComponent({
               position: "bottom-center",
               showIcon: true,
             });
-            // console.log(this);
-            // this.teachStyle  = "";
-            // this.gradeStyle = "";
-            // this.teachFeedback = "";
-            // this.workload = "";
-            // this.assignment = "";
-            // this.exam = "";
+            router.push("/my-courses");
           })
           .catch(function (error) {
             console.log(error);

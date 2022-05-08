@@ -60,21 +60,42 @@
               </p>
             </div>
           </div>
+          <div class="mt-2">
+            <input
+              v-show = "this.user_id"
+              type="checkbox"
+              :id="course.course_num"
+              :value="course"
+              v-model="courses"
+              @change="updateTakenStatus(course)"
+            />
+            <label
+              v-show = "this.user_id"
+              for="checkbox"
+              class="text-sm text-gray-700 dark:text-gray-300"
+              >{{ " I have taken this course" }}</label
+            >
+          </div>
           <div class="block inline-flex mt-4 mb-2">
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
-              @click="goToWriteReview(course)"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
+              @click="goToReadReviews(course)"
             >
-              Write Review
+              <EyeIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
+
+              Read Reviews
             </button>
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-2 mx-1 rounded"
-              @click="goToReadReviews(course)"
+              class="bg-blue-500 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-900 text-white dark:text-gray-200 font-bold py-1 px-3 mx-1 rounded"
+              @click="goToWriteReview(course)"
             >
-              Read Reviews
+              <PlusIcon class="float-left h-5 w-5 mr-2 mt-0.5" />
+
+              Write Review
             </button>
+            
           </div>
         </div>
       </div>
@@ -92,7 +113,7 @@ import SelectMenu from "./SelectMenu.vue";
 import Pagination from "./Pagination.vue";
 import Checkbox from "./Checkbox.vue";
 import axios from "axios";
-import { ViewGridIcon, ViewListIcon } from "@heroicons/vue/outline";
+import { ViewGridIcon, ViewListIcon, EyeIcon, PlusIcon } from "@heroicons/vue/outline";
 
 let courses = [];
 
@@ -137,6 +158,8 @@ export default defineComponent({
     SelectMenu,
     Pagination,
     Checkbox,
+    EyeIcon,
+    PlusIcon,
     ViewGridIcon,
     ViewListIcon,
   },
@@ -216,6 +239,43 @@ export default defineComponent({
         name: "read",
         params: { course: JSON.stringify(course) },
       });
+    },
+    addCourse(course_id: any) {
+      // http://localhost:8000/user/api/
+      // https://jhcourserevu-api-test.herokuapp.com/user/api/
+      axios
+        .post(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          user_id: this.user_id,
+          course_id: course_id,
+        })
+        .then((response) => {
+          const data = response.data;
+        });
+    },
+    haveTakenCourse(course: any) {
+      return this.courses.some(courseTaken=> {
+        if(courseTaken.id == course.id){ return true};
+        return false;
+      });
+    },
+    updateTakenStatus(course: any) {
+      //if becomes unchecked take out from user's courses, otherwise add the course to user's courses
+      
+      console.log(this.taken);
+      
+      if (this.haveTakenCourse(course)) {
+        console.log("adding");
+        this.addCourse(course.id);
+      } else {
+        // http://localhost:8000/user/api/
+        // https://jhcourserevu-api-test.herokuapp.com/user/api/
+        axios.delete(`https://jhcourserevu-api-test.herokuapp.com/user/api/`, {
+          data: {
+            user_id: this.user_id,
+            course_id: course.id,
+          },
+        });
+      }
     },
   },
 

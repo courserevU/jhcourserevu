@@ -5,7 +5,7 @@ from course.api.serializers import CourseSerializer
 from course.models import Course
 from user.models import MyCourses, CustomUser
 from django.contrib.auth.models import User
-from .serializers import CustomUserSerializer, MyCoursesSerializer, AuthUserSerializer
+from .serializers import MyCoursesSerializer
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q

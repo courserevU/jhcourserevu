@@ -2,24 +2,6 @@
 
 JHcourserevU is an application to rate, review, and view reviews for the courses right here at JHU.
 
-**Team**
-
-| Name                     | JHU Email        | GitHub Username |
-| ------------------------ | ---------------- | --------------- |
-| Bridget Carr             | bcarr15@jhu.edu  | bcarr15         |
-| Sebastian Cabrejos       | scabrej1@jhu.edu | boccca2014      |
-| Stephania Rincon Godinez | srincon3@jhu.edu | Stephrg         |
-| Tsige Solomon            | tsolomo8@jhu.edu | tsigeas         |
-| Melody Hsu               | mhsu13@jhu.edu   | melodymhsu      |
-| Narayani Wagle           | nwagle1@jhu.edu  | nhwagle         |
-| Theodore Xie             | txie10@jhu.edu   | theodore-xie    |
-
-**Advisors**
-
-| Name       | JHU Email       | GitHub Username |
-| ---------- | --------------- | --------------- |
-| Melody Lee | hlee244@jhu.edu | melodyhplee     |
-
 # Documentation
 
 - [Project Document](https://docs.google.com/document/d/1ERXfE-sJ2X_Asr5cXk-hHA5Ayl_FxULpkI7nzGDUnOM)
@@ -224,10 +206,3 @@ call to the backend’s Restful API. The app uses
 [drf-rest-oauth2](https://github.com/wagnerdelima/drf-social-oauth2) to
 obtain a User Access Token and gather the user’s information and store it
 accordingly.
-
-<!--
-You should include what is needed (e.g. all of the configurations) to set up the dev environment. For instance, global dependencies or any other tools (include download links), explaining what database (and version) has been used, etc. If there is any virtual environment, local server, ..., explain here.
-
-Additionally, describe and show how to run the tests, explain your code style and show how to check it.
-
-If your project needs some additional steps for the developer to build the project after some code changes, state them here. Moreover, give instructions on how to build and release a new version. In case there's some step you have to take that publishes this project to a server, it must be stated here. -->

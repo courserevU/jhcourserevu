@@ -24,3 +24,10 @@ python:
   install:
     - requirements: code/backend/requirements.txt
     - requirements: requirements.txt
+
+sphinx:
+  fail_on_warning: true
+
+formats:
+  - pdf
+  - epub
